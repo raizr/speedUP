@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices.WindowsRuntime;
 using DG.Tweening;
 using PathCreation.Examples;
+using Spine;
+using Spine.Unity;
 using Unity.InteractiveTutorials;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,19 +28,33 @@ namespace Assets.SlotCar.Scripts {
 		private bool reverse = false;
 		public float handlePos;
 		public UnityEvent zoneCompleteEvent;
+		public SkeletonAnimation greenFX;
+
+		public void OnSpineAnimationEnd(TrackEntry trackEntry) {
+			GenerateZonePos();
+		}
+
+		void Awake() {
+			greenFX.gameObject.SetActive(false);
+			greenFX.AnimationState.Complete += OnSpineAnimationEnd;
+			button.onClick.AddListener(SpeedUpClick);
+		}
 
 		void Start() {
-			button.onClick.AddListener(SpeedUpClick);
 			GenerateZonePos();
 		}
 		private void SpeedUpClick() {
+			if (state == StateScrollGame.Stop) {
+				return;
+			}
 			state = StateScrollGame.Stop;
-			car.SpeedUp(GetCurrentZone());
-			GenerateZonePos();
-			state = StateScrollGame.Start;
+			ScrollZone zone = GetCurrentZone();
+			setFxByZone(zone);
+			car.SpeedUp(zone);
 		}
 
 		void GenerateZonePos() {
+			state = StateScrollGame.Start;
 			RectTransform redTransform = redZone.GetComponent<RectTransform>();
 			RectTransform yellowTransform = yellowZone.GetComponent<RectTransform>();
 			RectTransform greenTransform = greenZone.GetComponent<RectTransform>();
@@ -60,6 +76,21 @@ namespace Assets.SlotCar.Scripts {
 				}
 			}
 			return result;
+		}
+
+		void setFxByZone(ScrollZone zone) {
+			switch (zone) {
+				case ScrollZone.Yellow:
+					GenerateZonePos();
+					break;
+				case ScrollZone.Green:
+					greenFX.gameObject.SetActive(true);
+					greenFX.AnimationState.SetAnimation(0, "green", false);
+					break;
+				default:
+					GenerateZonePos();
+					break;
+			}
 		}
 
 		void Update() {

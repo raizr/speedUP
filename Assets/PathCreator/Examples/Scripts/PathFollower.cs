@@ -58,7 +58,7 @@ namespace PathCreation.Examples
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
 				if (wheelsDrive != null) {
 					wheelsDrive.currentTorque = (float)speed / maxSpeed;
-					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 2.0f;
+					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 3.0f;
 				}
 			}
         }

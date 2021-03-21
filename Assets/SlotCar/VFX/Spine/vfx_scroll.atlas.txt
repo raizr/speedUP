@@ -1,0 +1,48 @@
+
+vfx_scroll.png
+size: 256,32
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ball
+  rotate: false
+  xy: 63, 3
+  size: 4, 4
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
+glow_prog
+  rotate: false
+  xy: 2, 4
+  size: 36, 27
+  orig: 36, 27
+  offset: 0, 0
+  index: -1
+slash_long3
+  rotate: false
+  xy: 39, 8
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+trace_01
+  rotate: false
+  xy: 63, 9
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+trace_02
+  rotate: false
+  xy: 87, 9
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+trace_07_rotated
+  rotate: false
+  xy: 110, 9
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
