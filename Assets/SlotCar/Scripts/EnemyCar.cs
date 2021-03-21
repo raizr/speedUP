@@ -6,21 +6,18 @@ using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
 	public class EnemyCar : PathFollower {
-		public PlayerCar playerCar;
 		public ScrollMiniGame scrollMiniGame;
-		public int speedUpCoeff = 1;
-		[Header("Seconds")]
-		public float timeSpeedUp = 1.0f;
+
 		public eEnemyAiPreset aiPreset = eEnemyAiPreset.Ease;
-		private EnemyPreset internalAiPreset;
 		public ScrollZone curZone;
+
+		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
 		private int scrollCounter = 0;
 		private int scrollCurrentCounter = 0;
 		// Start is called before the first frame update
 		void Start() {
 			base.Start();
-			//StartCoroutine(SpeedTick());
 			chooseAiPreset();
 			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
@@ -37,15 +34,6 @@ namespace Assets.SlotCar.Scripts {
 				case eEnemyAiPreset.Hard:
 					internalAiPreset = GetComponent<EnemyPresetHard>();
 					break;
-			}
-		}
-
-		IEnumerator SpeedTick() {
-			yield return new WaitForSeconds(timeSpeedUp);
-			while (true) // Or whatever condition you want
-			{
-				SpeedUp(speedUpCoeff);
-				yield return new WaitForSeconds(timeSpeedUp);
 			}
 		}
 

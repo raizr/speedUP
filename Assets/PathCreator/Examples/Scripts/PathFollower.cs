@@ -24,6 +24,8 @@ namespace PathCreation.Examples
         public RoadMeshCreator roadMeshCreator;
         public EndOfPathInstruction endOfPathInstruction;
 		public WheelDrive wheelsDrive;
+		public Position linePosition = Position.Center;
+		public Transform linePosTransform;
 		
 		public int speed = 5;
 		public int maxSpeed = 270;
@@ -35,9 +37,6 @@ namespace PathCreation.Examples
 		public float yellowZoneSpeed = 15.0f;
 	
 		float distanceTravelled;
-		public Position linePosition = Position.Center;
-		public Transform linePosTransform;
-		public Vector3 position;
 
         public void Start() {
             if (roadMeshCreator != null)
@@ -55,9 +54,8 @@ namespace PathCreation.Examples
                 distanceTravelled += speed / 10.0f * Time.deltaTime;
                 transform.position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
                 transform.rotation = roadMeshCreator.pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
-				position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
+				Vector3 position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
-				Debug.DrawLine(transform.position, position, Color.green);
 				if (wheelsDrive != null) {
 					wheelsDrive.currentTorque = (float)speed / maxSpeed;
 					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 2.0f;

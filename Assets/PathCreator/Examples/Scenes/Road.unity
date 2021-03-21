@@ -159,7 +159,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 6026452486700216410}
   m_Lens:
-    FieldOfView: 90
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -1313,7 +1313,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1780841867}
-  moveTime: 1000
+  moveTime: 500
+  maxMoveTime: 2
+  minMoveTime: 0.7
   redZone: {fileID: 2146279021}
   yellowZone: {fileID: 640370888}
   greenZone: {fileID: 485281759}
@@ -1643,7 +1645,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
