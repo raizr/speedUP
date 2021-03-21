@@ -6,11 +6,14 @@ using UnityEngine;
 public class RaceManager : MonoBehaviour {
 	public List<EnemyCar> enemyCars;
 	public List<EnemyPreset> enemyPreset;
+	public TextAsset jsonFile;
+    public EnemyDifficult difficultData;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+		difficultData = EnemyDifficult.CreateFromJson(jsonFile.text);
 
-	}
+    }
 
     // Update is called once per frame
     void Update()

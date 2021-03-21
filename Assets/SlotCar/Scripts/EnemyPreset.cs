@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum eEnemyAiPreset {
-	Ease,
+	Easy,
 	Normal,
 	Hard
 }
 [System.Serializable]
-public class EnemyPreset: MonoBehaviour {
+public class EnemyPreset {
 	public int scrollFreqCounterMin = 2;
 	public int scrollFreqCounterMax = 4;
 	public int redChance = 65;

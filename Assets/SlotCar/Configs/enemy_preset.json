@@ -1,0 +1,50 @@
+{
+    "easy": [
+        {
+            "scrollFreqCounterMin" : 3,
+            "scrollFreqCounterMax" : 5,
+            "redChance": 30,
+            "yellowChance": 30,
+            "greenChance": 40
+        },
+        {
+            "scrollFreqCounterMin" : 3,
+            "scrollFreqCounterMax" : 5,
+            "redChance": 35,
+            "yellowChance": 30,
+            "greenChance": 35
+        }
+    ],
+    "normal": [
+        {
+            "scrollFreqCounterMax" : 2,
+            "scrollFreqCounterMin" : 5,
+            "redChance": 20,
+            "yellowChance": 30,
+            "greenChance": 50
+        },
+        {
+            "scrollFreqCounterMax" : 2,
+            "scrollFreqCounterMin" : 5,
+            "redChance": 25,
+            "yellowChance": 30,
+            "greenChance": 45
+        }
+    ],
+    "hard": [
+        {
+            "scrollFreqCounterMax" : 2,
+            "scrollFreqCounterMin" : 4,
+            "redChance": 15,
+            "yellowChance": 25,
+            "greenChance": 60
+        },
+        {
+            "scrollFreqCounterMax" : 2,
+            "scrollFreqCounterMin" : 4,
+            "redChance": 25,
+            "yellowChance": 25,
+            "greenChance": 55
+        }
+    ]
+}

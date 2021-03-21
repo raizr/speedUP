@@ -7,10 +7,10 @@ using UnityEngine;
 namespace Assets.SlotCar.Scripts {
 	public class EnemyCar : PathFollower {
 		public ScrollMiniGame scrollMiniGame;
-
-		public eEnemyAiPreset aiPreset = eEnemyAiPreset.Ease;
+		public RaceManager raceManager;
+		public eEnemyAiPreset aiPreset = eEnemyAiPreset.Easy;
+		public int enemyCount = 0;
 		public ScrollZone curZone;
-
 		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
 		private int scrollCounter = 0;
@@ -26,13 +26,20 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void chooseAiPreset() {
-			internalAiPreset = GetComponent<EnemyPresetEase>();
+			if (raceManager == null) {
+				return;
+			}
+			internalAiPreset = raceManager.difficultData.easy[0];
+			if (enemyCount > raceManager.difficultData.easy.Length) {
+				enemyCount = 0;
+			}
+			internalAiPreset = raceManager.difficultData.easy[enemyCount];
 			switch (aiPreset) {
 				case eEnemyAiPreset.Normal:
-					internalAiPreset = GetComponent<EnemyPresetNormal>();
+					internalAiPreset = raceManager.difficultData.normal[enemyCount];
 					break;
 				case eEnemyAiPreset.Hard:
-					internalAiPreset = GetComponent<EnemyPresetHard>();
+					internalAiPreset = raceManager.difficultData.hard[enemyCount];
 					break;
 			}
 		}

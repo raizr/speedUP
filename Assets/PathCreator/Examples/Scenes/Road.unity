@@ -972,6 +972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 883356259}
+  - component: {fileID: 883356260}
   m_Layer: 0
   m_Name: Race
   m_TagString: Untagged
@@ -1000,6 +1001,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &883356260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883356258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3d38cb6ac1525438dd0c794db69d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCars: []
+  enemyPreset: []
+  jsonFile: {fileID: 4900000, guid: efe86aa36315e6040aa9d21fab26191e, type: 3}
+  difficultData:
+    easy: []
+    normal: []
+    hard: []
 --- !u!1 &1073702040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2458,11 @@ PrefabInstance:
       objectReference: {fileID: 8807749673999207177}
     - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
+      propertyPath: raceManager
+      value: 
+      objectReference: {fileID: 883356260}
+    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
+        type: 3}
       propertyPath: scrollMiniGame
       value: 
       objectReference: {fileID: 1421787488}
@@ -2506,7 +2531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyRight
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5868581027047784260, guid: 0b4c5e6a29cda594cbb183af1ab3171a, type: 3}
+    - {fileID: 2669601695126042797, guid: 0b4c5e6a29cda594cbb183af1ab3171a, type: 3}
+    - {fileID: 8264376704806666532, guid: 0b4c5e6a29cda594cbb183af1ab3171a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0b4c5e6a29cda594cbb183af1ab3171a, type: 3}
 --- !u!1001 &6729973362882368554
 PrefabInstance:
@@ -2582,6 +2610,16 @@ PrefabInstance:
       objectReference: {fileID: 8807749673999207177}
     - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
         type: 3}
+      propertyPath: enemyCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
+        type: 3}
+      propertyPath: raceManager
+      value: 
+      objectReference: {fileID: 883356260}
+    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
+        type: 3}
       propertyPath: scrollMiniGame
       value: 
       objectReference: {fileID: 1421787488}
@@ -2590,7 +2628,10 @@ PrefabInstance:
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3354257908486418740, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
+    - {fileID: 6553159717355763421, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
+    - {fileID: 958459960828940116, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
 --- !u!4 &7552470919422762073 stripped
 Transform:
