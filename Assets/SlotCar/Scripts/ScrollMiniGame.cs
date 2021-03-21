@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts {
-
 	enum StateScrollGame {
 		Start,
 		Stop
@@ -15,7 +14,9 @@ namespace Assets.SlotCar.Scripts {
 
 	public class ScrollMiniGame : MonoBehaviour {
 		public Button button;
-		public float moveTime = 0.1f;
+		public float moveTime = 1500.0f;
+		public float maxMoveTime = 2.0f;
+		public float minMoveTime = 0.7f;
 		private StateScrollGame state = StateScrollGame.Start;
 		public Canvas redZone;
 		public Canvas yellowZone;
@@ -41,8 +42,6 @@ namespace Assets.SlotCar.Scripts {
 			RectTransform redTransform = redZone.GetComponent<RectTransform>();
 			RectTransform yellowTransform = yellowZone.GetComponent<RectTransform>();
 			RectTransform greenTransform = greenZone.GetComponent<RectTransform>();
-			//yellowTransform.sizeDelta = new Vector2(yellowTransform.rect.width - car.speed, yellowTransform.rect.height);
-			//greenTransform.sizeDelta = new Vector2(yellowTransform.rect.width - car.speed * 2.0f, yellowTransform.rect.height);
 			float yellowX = Random.Range(0, redTransform.sizeDelta.x- yellowTransform.rect.width);
 			float greenX = Random.Range(yellowX + 5.0f, yellowX + yellowTransform.rect.width - greenTransform.rect.width);
 			yellowZone.GetComponent<RectTransform>().anchoredPosition = new Vector3(yellowX, yellowZone.transform.localPosition.y);
@@ -68,8 +67,8 @@ namespace Assets.SlotCar.Scripts {
 			if (state == StateScrollGame.Stop) {
 				return;
 			}
-
-			float coeff = (reverse ? -1.0f : 1.0f) * moveTime * Time.deltaTime;
+			float moveCoeff = minMoveTime + maxMoveTime * car.speed / car.maxSpeed;
+			float coeff = (reverse ? -1.0f : 1.0f) * moveCoeff * moveTime * Time.deltaTime;
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(
 				handle.GetComponent<RectTransform>().anchoredPosition.x + coeff,
 				handle.GetComponent<RectTransform>().anchoredPosition.y);
