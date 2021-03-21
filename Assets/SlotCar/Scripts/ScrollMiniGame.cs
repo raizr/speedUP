@@ -3,6 +3,7 @@ using DG.Tweening;
 using PathCreation.Examples;
 using Unity.InteractiveTutorials;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts {
@@ -10,12 +11,6 @@ namespace Assets.SlotCar.Scripts {
 	enum StateScrollGame {
 		Start,
 		Stop
-	}
-
-	public enum ScrollZone {
-		Red,
-		Yellow,
-		Green
 	}
 
 	public class ScrollMiniGame : MonoBehaviour {
@@ -28,10 +23,8 @@ namespace Assets.SlotCar.Scripts {
 		public RectTransform handle;
 		public PathFollower car;
 		private bool reverse = false;
-		public float RedZoneSpeed = 10.0f;
-		public float YellowZoneSpeed = 15.0f;
-		public float GreenZoneSpeed = 25.0f;
 		public float handlePos;
+		public UnityEvent zoneCompleteEvent;
 
 		void Start() {
 			button.onClick.AddListener(SpeedUpClick);
@@ -39,7 +32,7 @@ namespace Assets.SlotCar.Scripts {
 		}
 		private void SpeedUpClick() {
 			state = StateScrollGame.Stop;
-			SpeedUp(GetCurrentZone());
+			car.SpeedUp(GetCurrentZone());
 			GenerateZonePos();
 			state = StateScrollGame.Start;
 		}
@@ -70,22 +63,6 @@ namespace Assets.SlotCar.Scripts {
 			return result;
 		}
 
-		void SpeedUp(ScrollZone zone) {
-			float speed = 0.0f;
-			switch (zone) {
-				case ScrollZone.Yellow:
-					speed = YellowZoneSpeed; 
-					break;
-				case ScrollZone.Green:
-					speed = GreenZoneSpeed;
-					break;
-				default:
-					speed = RedZoneSpeed;
-					break;
-			}
-			car.SpeedUp(speed);
-		}
-
 		void Update() {
 			handlePos = handle.GetComponent<RectTransform>().position.x;
 			if (state == StateScrollGame.Stop) {
@@ -98,9 +75,11 @@ namespace Assets.SlotCar.Scripts {
 				handle.GetComponent<RectTransform>().anchoredPosition.y);
 			var xPos = handle.GetComponent<RectTransform>().anchoredPosition.x;
 			if (xPos >= redZone.GetComponent<RectTransform>().rect.width && !reverse) {
+				zoneCompleteEvent.Invoke();
 				reverse = true;
 			}
 			else if (xPos <= 0.0f && reverse) {
+				zoneCompleteEvent.Invoke();
 				reverse = false;
 			}
 		}

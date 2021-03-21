@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.SlotCar.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -9,21 +10,35 @@ namespace PathCreation.Examples
 		Center,
 		Right
 	}
+	
+	public enum ScrollZone {
+		Red,
+		Yellow,
+		Green
+	}
 
-
-    // Moves along a path at constant speed.
-    // Depending on the end of path instruction, will either loop, reverse, or stop at the end of the path.
-    public class PathFollower : MonoBehaviour
+// Moves along a path at constant speed.
+	// Depending on the end of path instruction, will either loop, reverse, or stop at the end of the path.
+	public class PathFollower : MonoBehaviour
     {
         public RoadMeshCreator roadMeshCreator;
         public EndOfPathInstruction endOfPathInstruction;
 		public WheelDrive wheelsDrive;
-        public float speed = 5;
-		public float maxSpeed = 270;
-        float distanceTravelled;
+		
+		public int speed = 5;
+		public int maxSpeed = 270;
+		[Header("% max speed")]
+		public float redZoneSpeed = 10.0f;
+		[Header("% max speed")]
+		public float greenZoneSpeed = 25.0f;
+		[Header("% max speed")]
+		public float yellowZoneSpeed = 15.0f;
+	
+		float distanceTravelled;
 		public Position linePosition = Position.Center;
 		public Transform linePosTransform;
 		public Vector3 position;
+
         public void Start() {
             if (roadMeshCreator != null)
             {
@@ -31,7 +46,7 @@ namespace PathCreation.Examples
 				roadMeshCreator.pathCreator.pathUpdated += OnPathChanged;
 				SetPosition();
 			}
-        }
+		}
 
         void Update()
         {
@@ -44,8 +59,8 @@ namespace PathCreation.Examples
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
 				Debug.DrawLine(transform.position, position, Color.green);
 				if (wheelsDrive != null) {
-					wheelsDrive.currentTorque = speed / maxSpeed;
-					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude;
+					wheelsDrive.currentTorque = (float)speed / maxSpeed;
+					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 2.0f;
 				}
 			}
         }
@@ -74,17 +89,32 @@ namespace PathCreation.Examples
 			}
 
 		}
+		public void SpeedUp(ScrollZone zone) {
+			float speed = 0.0f;
+			switch (zone) {
+				case ScrollZone.Yellow:
+					speed = maxSpeed / yellowZoneSpeed;
+					break;
+				case ScrollZone.Green:
+					speed = maxSpeed / greenZoneSpeed;
+					break;
+				default:
+					speed = maxSpeed / redZoneSpeed;
+					break;
+			}
+			SpeedUp((int)speed);
+		}
 
-		public void SpeedUp(float value) {
+		public void SpeedUp(int value) {
 			if (speed + value < 0) {
 				speed = 0;
 			}
-			else if(speed + value < maxSpeed) {
+			else if (speed + value < maxSpeed) {
 				speed += value;
 			}
 			else {
 				speed = maxSpeed;
 			}
 		}
-    }
+}
 }

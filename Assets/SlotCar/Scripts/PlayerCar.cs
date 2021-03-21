@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
 	public class PlayerCar : PathFollower {
-		public float speedDownCoeff = 1.0f;
+		public int speedDownCoeff = 1;
 		[Header("Seconds")]
 		public float timeSpeedDown = 1.0f;
 		// Start is called before the first frame update
