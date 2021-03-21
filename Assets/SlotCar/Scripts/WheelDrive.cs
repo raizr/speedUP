@@ -52,21 +52,17 @@ public class WheelDrive : MonoBehaviour
 		m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepsBelow, stepsAbove);
 
 		float angle = maxAngle * steerAngle;
-		float torque = maxTorque /** currentTorque*/;
+		float torque = maxTorque * currentTorque;
 
-		float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
+		float handBrake = currentTorque == 0 ? brakeTorque : 0;
 
 		foreach (WheelCollider wheel in m_Wheels)
 		{
 			// A simple car where front wheels steer while rear ones drive.
 			if (wheel.transform.localPosition.z > 0)
 				wheel.steerAngle = angle;
-
-			if (wheel.transform.localPosition.z < 0)
-			{
-				wheel.brakeTorque = handBrake;
-			}
-
+			
+			wheel.brakeTorque = handBrake;
 			if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
 			{
 				wheel.motorTorque = torque;
@@ -86,8 +82,8 @@ public class WheelDrive : MonoBehaviour
 			Transform shapeTransform = wheel.transform.GetChild(0);
 
 			if (wheel.name == "a0l" || wheel.name == "a1l" || wheel.name == "a2l") {
+				shapeTransform.rotation = q * Quaternion.Euler(0, 180, 0);
 				shapeTransform.position = p;
-				shapeTransform.rotation = q;
 			} else {
 				shapeTransform.position = p;
 				shapeTransform.rotation = q;
