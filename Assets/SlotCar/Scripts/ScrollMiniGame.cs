@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices.WindowsRuntime;
+using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using PathCreation.Examples;
 using Spine;
@@ -16,6 +17,7 @@ namespace Assets.SlotCar.Scripts {
 
 	public class ScrollMiniGame : MonoBehaviour {
 		public Button button;
+		public CarSpeed carSpeedText;
 		public float moveTime = 1500.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
@@ -28,15 +30,8 @@ namespace Assets.SlotCar.Scripts {
 		private bool reverse = false;
 		public float handlePos;
 		public UnityEvent zoneCompleteEvent;
-		public SkeletonAnimation greenFX;
-
-		public void OnSpineAnimationEnd(TrackEntry trackEntry) {
-			GenerateZonePos();
-		}
-
+		
 		void Awake() {
-			greenFX.gameObject.SetActive(false);
-			greenFX.AnimationState.Complete += OnSpineAnimationEnd;
 			button.onClick.AddListener(SpeedUpClick);
 		}
 
@@ -84,10 +79,11 @@ namespace Assets.SlotCar.Scripts {
 					GenerateZonePos();
 					break;
 				case ScrollZone.Green:
-					greenFX.gameObject.SetActive(true);
-					greenFX.AnimationState.SetAnimation(0, "green", false);
+					carSpeedText.bounceAnimationGreen();
+					GenerateZonePos();
 					break;
 				default:
+					carSpeedText.bounceAnimationRed();
 					GenerateZonePos();
 					break;
 			}
