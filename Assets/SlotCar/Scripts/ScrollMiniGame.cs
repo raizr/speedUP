@@ -1,10 +1,5 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-using Assets.SlotCar.Scripts.UI;
-using DG.Tweening;
+﻿using Assets.SlotCar.Scripts.UI;
 using PathCreation.Examples;
-using Spine;
-using Spine.Unity;
-using Unity.InteractiveTutorials;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
