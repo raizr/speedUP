@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 namespace PathCreation.Examples {
-    // Example of creating a path at runtime from a set of points.
+	// Example of creating a path at runtime from a set of points.
 
-    [RequireComponent(typeof(PathCreator))]
+	[RequireComponent(typeof(PathCreator))]
     public class GeneratePathExample : MonoBehaviour {
 
         public bool closedLoop = true;

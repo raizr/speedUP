@@ -205,9 +205,10 @@ namespace PathCreation {
             return Vector3.Lerp (GetPoint (data.previousIndex), GetPoint (data.nextIndex), data.percentBetweenIndices);
         }
 
-		public int GetPointIndexAtTime(float t, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
-			var data = CalculatePercentOnPathData(t, endOfPathInstruction);
-			return data.previousIndex;
+		public int GetPointIndexAtTime(float dst, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
+            float t = dst / length;
+            var data = CalculatePercentOnPathData(t, endOfPathInstruction);
+			return data.nextIndex;
 		}
 
 		public bool IsLastPointOnPath(int indexPoint) {

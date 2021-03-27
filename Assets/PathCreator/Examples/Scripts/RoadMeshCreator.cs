@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using PathCreation.Utility;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PathCreation.Examples {
     public class RoadMeshCreator : PathSceneTool {

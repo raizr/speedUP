@@ -68,10 +68,10 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void CheckCurrentLap() {
-			currentLap = roadMeshCreator.pathCreator.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
-			/*if (roadMeshCreator.pathCreator.path.IsLastPointOnPath(currentIndex)) {
+			int currentIndex = roadMeshCreator.pathCreator.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
+			if (roadMeshCreator.pathCreator.path.IsLastPointOnPath(currentIndex)) {
 				currentLap++;
-			}*/
+			}
 		}
 
         // If the path changes during the game, update the distance travelled so that the follower's position on the new path
@@ -100,15 +100,16 @@ namespace Assets.SlotCar.Scripts {
 		}
 		public void SpeedUp(ScrollZone zone) {
 			float speed = 0.0f;
+			float speedCoeff = maxSpeed / 100.0f;
 			switch (zone) {
 				case ScrollZone.Yellow:
-					speed = maxSpeed / yellowZoneSpeed;
+					speed = speedCoeff * yellowZoneSpeed;
 					break;
 				case ScrollZone.Green:
-					speed = maxSpeed / greenZoneSpeed;
+					speed = speedCoeff * greenZoneSpeed;
 					break;
 				default:
-					speed = maxSpeed / redZoneSpeed;
+					speed = speedCoeff * redZoneSpeed;
 					break;
 			}
 			SpeedUp((int)speed);
