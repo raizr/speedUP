@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,14 +33,14 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void CheckPositions() {
-			i = 0;
-			foreach (var car in cars) {
-				carDistances[i] = (int)car.distanceTravelled;
-				i++;
-			}
+			cars = cars.OrderBy( o => o.distanceTravelled).ToList();
 			Array.Sort(carDistances);
 			playerDistance = (int)playerCar.distanceTravelled;
-			playerPosition = cars.Count - Array.IndexOf(carDistances, playerDistance);
+			playerPosition = cars.Count - cars.IndexOf(playerCar);
+			foreach (var car in cars) {
+				car.SetFirstPos(false);
+			}
+			cars.Last().SetFirstPos(true);
 		}
 	}
 }

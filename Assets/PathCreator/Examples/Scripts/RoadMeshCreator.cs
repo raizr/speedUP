@@ -17,7 +17,6 @@ namespace PathCreation.Examples {
 
         [SerializeField]
         GameObject meshHolder;
-
         MeshFilter meshFilter;
         MeshRenderer meshRenderer;
         Mesh mesh;
@@ -145,6 +144,5 @@ namespace PathCreation.Examples {
                 meshRenderer.sharedMaterials[0].mainTextureScale = new Vector3 (1, textureTiling);
             }
         }
-
     }
 }

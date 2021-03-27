@@ -27,7 +27,8 @@ namespace Assets.SlotCar.Scripts {
 		public WheelDrive wheelsDrive;
 		public Position linePosition = Position.Center;
 		public Transform linePosTransform;
-		
+		public GameObject crown;
+
 		public int speed = 5;
 		public int maxSpeed = 270;
 		[Header("% max speed")]
@@ -123,6 +124,10 @@ namespace Assets.SlotCar.Scripts {
 			else {
 				speed = maxSpeed;
 			}
+		}
+
+		public void SetFirstPos(bool status) {
+			crown.SetActive(status);
 		}
 }
 }
