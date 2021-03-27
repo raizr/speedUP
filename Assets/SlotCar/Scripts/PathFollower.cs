@@ -1,10 +1,11 @@
 ﻿using System;
 using Assets.SlotCar.Scripts;
+using PathCreation;
+using PathCreation.Examples;
 using TMPro;
 using UnityEngine;
 
-namespace PathCreation.Examples
-{
+namespace Assets.SlotCar.Scripts {
 	public enum Position {
 		Left,
 		Center,
@@ -35,9 +36,9 @@ namespace PathCreation.Examples
 		public float greenZoneSpeed = 25.0f;
 		[Header("% max speed")]
 		public float yellowZoneSpeed = 15.0f;
-	
-		float distanceTravelled;
-
+		
+		public float distanceTravelled;
+		public int currentLap = 1;
         public void Start() {
             if (roadMeshCreator != null)
             {
@@ -61,7 +62,16 @@ namespace PathCreation.Examples
 					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 3.0f;
 				}
 			}
-        }
+
+			CheckCurrentLap();
+		}
+
+		void CheckCurrentLap() {
+			currentLap = roadMeshCreator.pathCreator.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
+			/*if (roadMeshCreator.pathCreator.path.IsLastPointOnPath(currentIndex)) {
+				currentLap++;
+			}*/
+		}
 
         // If the path changes during the game, update the distance travelled so that the follower's position on the new path
         // is as close as possible to its position on the old path

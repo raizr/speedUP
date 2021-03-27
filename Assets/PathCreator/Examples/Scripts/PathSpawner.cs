@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using PathCreation;
+using Assets.SlotCar.Scripts;
 using UnityEngine;
 
 namespace PathCreation.Examples {

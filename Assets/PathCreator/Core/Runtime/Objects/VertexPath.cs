@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PathCreation.Utility;
 using UnityEngine;
 
@@ -203,6 +204,15 @@ namespace PathCreation {
             var data = CalculatePercentOnPathData (t, endOfPathInstruction);
             return Vector3.Lerp (GetPoint (data.previousIndex), GetPoint (data.nextIndex), data.percentBetweenIndices);
         }
+
+		public int GetPointIndexAtTime(float t, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
+			var data = CalculatePercentOnPathData(t, endOfPathInstruction);
+			return data.previousIndex;
+		}
+
+		public bool IsLastPointOnPath(int indexPoint) {
+			return localPoints.Length - 1 == indexPoint;
+		}
 
         /// Gets forward direction on path based on 'time' (where 0 is start, and 1 is end of path).
         public Vector3 GetDirection (float t, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
