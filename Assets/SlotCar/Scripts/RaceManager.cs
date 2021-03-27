@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts {
 	public class RaceManager : MonoBehaviour {
@@ -11,6 +12,7 @@ namespace Assets.SlotCar.Scripts {
 		public PlayerCar playerCar;
 		public TextAsset jsonFile;
 		public EnemyDifficult difficultData;
+		public Slider raceProgressSlider;
 
 		public int[] carDistances;
 		private int playerDistance;
@@ -22,6 +24,8 @@ namespace Assets.SlotCar.Scripts {
 
 		// Start is called before the first frame update
 		void Awake() {
+			raceProgressSlider.maxValue = AllLaps;
+			raceProgressSlider.value = 0.0f;
 			carDistances = new int[cars.Count];
 			difficultData = EnemyDifficult.CreateFromJson(jsonFile.text);
 		}
@@ -30,6 +34,7 @@ namespace Assets.SlotCar.Scripts {
 		void FixedUpdate() {
 
 			CheckPositions();
+			SetCurrentRaceProgreess();
 		}
 
 		void CheckPositions() {
@@ -41,6 +46,10 @@ namespace Assets.SlotCar.Scripts {
 				car.SetFirstPos(false);
 			}
 			cars.Last().SetFirstPos(true);
+		}
+
+		void SetCurrentRaceProgreess() {
+			raceProgressSlider.value = playerCar.currentTravelled;
 		}
 	}
 }

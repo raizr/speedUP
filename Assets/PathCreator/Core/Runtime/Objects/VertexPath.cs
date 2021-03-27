@@ -211,7 +211,12 @@ namespace PathCreation {
 			return data.nextIndex;
 		}
 
-		public bool IsLastPointOnPath(int indexPoint) {
+		public float GetTravelledDistance(float dst, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
+			float t = dst / length;
+			return t;
+		}
+
+public bool IsLastPointOnPath(int indexPoint) {
 			return localPoints.Length - 1 == indexPoint;
 		}
 

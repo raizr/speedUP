@@ -40,6 +40,7 @@ namespace Assets.SlotCar.Scripts {
 		
 		public float distanceTravelled;
 		public int currentLap = 1;
+		public float currentTravelled;
         public void Start() {
             if (roadMeshCreator != null)
             {
@@ -69,6 +70,7 @@ namespace Assets.SlotCar.Scripts {
 
 		void CheckCurrentLap() {
 			int currentIndex = roadMeshCreator.pathCreator.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
+			currentTravelled = roadMeshCreator.pathCreator.path.GetTravelledDistance(distanceTravelled, EndOfPathInstruction.Stop);
 			if (roadMeshCreator.pathCreator.path.IsLastPointOnPath(currentIndex)) {
 				currentLap++;
 			}
