@@ -93,7 +93,7 @@ namespace Assets.SlotCar.Scripts {
             }
 
 			if (linePosTransform != null) {
-				linePosTransform.localPosition = new Vector3(coeff, 0.0f , 0.0f);
+				linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
 			}
 
 		}
