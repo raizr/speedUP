@@ -14,18 +14,26 @@ namespace Assets.SlotCar.Scripts {
 	public class ScrollMiniGame : MonoBehaviour {
 		public Button button;
 		public CarSpeed carSpeedText;
-		public float moveTime = 1500.0f;
-		public float maxMoveTime = 2.0f;
-		public float minMoveTime = 0.7f;
-		public float greenZoneBlockTime = 2.0f;
-		private StateScrollGame state = StateScrollGame.Stop;
+		public PlayerCar car;
 		public Canvas redZone;
 		public Canvas yellowZone;
 		public Canvas greenZone;
 		public RectTransform handle;
-		public PlayerCar car;
+		public PopupManager pointsPopup;
+		public float moveTime = 1500.0f;
+		public float maxMoveTime = 2.0f;
+		public float minMoveTime = 0.7f;
+		public float greenZoneBlockTime = 2.0f;
+		private int allPoints = 0;
+		public int pointsPerTap = 100;
+		public int pointMulitpliers = 1;
+		public int maxPointMulitpliers = 5;
+
+		private StateScrollGame state = StateScrollGame.Stop;
 		private bool reverse = false;
+		[HideInInspector]
 		public float handlePos;
+		[HideInInspector]
 		public UnityEvent zoneCompleteEvent;
 		
 		void Awake() {
@@ -45,7 +53,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 			state = StateScrollGame.Stop;
 			ScrollZone zone = GetCurrentZone();
-			setFxByZone(zone);
+			SetFxByZone(zone);
 		}
 
 		void GenerateZonePos() {
@@ -72,22 +80,29 @@ namespace Assets.SlotCar.Scripts {
 			return result;
 		}
 
-		void setFxByZone(ScrollZone zone) {
+		void SetFxByZone(ScrollZone zone) {
 			switch (zone) {
 				case ScrollZone.Yellow:
 					GenerateZonePos();
 					car.SpeedUp(zone);
 					state = StateScrollGame.Start;
+					pointMulitpliers = 1;
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
 					StartCoroutine(SetBlockScrollByTime());
 					car.SpeedUpByGreenZone();
+					pointsPopup.ShowPopup(pointsPerTap, pointMulitpliers);
+					if (pointMulitpliers < maxPointMulitpliers) {
+						pointMulitpliers++;
+					}
+					allPoints += pointsPerTap * pointMulitpliers;
 					break;
 				default:
 					carSpeedText.bounceAnimationRed();
 					GenerateZonePos();
 					car.SpeedUp(zone);
+					pointMulitpliers = 1;
 					state = StateScrollGame.Start;
 					break;
 			}
