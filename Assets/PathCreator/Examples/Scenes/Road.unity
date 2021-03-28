@@ -1041,7 +1041,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 160.7, y: 0.45}
-  m_SizeDelta: {x: 41, y: 88}
+  m_SizeDelta: {x: 100, y: 88}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &485281756
 MonoBehaviour:
@@ -1463,9 +1463,10 @@ MonoBehaviour:
     normal: []
     hard: []
   raceProgressSlider: {fileID: 304349911}
-  carDistances: 
+  scrollGame: {fileID: 1421787488}
   playerPosition: 0
-  AllLaps: 3
+  allLaps: 3
+  accelerationOnStartTime: 2
 --- !u!1 &953428002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,6 +1939,7 @@ MonoBehaviour:
   moveTime: 350
   maxMoveTime: 2
   minMoveTime: 0.7
+  greenZoneBlockTime: 2
   redZone: {fileID: 2146279021}
   yellowZone: {fileID: 640370888}
   greenZone: {fileID: 485281759}

@@ -7,6 +7,8 @@ namespace Assets.SlotCar.Scripts {
 		public int speedDownCoeff = 1;
 		[Header("Seconds")]
 		public float timeSpeedDown = 1.0f;
+
+		public float greenZoneSpeedUpTime = 1.0f;
 		// Start is called before the first frame update
 		new void Start()
 		{
@@ -18,9 +20,14 @@ namespace Assets.SlotCar.Scripts {
 			yield return new WaitForSeconds(timeSpeedDown);
 			while (true) // Or whatever condition you want
 			{
-				SpeedUp(-speedDownCoeff);
+				SpeedUp(-speedDownCoeff, speedUpTime);
 				yield return new WaitForSeconds(timeSpeedDown);
 			}
+		}
+
+		public void SpeedUpByGreenZone() {
+			float zoneSpeed = ChooseSpeedByZone(ScrollZone.Green);
+			SpeedUp((int)zoneSpeed, greenZoneSpeedUpTime);
 		}
 	}
 }

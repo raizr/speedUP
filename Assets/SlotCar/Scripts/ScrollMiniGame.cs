@@ -1,11 +1,12 @@
-﻿using Assets.SlotCar.Scripts.UI;
+﻿using System.Collections;
+using Assets.SlotCar.Scripts.UI;
 using PathCreation.Examples;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts {
-	enum StateScrollGame {
+	public enum StateScrollGame {
 		Start,
 		Stop
 	}
@@ -16,18 +17,23 @@ namespace Assets.SlotCar.Scripts {
 		public float moveTime = 1500.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
-		private StateScrollGame state = StateScrollGame.Start;
+		public float greenZoneBlockTime = 2.0f;
+		private StateScrollGame state = StateScrollGame.Stop;
 		public Canvas redZone;
 		public Canvas yellowZone;
 		public Canvas greenZone;
 		public RectTransform handle;
-		public PathFollower car;
+		public PlayerCar car;
 		private bool reverse = false;
 		public float handlePos;
 		public UnityEvent zoneCompleteEvent;
 		
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
+		}
+
+		public void SetCurrentState(StateScrollGame currentState) {
+			state = currentState;
 		}
 
 		void Start() {
@@ -40,11 +46,9 @@ namespace Assets.SlotCar.Scripts {
 			state = StateScrollGame.Stop;
 			ScrollZone zone = GetCurrentZone();
 			setFxByZone(zone);
-			car.SpeedUp(zone);
 		}
 
 		void GenerateZonePos() {
-			state = StateScrollGame.Start;
 			RectTransform redTransform = redZone.GetComponent<RectTransform>();
 			RectTransform yellowTransform = yellowZone.GetComponent<RectTransform>();
 			RectTransform greenTransform = greenZone.GetComponent<RectTransform>();
@@ -72,23 +76,34 @@ namespace Assets.SlotCar.Scripts {
 			switch (zone) {
 				case ScrollZone.Yellow:
 					GenerateZonePos();
+					car.SpeedUp(zone);
+					state = StateScrollGame.Start;
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
-					GenerateZonePos();
+					StartCoroutine(SetBlockScrollByTime());
+					car.SpeedUpByGreenZone();
 					break;
 				default:
 					carSpeedText.bounceAnimationRed();
 					GenerateZonePos();
+					car.SpeedUp(zone);
+					state = StateScrollGame.Start;
 					break;
 			}
 		}
 
+		IEnumerator SetBlockScrollByTime() {
+			yield return new WaitForSeconds(greenZoneBlockTime);
+			GenerateZonePos();
+			state = StateScrollGame.Start;
+		}
+
 		void Update() {
-			handlePos = handle.GetComponent<RectTransform>().position.x;
 			if (state == StateScrollGame.Stop) {
 				return;
 			}
+			handlePos = handle.GetComponent<RectTransform>().position.x;
 			float moveCoeff = minMoveTime + maxMoveTime * car.speed / car.maxSpeed;
 			float coeff = (reverse ? -1.0f : 1.0f) * moveCoeff * moveTime * Time.deltaTime;
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(

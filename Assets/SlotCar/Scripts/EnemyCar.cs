@@ -18,6 +18,7 @@ namespace Assets.SlotCar.Scripts {
 		// Start is called before the first frame update
 		void Start() {
 			base.Start();
+
 			chooseAiPreset();
 			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };

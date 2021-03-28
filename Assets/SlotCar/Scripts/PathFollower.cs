@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.SlotCar.Scripts;
+using DG.Tweening;
 using PathCreation;
 using PathCreation.Examples;
 using TMPro;
@@ -29,7 +30,7 @@ namespace Assets.SlotCar.Scripts {
 		public Transform linePosTransform;
 		public GameObject crown;
 
-		public int speed = 5;
+		public int speed = 0;
 		public int maxSpeed = 270;
 		[Header("% max speed")]
 		public float redZoneSpeed = 10.0f;
@@ -41,22 +42,35 @@ namespace Assets.SlotCar.Scripts {
 		public float distanceTravelled;
 		public int currentLap = 1;
 		public float currentTravelled;
-        public void Start() {
-            if (roadMeshCreator != null)
+
+		public float accelerationOnStart = 20.0f;
+		public float accelerationOnStartTime = 2.0f;
+		public float speedUpTime = 0.1f;
+		private float maxSpeedCoeff;
+
+		public void Start() {
+			maxSpeedCoeff = maxSpeed / 100.0f;
+			if (roadMeshCreator != null)
             {
                 // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
 				roadMeshCreator.pathCreator.pathUpdated += OnPathChanged;
 				SetPosition();
 			}
+
+			DOTween.To(() => (float)speed, x => speed = (int)x,
+					accelerationOnStart * maxSpeedCoeff, accelerationOnStartTime);
 		}
 
-        void Update()
-        {
-            if (roadMeshCreator != null)
-            {
-                distanceTravelled += speed / 10.0f * Time.deltaTime;
-                transform.position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-                transform.rotation = roadMeshCreator.pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+		void Update() {
+			SetCurrentPositionOnRoad();
+			CheckCurrentLap();
+		}
+
+		void SetCurrentPositionOnRoad() {
+			if (roadMeshCreator != null) {
+				distanceTravelled += speed / 10.0f * Time.deltaTime;
+				transform.position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+				transform.rotation = roadMeshCreator.pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
 				Vector3 position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
 				if (wheelsDrive != null) {
@@ -64,8 +78,6 @@ namespace Assets.SlotCar.Scripts {
 					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 3.0f;
 				}
 			}
-
-			CheckCurrentLap();
 		}
 
 		void CheckCurrentLap() {
@@ -100,29 +112,39 @@ namespace Assets.SlotCar.Scripts {
 			}
 
 		}
-		public void SpeedUp(ScrollZone zone) {
+
+		protected float ChooseSpeedByZone(ScrollZone zone) {
 			float speed = 0.0f;
-			float speedCoeff = maxSpeed / 100.0f;
 			switch (zone) {
 				case ScrollZone.Yellow:
-					speed = speedCoeff * yellowZoneSpeed;
+					speed = maxSpeedCoeff * yellowZoneSpeed;
 					break;
 				case ScrollZone.Green:
-					speed = speedCoeff * greenZoneSpeed;
+					speed = maxSpeedCoeff * greenZoneSpeed;
 					break;
 				default:
-					speed = speedCoeff * redZoneSpeed;
+					speed = maxSpeedCoeff * redZoneSpeed;
 					break;
 			}
-			SpeedUp((int)speed);
+			return speed;
+		}
+		public void SpeedUp(ScrollZone zone) {
+			float speed = ChooseSpeedByZone(zone);
+			SpeedUp((int)speed, speedUpTime);
 		}
 
-		public void SpeedUp(int value) {
+		public void SpeedUp(int value, float duration) {
 			if (speed + value < 0) {
 				speed = 0;
 			}
 			else if (speed + value < maxSpeed) {
-				speed += value;
+				if (value > 0) {
+					DOTween.To(() => (float)speed, x => speed = (int)x,
+						speed + value, duration);
+				}
+				else {
+					speed += value;
+				}
 			}
 			else {
 				speed = maxSpeed;
