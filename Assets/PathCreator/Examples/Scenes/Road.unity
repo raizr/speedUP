@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1780841867}
   carSpeedText: {fileID: 104428521}
-  moveTime: 500
+  moveTime: 350
   maxMoveTime: 2
   minMoveTime: 0.7
   redZone: {fileID: 2146279021}
@@ -3609,7 +3609,7 @@ PrefabInstance:
     - target: {fileID: 7517164200178057576, guid: 87b3b947d64d84d45bc07182d065096b,
         type: 3}
       propertyPath: greenZoneSpeed
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7517164200178057576, guid: 87b3b947d64d84d45bc07182d065096b,
         type: 3}
@@ -3619,7 +3619,7 @@ PrefabInstance:
     - target: {fileID: 7517164200178057576, guid: 87b3b947d64d84d45bc07182d065096b,
         type: 3}
       propertyPath: yellowZoneSpeed
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87b3b947d64d84d45bc07182d065096b, type: 3}
@@ -3659,6 +3659,16 @@ PrefabInstance:
       objectReference: {fileID: 883356260}
     - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
+      propertyPath: redZoneSpeed
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
+        type: 3}
+      propertyPath: greenZoneSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
+        type: 3}
       propertyPath: scrollMiniGame
       value: 
       objectReference: {fileID: 1421787488}
@@ -3667,6 +3677,11 @@ PrefabInstance:
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
+    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
+        type: 3}
+      propertyPath: yellowZoneSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5356956743249135107, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
       propertyPath: m_RootOrder
@@ -3826,6 +3841,16 @@ PrefabInstance:
       objectReference: {fileID: 883356260}
     - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
         type: 3}
+      propertyPath: redZoneSpeed
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
+        type: 3}
+      propertyPath: greenZoneSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
+        type: 3}
       propertyPath: scrollMiniGame
       value: 
       objectReference: {fileID: 1421787488}
@@ -3834,6 +3859,11 @@ PrefabInstance:
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
+    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
+        type: 3}
+      propertyPath: yellowZoneSpeed
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3354257908486418740, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
     - {fileID: 6553159717355763421, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
