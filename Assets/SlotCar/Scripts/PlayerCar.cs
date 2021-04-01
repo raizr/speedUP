@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using PathCreation.Examples;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {

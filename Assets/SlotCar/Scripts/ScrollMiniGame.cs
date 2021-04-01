@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Assets.SlotCar.Scripts.UI;
-using PathCreation.Examples;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

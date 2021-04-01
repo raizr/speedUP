@@ -1,9 +1,6 @@
-﻿using System;
-using Assets.SlotCar.Scripts;
-using DG.Tweening;
+﻿using DG.Tweening;
 using PathCreation;
 using PathCreation.Examples;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {

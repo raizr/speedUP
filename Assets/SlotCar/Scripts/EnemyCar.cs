@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using PathCreation.Examples;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
