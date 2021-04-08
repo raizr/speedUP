@@ -44,6 +44,7 @@ namespace Assets.SlotCar.Scripts {
 		public float accelerationOnStartTime = 2.0f;
 		public float speedUpTime = 0.1f;
 		private float maxSpeedCoeff;
+		public RaceState state = RaceState.PAUSE;
 
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
@@ -52,20 +53,28 @@ namespace Assets.SlotCar.Scripts {
                 // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
 				roadMeshCreator.pathCreator.pathUpdated += OnPathChanged;
 				SetPosition();
+				SetCurrentPositionOnRoad();
 			}
+		}
 
-			DOTween.To(() => (float)speed, x => speed = (int)x,
+		public void SetStateRace(RaceState settedState) {
+			state = settedState;
+			if (state == RaceState.RACE) {
+				DOTween.To(() => (float)speed, x => speed = (int)x,
 					accelerationOnStart * maxSpeedCoeff, accelerationOnStartTime);
+			}
 		}
 
 		void Update() {
-			SetCurrentPositionOnRoad();
-			CheckCurrentLap();
+				SetCurrentPositionOnRoad();
+				CheckCurrentLap();
 		}
 
 		void SetCurrentPositionOnRoad() {
 			if (roadMeshCreator != null) {
-				distanceTravelled += speed / 10.0f * Time.deltaTime;
+				if (state == RaceState.RACE) {
+					distanceTravelled += speed / 10.0f * Time.deltaTime;
+				}
 				transform.position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
 				transform.rotation = roadMeshCreator.pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
 				Vector3 position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);

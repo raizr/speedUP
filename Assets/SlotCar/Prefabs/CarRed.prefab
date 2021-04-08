@@ -685,15 +685,22 @@ MonoBehaviour:
   wheelsDrive: {fileID: 2812852644250164536}
   linePosition: 1
   linePosTransform: {fileID: 3541174311524130490}
-  speed: 5
+  crown: {fileID: 3453947003996280693}
+  speed: 0
   maxSpeed: 270
-  redZoneSpeed: 10
-  greenZoneSpeed: 25
-  yellowZoneSpeed: 15
+  redZoneSpeed: -10
+  greenZoneSpeed: 20
+  yellowZoneSpeed: 0
   distanceTravelled: 0
   currentLap: 1
+  currentTravelled: 0
+  accelerationOnStart: 20
+  accelerationOnStartTime: 2
+  speedUpTime: 0.1
+  state: 0
   speedDownCoeff: 1
   timeSpeedDown: 1
+  greenZoneSpeedUpTime: 1
 --- !u!1 &5199047642422462265
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +996,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d163b4279288bf4408279ec03a5026ba, type: 3}
+--- !u!1 &3453947003996280693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6361475706141428564, guid: d163b4279288bf4408279ec03a5026ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621687333167520801}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2640571923440422351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5981713651561009646, guid: d163b4279288bf4408279ec03a5026ba,

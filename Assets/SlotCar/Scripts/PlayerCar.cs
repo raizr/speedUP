@@ -16,6 +16,9 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		IEnumerator SpeedTick() {
+			if (state != RaceState.RACE) {
+				yield return null;
+			}
 			yield return new WaitForSeconds(timeSpeedDown);
 			while (true) // Or whatever condition you want
 			{
