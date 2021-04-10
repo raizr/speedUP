@@ -347,7 +347,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87764325}
   m_LocalRotation: {x: 0.20810719, y: -0.78881013, z: 0.3678282, w: 0.44628736}
-  m_LocalPosition: {x: 12.13199, y: 11.40094, z: -18.220411}
+  m_LocalPosition: {x: 6.7875175, y: 3.9703095, z: -21.431694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 790448859}
@@ -1775,6 +1775,31 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &785652278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4741021785903184446, guid: 87b3b947d64d84d45bc07182d065096b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1326658268506655329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &785652279
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785652278}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b306438e04c5a6e45a17bf9b8a1dd129, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &790448858
 GameObject:
   m_ObjectHideFlags: 3
@@ -1829,8 +1854,8 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 17.7
-  m_DeadZoneWidth: 0
+  m_CameraDistance: 8
+  m_DeadZoneWidth: 0.05093667
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 1
@@ -1862,12 +1887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &836358293 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8329653988889654276, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-    type: 3}
-  m_PrefabInstance: {fileID: 6729973362882368554}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &883356258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,12 +2208,6 @@ MonoBehaviour:
   undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
   textureTiling: 1
   meshHolder: {fileID: 1646890433}
---- !u!1 &1201741332 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8862320662041704004, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
-    type: 3}
-  m_PrefabInstance: {fileID: 6026813537378355612}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1204159656
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,13 +2643,10 @@ MonoBehaviour:
   greenZone: {fileID: 485281759}
   handle: {fileID: 1763337086}
   pointsPopup: {fileID: 555906642}
-  moveTime: 350
+  moveTime: 2
   maxMoveTime: 2
   minMoveTime: 0.7
-  greenZoneBlockTime: 2
-  pointsPerTap: 100
   pointMulitpliers: 1
-  maxPointMulitpliers: 5
   handlePos: 0
   zoneCompleteEvent:
     m_PersistentCalls:
@@ -3421,7 +3431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777349640}
   m_LocalRotation: {x: 0.20810719, y: -0.78881013, z: 0.3678282, w: 0.44628736}
-  m_LocalPosition: {x: 12.13199, y: 11.40094, z: -18.220411}
+  m_LocalPosition: {x: 6.7875175, y: 3.9703095, z: -21.431694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4843,6 +4853,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7517164200178057576, guid: 87b3b947d64d84d45bc07182d065096b,
         type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 87764326}
+    - target: {fileID: 7517164200178057576, guid: 87b3b947d64d84d45bc07182d065096b,
+        type: 3}
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
@@ -4869,11 +4884,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
-      propertyPath: crown
-      value: 
-      objectReference: {fileID: 1201741332}
-    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
-        type: 3}
       propertyPath: playerCar
       value: 
       objectReference: {fileID: 8807749673999207177}
@@ -4884,16 +4894,6 @@ PrefabInstance:
       objectReference: {fileID: 883356260}
     - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
-      propertyPath: redZoneSpeed
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
-        type: 3}
-      propertyPath: greenZoneSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
-        type: 3}
       propertyPath: scrollMiniGame
       value: 
       objectReference: {fileID: 1421787488}
@@ -4902,11 +4902,6 @@ PrefabInstance:
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
-    - target: {fileID: 1283162780396547079, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
-        type: 3}
-      propertyPath: yellowZoneSpeed
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5330250748966322670, guid: 0b4c5e6a29cda594cbb183af1ab3171a,
         type: 3}
       propertyPath: m_Mass
@@ -5051,39 +5046,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
         type: 3}
-      propertyPath: crown
-      value: 
-      objectReference: {fileID: 836358293}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
-      propertyPath: aiPreset
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
       propertyPath: playerCar
       value: 
       objectReference: {fileID: 8807749673999207177}
     - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
         type: 3}
-      propertyPath: enemyCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
       propertyPath: raceManager
       value: 
       objectReference: {fileID: 883356260}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
-      propertyPath: redZoneSpeed
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
-      propertyPath: greenZoneSpeed
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
         type: 3}
       propertyPath: scrollMiniGame
@@ -5094,11 +5064,6 @@ PrefabInstance:
       propertyPath: roadMeshCreator
       value: 
       objectReference: {fileID: 1073702043}
-    - target: {fileID: 7940797573305918071, guid: 78e5c48baac0c6149a3d7e73e2051d9b,
-        type: 3}
-      propertyPath: yellowZoneSpeed
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3354257908486418740, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
     - {fileID: 6553159717355763421, guid: 78e5c48baac0c6149a3d7e73e2051d9b, type: 3}
@@ -5200,7 +5165,7 @@ PrefabInstance:
     - target: {fileID: 7893621264229252168, guid: 9688b327363040d4fac4872ba9c04c49,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 44.54
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7893621264229252168, guid: 9688b327363040d4fac4872ba9c04c49,
         type: 3}
@@ -5222,11 +5187,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7893621264229252170, guid: 9688b327363040d4fac4872ba9c04c49,
-        type: 3}
-      propertyPath: m_text
-      value: 123  x1
-      objectReference: {fileID: 0}
     - target: {fileID: 7893621264229252172, guid: 9688b327363040d4fac4872ba9c04c49,
         type: 3}
       propertyPath: m_Name
@@ -5240,7 +5200,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1326658268506655329}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 785652278}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d575e355bdbd38d4abfcfc1e2d5c275e, type: 3}
