@@ -16,17 +16,5 @@ namespace Assets.SlotCar.Scripts.UI {
 			gameObject.SetActive(false);
 			raceManager.StartRace();
 		}
-
-		// Start is called before the first frame update
-		void Start()
-		{
-        
-		}
-
-		// Update is called once per frame
-		void Update()
-		{
-        
-		}
 	}
 }

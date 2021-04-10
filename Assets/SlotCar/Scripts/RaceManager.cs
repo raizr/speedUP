@@ -14,6 +14,11 @@ namespace Assets.SlotCar.Scripts {
 		FINISHED
 	}
 
+	public enum FinishResult {
+		WIN,
+		LOSE
+	}
+
 	public class RaceManager : MonoBehaviour {
 		public List<PathFollower> cars;
 		public PlayerCar playerCar;
@@ -22,6 +27,8 @@ namespace Assets.SlotCar.Scripts {
 		public Slider raceProgressSlider;
 		public ScrollMiniGame scrollGame;
 		public Countdown countdown;
+		public GameObject raceUI;
+		public FinishRaceUI finishUI;
 		public int playerPosition;
 		public int AllPositions => cars.Count;
 		public int allLaps = 3;
@@ -32,6 +39,7 @@ namespace Assets.SlotCar.Scripts {
 			raceProgressSlider.maxValue = allLaps;
 			raceProgressSlider.value = 0.0f;
 			difficultData = EnemyDifficult.CreateFromJson(jsonFile.text);
+			finishUI.gameObject.SetActive(false);
 		}
 
 		void Start() {
@@ -63,11 +71,24 @@ namespace Assets.SlotCar.Scripts {
 		public void PauseRace() {
 			state = RaceState.PAUSE;
 			StopScrollGame();
-			SetCarsState(state);
+			//SetCarsState(state);
 		}
 
-		public void FinisRace() {
+		public void FinisRace(FinishResult result) {
 			PauseRace();
+
+			finishUI.ShowUI(result);
+			raceUI.gameObject.SetActive(false);
+		}
+
+		public void RetryRace() {
+			foreach (var car in cars) {
+				car.ResetValues();
+			}
+			raceUI.gameObject.SetActive(true);
+			countdown.gameObject.SetActive(true);
+			finishUI.gameObject.SetActive(false);
+			StartRace();
 		}
 
 		IEnumerator SetStartScrollGame() {
@@ -101,8 +122,9 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void CheckEndRace(PathFollower firstCar) {
-			if (firstCar.currentTravelled >= allLaps) {
-				FinisRace();
+			if (playerCar.currentTravelled >= allLaps) {
+				FinishResult result = (firstCar == playerCar) ? FinishResult.WIN : FinishResult.LOSE;
+				FinisRace(result);
 			}
 		}
 

@@ -94,9 +94,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
-        // If the path changes during the game, update the distance travelled so that the follower's position on the new path
-        // is as close as possible to its position on the old path
-        void OnPathChanged() {
+		void OnPathChanged() {
             distanceTravelled = roadMeshCreator.pathCreator.path.GetClosestDistanceAlongPath(transform.position);
         }
 
@@ -159,6 +157,14 @@ namespace Assets.SlotCar.Scripts {
 
 		public void SetFirstPos(bool status) {
 			crown.SetActive(status);
+		}
+
+		public void ResetValues() {
+			distanceTravelled = 0.0f;
+			currentTravelled = 0.0f;
+			currentLap = 0;
+			speed = 0;
+			SetCurrentPositionOnRoad();
 		}
 }
 }

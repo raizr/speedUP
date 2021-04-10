@@ -8,18 +8,20 @@ namespace Assets.SlotCar.Scripts.UI {
 	public class Countdown : MonoBehaviour
 	{
 		TextMeshProUGUI text;
-		private Animation countdownAnimation;
-		public int startSeconds;
+		public int seconds = 3;
+		private int startSeconds;
 		public UnityEvent countdownFinish;
 		// Start is called before the first frame update
 		void Awake()
 		{
 			text = GetComponent<TextMeshProUGUI>();
-			text.text = startSeconds.ToString();
-			GetComponent<RectTransform>().localScale = new Vector3(0.0f, 0.0f, 1.0f);
 		}
 
 		public void StartCountdown() {
+			gameObject.SetActive(true);
+			startSeconds = seconds;
+			text.text = startSeconds.ToString();
+			GetComponent<RectTransform>().localScale = new Vector3(0.0f, 0.0f, 1.0f);
 			StartCoroutine("SpeedTick");
 		}
 
