@@ -88,6 +88,7 @@ namespace Assets.SlotCar.Scripts {
 			raceUI.gameObject.SetActive(true);
 			countdown.gameObject.SetActive(true);
 			finishUI.gameObject.SetActive(false);
+			scrollGame.ResetProgress();
 			StartRace();
 		}
 

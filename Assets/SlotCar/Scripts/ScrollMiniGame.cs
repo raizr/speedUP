@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -22,17 +23,12 @@ namespace Assets.SlotCar.Scripts {
 		public Canvas greenZone;
 		public RectTransform handle;
 		public PopupManager pointsPopup;
-		public float moveTime = 1500.0f;
+		public float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
-		public float greenZoneBlockTime = 2.0f;
-		private int allPoints = 0;
-		public int pointsPerTap = 100;
 		public int pointMulitpliers = 1;
-		public int maxPointMulitpliers = 5;
 
 		private StateScrollGame state = StateScrollGame.Stop;
-		private bool reverse = false;
 		[HideInInspector]
 		public float handlePos;
 		[HideInInspector]
@@ -44,47 +40,42 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
-			state = currentState;
-			if (state == StateScrollGame.Start) {
+			if (currentState == StateScrollGame.Start) {
 				GenerateZonePos();
 			}
+			state = currentState;
 		}
 
 		void Start() {
 			//GenerateZonePos();
 		}
 		private void SpeedUpClick() {
-			/*if (state == StateScrollGame.Start) {
-				return;
-			}*/
-			state = StateScrollGame.Start;
 			moveHandle.Kill();
 			ScrollZone zone = GetCurrentZone();
 			SetFxByZone(zone);
+			state = StateScrollGame.Stop;
 			GenerateZonePos();
 		}
 
 		void GenerateZonePos() {
+			if (state == StateScrollGame.Start) {
+				return;
+			}
+			state = StateScrollGame.Start;
+			zoneCompleteEvent.Invoke();
 			Vector2 anchor = handle.GetComponent<RectTransform>().anchoredPosition;
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
 			Vector2 value = new Vector2(redZone.GetComponent<RectTransform>().rect.width, anchor.y);
 			moveHandle = handle.GetComponent<RectTransform>()
-				.DOAnchorPos(value, 2.0f).SetEase(Ease.OutQuad)
+				.DOAnchorPos(value, moveTime).SetEase(Ease.OutQuad)
 				.OnComplete(() => {
-					zoneCompleteEvent.Invoke();
+					if (state == StateScrollGame.Stop) {
+						return;
+					}
+					state = StateScrollGame.Stop;
 					SetFxByZone(ScrollZone.Red);
 					GenerateZonePos();
-					state = StateScrollGame.Stop;
 				});
-			/*
-			RectTransform redTransform = redZone.GetComponent<RectTransform>();
-			RectTransform yellowTransform = yellowZone.GetComponent<RectTransform>();
-			RectTransform greenTransform = greenZone.GetComponent<RectTransform>();
-			float yellowX = Random.Range(0, redTransform.sizeDelta.x- yellowTransform.rect.width);
-			float greenX = Random.Range(yellowX + 5.0f, yellowX + yellowTransform.rect.width - greenTransform.rect.width);
-			yellowZone.GetComponent<RectTransform>().anchoredPosition = new Vector3(yellowX, yellowZone.transform.localPosition.y);
-			greenZone.GetComponent<RectTransform>().anchoredPosition = new Vector3(greenX, greenZone.transform.localPosition.y);
-			*/
 		}
 
 		ScrollZone GetCurrentZone() {
@@ -105,55 +96,30 @@ namespace Assets.SlotCar.Scripts {
 			switch (zone) {
 				case ScrollZone.Yellow:
 					car.SpeedUp(zone);
-					state = StateScrollGame.Start;
+					pointsPopup.ShowPopup("Well", Color.yellow);
 					pointMulitpliers = 1;
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
 					car.SpeedUpByGreenZone();
-					pointsPopup.ShowPopup(pointsPerTap, pointMulitpliers);
-					if (pointMulitpliers < maxPointMulitpliers) {
-						pointMulitpliers++;
-					}
-					allPoints += pointsPerTap * pointMulitpliers;
+					pointsPopup.ShowPopup("Perfect", Color.green);
+					moveTime = Math.Max(moveTime - 0.2f, minMoveTime);
 					break;
 				default:
+					pointsPopup.ShowPopup("Bad", Color.red);
 					carSpeedText.bounceAnimationRed();
 					car.SpeedUp(zone);
 					pointMulitpliers = 1;
-					state = StateScrollGame.Start;
+					moveTime = Math.Min(moveTime + 0.2f, maxMoveTime);
 					break;
 			}
 		}
 
-		IEnumerator SetBlockScrollByTime() {
-			yield return new WaitForSeconds(greenZoneBlockTime);
-			GenerateZonePos();
-			state = StateScrollGame.Start;
-		}
-
-		void Update() {
-			if (state == StateScrollGame.Stop) {
-				return;
-			}
-			/*
-			handlePos = handle.GetComponent<RectTransform>().position.x;
-			float moveCoeff = minMoveTime + maxMoveTime * car.speed / car.maxSpeed;
-			float coeff = (reverse ? -1.0f : 1.0f) * moveCoeff * moveTime * Time.deltaTime;
-			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(
-				handle.GetComponent<RectTransform>().anchoredPosition.x + coeff,
-				handle.GetComponent<RectTransform>().anchoredPosition.y);*/
-
-			var xPos = handle.GetComponent<RectTransform>().anchoredPosition.x;
-			if (xPos >= redZone.GetComponent<RectTransform>().rect.width && !reverse) {
-				/*zoneCompleteEvent.Invoke();
-				reverse = true;*/
-				//state = StateScrollGame.Stop;
-			}
-			else if (xPos <= 0.0f && reverse) {
-				zoneCompleteEvent.Invoke();
-				reverse = false;
-			}
+		public void ResetProgress() {
+			Vector2 anchor = handle.GetComponent<RectTransform>().anchoredPosition;
+			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
+			state = StateScrollGame.Stop;
+			moveTime = maxMoveTime;
 		}
 	}
 }

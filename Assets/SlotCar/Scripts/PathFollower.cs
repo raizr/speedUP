@@ -65,12 +65,12 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
-		void Update() {
+		public void Update() {
 				SetCurrentPositionOnRoad();
 				CheckCurrentLap();
 		}
 
-		void SetCurrentPositionOnRoad() {
+		public virtual void SetCurrentPositionOnRoad() {
 			if (roadMeshCreator != null) {
 				if (state == RaceState.RACE) {
 					distanceTravelled += speed / 10.0f * Time.deltaTime;
@@ -143,6 +143,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 			else if (speed + value < maxSpeed) {
 				if (value > 0) {
+					OnIncrementSpeed(duration);
 					DOTween.To(() => (float)speed, x => speed = (int)x,
 						speed + value, duration);
 				}
@@ -153,6 +154,10 @@ namespace Assets.SlotCar.Scripts {
 			else {
 				speed = maxSpeed;
 			}
+		}
+
+		public virtual void OnIncrementSpeed(float duration) {
+
 		}
 
 		public void SetFirstPos(bool status) {

@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
+using Random = UnityEngine.Random;
 
 namespace Assets.SlotCar.Scripts {
 	public class EnemyCar : PathFollower {
@@ -14,7 +17,7 @@ namespace Assets.SlotCar.Scripts {
 		private int scrollCounter = 0;
 		private int scrollCurrentCounter = 0;
 		// Start is called before the first frame update
-		void Start() {
+		new void Start() {
 			base.Start();
 
 			chooseAiPreset();
@@ -58,12 +61,15 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void SpeedAi() {
-			scrollCurrentCounter++;
-			if (scrollCurrentCounter < scrollCounter) {
-				return;
+			float distance = distanceTravelled - raceManager.playerCar.distanceTravelled;
+			if (distance < -1) {
+				curZone = ScrollZone.Green;
+			} else if (distance > 3) {
+				curZone = ScrollZone.Red;
 			}
-			scrollCurrentCounter = 0;
-			curZone = GetCurrentZone();
+			else {
+				curZone = GetCurrentZone();
+			}
 			SpeedUp(curZone);
 		}
 	}

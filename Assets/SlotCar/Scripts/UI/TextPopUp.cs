@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,17 @@ public class TextPopUp : MonoBehaviour
 		text.text = "+" + points + " x" + multplier;
 		text.DOFade(255.0f, upFadeDuration);
 		text.DOFade(0f, downFadeDuration);
+		RectTransform rect = GetComponent<RectTransform>();
+		rect.DOLocalMove(rect.localPosition + Vector3.up * upYPos, moveDuration)
+			.OnComplete(() => {
+				Destroy(gameObject);
+			});
+	}
+	public void Show(String str, Color color) {
+		text.text = str;
+		text.DOFade(255.0f, upFadeDuration);
+		text.DOFade(0f, downFadeDuration);
+		text.color = color;
 		RectTransform rect = GetComponent<RectTransform>();
 		rect.DOLocalMove(rect.localPosition + Vector3.up * upYPos, moveDuration)
 			.OnComplete(() => {

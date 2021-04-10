@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
@@ -6,11 +8,11 @@ namespace Assets.SlotCar.Scripts {
 		public int speedDownCoeff = 1;
 		[Header("Seconds")]
 		public float timeSpeedDown = 1.0f;
-
+		public CinemachineVirtualCamera camera;
 		public float greenZoneSpeedUpTime = 1.0f;
+
 		// Start is called before the first frame update
-		new void Start()
-		{
+		new void Start() {
 			base.Start();
 			StartCoroutine(SpeedTick());
 		}
@@ -19,6 +21,7 @@ namespace Assets.SlotCar.Scripts {
 			if (state != RaceState.RACE) {
 				yield return null;
 			}
+
 			yield return new WaitForSeconds(timeSpeedDown);
 			while (true) // Or whatever condition you want
 			{
@@ -29,7 +32,20 @@ namespace Assets.SlotCar.Scripts {
 
 		public void SpeedUpByGreenZone() {
 			float zoneSpeed = ChooseSpeedByZone(ScrollZone.Green);
-			SpeedUp((int)zoneSpeed, greenZoneSpeedUpTime);
+			SpeedUp((int) zoneSpeed, greenZoneSpeedUpTime);
 		}
-	}
+
+		override public void OnIncrementSpeed(float duration) {
+			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+			DOTween.To(() => transposer.m_CameraDistance,
+					x => transposer.m_CameraDistance = x,
+					12, duration).SetEase(Ease.OutQuad)
+				.OnComplete(() => {
+					DOTween.To(() => transposer.m_CameraDistance,
+						x => transposer.m_CameraDistance = x,
+						8, 1.0f);
+				});
+		}
+
+}
 }
