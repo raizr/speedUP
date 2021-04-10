@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using Assets.SlotCar.Scripts.UI;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -34,28 +37,46 @@ namespace Assets.SlotCar.Scripts {
 		public float handlePos;
 		[HideInInspector]
 		public UnityEvent zoneCompleteEvent;
-		
+		private TweenerCore<Vector2, Vector2, VectorOptions> moveHandle;
+
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
 			state = currentState;
+			if (state == StateScrollGame.Start) {
+				GenerateZonePos();
+			}
 		}
 
 		void Start() {
-			GenerateZonePos();
+			//GenerateZonePos();
 		}
 		private void SpeedUpClick() {
-			if (state == StateScrollGame.Stop) {
+			/*if (state == StateScrollGame.Start) {
 				return;
-			}
-			state = StateScrollGame.Stop;
+			}*/
+			state = StateScrollGame.Start;
+			moveHandle.Kill();
 			ScrollZone zone = GetCurrentZone();
 			SetFxByZone(zone);
+			GenerateZonePos();
 		}
 
 		void GenerateZonePos() {
+			Vector2 anchor = handle.GetComponent<RectTransform>().anchoredPosition;
+			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
+			Vector2 value = new Vector2(redZone.GetComponent<RectTransform>().rect.width, anchor.y);
+			moveHandle = handle.GetComponent<RectTransform>()
+				.DOAnchorPos(value, 2.0f).SetEase(Ease.OutQuad)
+				.OnComplete(() => {
+					zoneCompleteEvent.Invoke();
+					SetFxByZone(ScrollZone.Red);
+					GenerateZonePos();
+					state = StateScrollGame.Stop;
+				});
+			/*
 			RectTransform redTransform = redZone.GetComponent<RectTransform>();
 			RectTransform yellowTransform = yellowZone.GetComponent<RectTransform>();
 			RectTransform greenTransform = greenZone.GetComponent<RectTransform>();
@@ -63,6 +84,7 @@ namespace Assets.SlotCar.Scripts {
 			float greenX = Random.Range(yellowX + 5.0f, yellowX + yellowTransform.rect.width - greenTransform.rect.width);
 			yellowZone.GetComponent<RectTransform>().anchoredPosition = new Vector3(yellowX, yellowZone.transform.localPosition.y);
 			greenZone.GetComponent<RectTransform>().anchoredPosition = new Vector3(greenX, greenZone.transform.localPosition.y);
+			*/
 		}
 
 		ScrollZone GetCurrentZone() {
@@ -82,14 +104,12 @@ namespace Assets.SlotCar.Scripts {
 		void SetFxByZone(ScrollZone zone) {
 			switch (zone) {
 				case ScrollZone.Yellow:
-					GenerateZonePos();
 					car.SpeedUp(zone);
 					state = StateScrollGame.Start;
 					pointMulitpliers = 1;
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
-					StartCoroutine(SetBlockScrollByTime());
 					car.SpeedUpByGreenZone();
 					pointsPopup.ShowPopup(pointsPerTap, pointMulitpliers);
 					if (pointMulitpliers < maxPointMulitpliers) {
@@ -99,7 +119,6 @@ namespace Assets.SlotCar.Scripts {
 					break;
 				default:
 					carSpeedText.bounceAnimationRed();
-					GenerateZonePos();
 					car.SpeedUp(zone);
 					pointMulitpliers = 1;
 					state = StateScrollGame.Start;
@@ -117,16 +136,19 @@ namespace Assets.SlotCar.Scripts {
 			if (state == StateScrollGame.Stop) {
 				return;
 			}
+			/*
 			handlePos = handle.GetComponent<RectTransform>().position.x;
 			float moveCoeff = minMoveTime + maxMoveTime * car.speed / car.maxSpeed;
 			float coeff = (reverse ? -1.0f : 1.0f) * moveCoeff * moveTime * Time.deltaTime;
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(
 				handle.GetComponent<RectTransform>().anchoredPosition.x + coeff,
-				handle.GetComponent<RectTransform>().anchoredPosition.y);
+				handle.GetComponent<RectTransform>().anchoredPosition.y);*/
+
 			var xPos = handle.GetComponent<RectTransform>().anchoredPosition.x;
 			if (xPos >= redZone.GetComponent<RectTransform>().rect.width && !reverse) {
-				zoneCompleteEvent.Invoke();
-				reverse = true;
+				/*zoneCompleteEvent.Invoke();
+				reverse = true;*/
+				//state = StateScrollGame.Stop;
 			}
 			else if (xPos <= 0.0f && reverse) {
 				zoneCompleteEvent.Invoke();
