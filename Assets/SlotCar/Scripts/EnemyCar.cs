@@ -14,8 +14,6 @@ namespace Assets.SlotCar.Scripts {
 		public ScrollZone curZone;
 		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
-		private int scrollCounter = 0;
-		private int scrollCurrentCounter = 0;
 		// Start is called before the first frame update
 		new void Start() {
 			base.Start();
@@ -24,7 +22,6 @@ namespace Assets.SlotCar.Scripts {
 			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int)(value)).ToList();
-			scrollCounter = Random.Range(2, 4);
 		}
 
 		void chooseAiPreset() {
