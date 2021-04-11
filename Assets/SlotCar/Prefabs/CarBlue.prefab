@@ -468,13 +468,19 @@ MonoBehaviour:
   wheelsDrive: {fileID: 3212622776411529472}
   linePosition: 2
   linePosTransform: {fileID: 4231134810446783106}
+  crown: {fileID: 8862320662041704004}
   speed: 5
   maxSpeed: 270
-  redZoneSpeed: 10
+  redZoneSpeed: -10
   greenZoneSpeed: 25
   yellowZoneSpeed: 15
   distanceTravelled: 0
   currentLap: 1
+  currentTravelled: 0
+  accelerationOnStart: 20
+  accelerationOnStartTime: 2
+  speedUpTime: 0.1
+  state: 0
   scrollMiniGame: {fileID: 0}
   raceManager: {fileID: 0}
   aiPreset: 2
@@ -992,6 +998,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d163b4279288bf4408279ec03a5026ba, type: 3}
+--- !u!1 &8862320662041704004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6361475706141428564, guid: d163b4279288bf4408279ec03a5026ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 2501127008458636560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8193904920138214654 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5981713651561009646, guid: d163b4279288bf4408279ec03a5026ba,
