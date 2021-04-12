@@ -59,8 +59,20 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			StartCoroutine("SetStartScrollGame");
+			//StartCoroutine("SetStartScrollGame");
+			StartScrollGame();
 			SetCarsState(state);
+		}
+
+		IEnumerator SetStartScrollGame() {
+			yield return new WaitForSeconds(accelerationOnStartTime);
+			StartScrollGame();
+		}
+
+		void StartScrollGame() {
+			if (state == RaceState.RACE) {
+				scrollGame.SetCurrentState(StateScrollGame.Start);
+			}
 		}
 
 		void StartCountdown() {
@@ -90,17 +102,6 @@ namespace Assets.SlotCar.Scripts {
 			finishUI.gameObject.SetActive(false);
 			scrollGame.ResetProgress();
 			StartRace();
-		}
-
-		IEnumerator SetStartScrollGame() {
-			yield return new WaitForSeconds(accelerationOnStartTime);
-			StartScrollGame();
-		}
-
-		void StartScrollGame() {
-			if (state == RaceState.RACE) {
-				scrollGame.SetCurrentState(StateScrollGame.Start);
-			}
 		}
 
 		void StopScrollGame() {

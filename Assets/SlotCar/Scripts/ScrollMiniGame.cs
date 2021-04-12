@@ -37,10 +37,12 @@ namespace Assets.SlotCar.Scripts {
 
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
+			button.interactable = false;
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
 			if (currentState == StateScrollGame.Start) {
+				button.interactable = true;
 				GenerateZonePos();
 			}
 			state = currentState;
@@ -120,6 +122,7 @@ namespace Assets.SlotCar.Scripts {
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
 			state = StateScrollGame.Stop;
 			moveTime = maxMoveTime;
+			button.interactable = false;
 		}
 	}
 }
