@@ -35,17 +35,5 @@ namespace Assets.SlotCar.Scripts {
 			SpeedUp((int) zoneSpeed, greenZoneSpeedUpTime);
 		}
 
-		override public void OnIncrementSpeed(float duration) {
-			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
-			DOTween.To(() => transposer.m_CameraDistance,
-					x => transposer.m_CameraDistance = x,
-					12, duration).SetEase(Ease.OutQuad)
-				.OnComplete(() => {
-					DOTween.To(() => transposer.m_CameraDistance,
-						x => transposer.m_CameraDistance = x,
-						8, 1.0f);
-				});
-		}
-
 }
 }
