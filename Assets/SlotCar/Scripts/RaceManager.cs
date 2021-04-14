@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,7 @@ namespace Assets.SlotCar.Scripts {
 		public Countdown countdown;
 		public GameObject raceUI;
 		public FinishRaceUI finishUI;
+		public FinishBlast finishBlast;
 		public int playerPosition;
 		public int AllPositions => cars.Count;
 		public int allLaps = 3;
@@ -91,6 +93,7 @@ namespace Assets.SlotCar.Scripts {
 
 			finishUI.ShowUI(result);
 			raceUI.gameObject.SetActive(false);
+			finishBlast.StartFinishBlast();
 		}
 
 		public void RetryRace() {
