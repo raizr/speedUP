@@ -77,6 +77,7 @@ namespace PathCreation.Examples {
                 // Top of road normals
                 normals[vertIndex + 0] = localUp;
                 normals[vertIndex + 1] = localUp;
+                
                 // Bottom of road normals
                 normals[vertIndex + 2] = -localUp;
                 normals[vertIndex + 3] = -localUp;
@@ -85,7 +86,7 @@ namespace PathCreation.Examples {
                 normals[vertIndex + 5] = localRight;
                 normals[vertIndex + 6] = -localRight;
                 normals[vertIndex + 7] = localRight;
-
+				Debug.DrawLine(localUp, localRight, Color.red, 10f);
                 // Set triangle indices
                 if (i < path.NumPoints - 1 || path.isClosedLoop) {
                     for (int j = 0; j < triangleMap.Length; j++) {
@@ -112,6 +113,7 @@ namespace PathCreation.Examples {
             mesh.SetTriangles (underRoadTriangles, 1);
             mesh.SetTriangles (sideOfRoadTriangles, 2);
             mesh.RecalculateBounds ();
+			mesh.RecalculateNormals();
         }
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached
