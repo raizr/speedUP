@@ -86,7 +86,7 @@ namespace PathCreation.Examples {
                 normals[vertIndex + 5] = localRight;
                 normals[vertIndex + 6] = -localRight;
                 normals[vertIndex + 7] = localRight;
-				Debug.DrawLine(localUp, localRight, Color.red, 10f);
+
                 // Set triangle indices
                 if (i < path.NumPoints - 1 || path.isClosedLoop) {
                     for (int j = 0; j < triangleMap.Length; j++) {
@@ -112,6 +112,8 @@ namespace PathCreation.Examples {
             mesh.SetTriangles (roadTriangles, 0);
             mesh.SetTriangles (underRoadTriangles, 1);
             mesh.SetTriangles (sideOfRoadTriangles, 2);
+			mesh.OptimizeIndexBuffers();
+			mesh.Optimize();
             mesh.RecalculateBounds ();
 			mesh.RecalculateNormals();
         }
