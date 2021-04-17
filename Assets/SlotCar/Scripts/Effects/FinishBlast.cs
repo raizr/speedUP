@@ -12,6 +12,7 @@ namespace Assets.SlotCar.Scripts.Effects {
 
 		public void StartFinishBlast() {
 			foreach (var particle in particles) {
+				particle.gameObject.SetActive(true);
 				particle.Play();
 			}
 		}
