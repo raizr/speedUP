@@ -18,13 +18,13 @@ namespace Assets.SlotCar.Scripts {
 		new void Start() {
 			base.Start();
 
-			chooseAiPreset();
+			СhooseAiPreset();
 			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int)(value)).ToList();
 		}
 
-		void chooseAiPreset() {
+		void СhooseAiPreset() {
 			if (raceManager == null) {
 				return;
 			}
@@ -59,9 +59,9 @@ namespace Assets.SlotCar.Scripts {
 
 		void SpeedAi() {
 			float distance = distanceTravelled - raceManager.playerCar.distanceTravelled;
-			if (distance < -1) {
+			if (distance < -2) {
 				curZone = ScrollZone.Green;
-			} else if (distance > 3) {
+			} else if (distance > 2) {
 				curZone = ScrollZone.Red;
 			}
 			else {

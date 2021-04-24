@@ -40,7 +40,7 @@ namespace Assets.SlotCar.Scripts {
 		public float slowdownLength = 2.0f;
 		public float slowDownFactor = 2.0f;
 		private FinishResult finishResult = FinishResult.LOSE;
-		// Start is called before the first frame update
+
 		void Awake() {
 			raceProgressSlider.maxValue = allLaps;
 			raceProgressSlider.value = 0.0f;
@@ -51,7 +51,6 @@ namespace Assets.SlotCar.Scripts {
 		void Start() {
 		}
 
-		// Update is called once per frame
 		void FixedUpdate() {
 			if (state == RaceState.RACE) {
 				CheckPositions();

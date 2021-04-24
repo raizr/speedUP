@@ -193,7 +193,7 @@ MonoBehaviour:
   linePosTransform: {fileID: 4991631208927423730}
   crown: {fileID: 8329653988889654276}
   speed: 5
-  maxSpeed: 270
+  maxSpeed: 350
   redZoneSpeed: -10
   greenZoneSpeed: 25
   yellowZoneSpeed: 15
