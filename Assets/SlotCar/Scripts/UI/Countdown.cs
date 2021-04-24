@@ -11,10 +11,12 @@ namespace Assets.SlotCar.Scripts.UI {
 		public int seconds = 3;
 		private int startSeconds;
 		public UnityEvent countdownFinish;
+		private AudioSource sound;
 		// Start is called before the first frame update
 		void Awake()
 		{
 			text = GetComponent<TextMeshProUGUI>();
+			sound = GetComponent<AudioSource>();
 		}
 
 		public void StartCountdown() {
@@ -23,6 +25,7 @@ namespace Assets.SlotCar.Scripts.UI {
 			text.text = startSeconds.ToString();
 			GetComponent<RectTransform>().localScale = new Vector3(0.0f, 0.0f, 1.0f);
 			StartCoroutine("SpeedTick");
+			sound.Play();
 		}
 
 		IEnumerator SpeedTick() {
