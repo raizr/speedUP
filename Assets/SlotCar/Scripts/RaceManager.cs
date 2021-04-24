@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,10 @@ namespace Assets.SlotCar.Scripts {
 		public int allLaps = 3;
 		private RaceState state = RaceState.PAUSE;
 		public float accelerationOnStartTime = 2.0f;
-			// Start is called before the first frame update
+		public float slowdownLength = 2.0f;
+		public float slowDownFactor = 2.0f;
+		private FinishResult finishResult = FinishResult.LOSE;
+		// Start is called before the first frame update
 		void Awake() {
 			raceProgressSlider.maxValue = allLaps;
 			raceProgressSlider.value = 0.0f;
@@ -90,10 +94,7 @@ namespace Assets.SlotCar.Scripts {
 
 		public void FinisRace(FinishResult result) {
 			PauseRace();
-
-			finishUI.ShowUI(result);
-			raceUI.gameObject.SetActive(false);
-			finishBlast.StartFinishBlast();
+			finishResult = result;
 		}
 
 		public void RetryRace() {
@@ -131,6 +132,10 @@ namespace Assets.SlotCar.Scripts {
 				FinishResult result = (firstCar == playerCar) ? FinishResult.WIN : FinishResult.LOSE;
 				FinisRace(result);
 			}
+
+			if (playerCar.currentTravelled >= allLaps - 0.03) {
+				DoSlowMotion();
+			}
 		}
 
 		void SetCarsState(RaceState st) {
@@ -138,5 +143,22 @@ namespace Assets.SlotCar.Scripts {
 				car.SetStateRace(st);
 			}
 		}
+		public void DoSlowMotion() {
+			raceUI.gameObject.SetActive(false);
+			finishBlast.StartFinishBlast();
+			DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
+				slowDownFactor, slowdownLength / 2.0f)
+				.OnComplete(() => {
+					DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
+						1.0f, slowdownLength / 2.0f);
+					Time.fixedDeltaTime = 0.02f;
+					finishUI.ShowUI(finishResult);
+				});
+		}
+		/*
+		void Update() {
+			Time.timeScale += (1.0f / slowdownLength) * Time.unscaledDeltaTime; // notice we are using the unscaledDelta now
+			Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
+		}*/
 	}
 }

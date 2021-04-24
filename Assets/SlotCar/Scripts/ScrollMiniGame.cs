@@ -23,6 +23,7 @@ namespace Assets.SlotCar.Scripts {
 		public Canvas greenZone;
 		public RectTransform handle;
 		public PopupManager pointsPopup;
+		public HandleBounce scrollHandle;
 
 		public ParticleSystem greenZoneFX;
 		public ParticleSystem yellowZoneFX;
@@ -31,7 +32,6 @@ namespace Assets.SlotCar.Scripts {
 		public float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
-		public int pointMulitpliers = 1;
 
 		private StateScrollGame state = StateScrollGame.Stop;
 		[HideInInspector]
@@ -53,13 +53,11 @@ namespace Assets.SlotCar.Scripts {
 			state = currentState;
 		}
 
-		void Start() {
-			//GenerateZonePos();
-		}
 		private void SpeedUpClick() {
 			moveHandle.Kill();
 			ScrollZone zone = GetCurrentZone();
 			SetFxByZone(zone);
+			scrollHandle.BounceAnimation();
 			state = StateScrollGame.Stop;
 			GenerateZonePos();
 		}
@@ -104,7 +102,6 @@ namespace Assets.SlotCar.Scripts {
 				case ScrollZone.Yellow:
 					car.SpeedUp(zone);
 					pointsPopup.ShowPopup("Well", Color.yellow);
-					pointMulitpliers = 1;
 					yellowZoneFX.Play();
 					break;
 				case ScrollZone.Green:
@@ -118,7 +115,6 @@ namespace Assets.SlotCar.Scripts {
 					pointsPopup.ShowPopup("Miss", Color.red);
 					carSpeedText.bounceAnimationRed();
 					car.SpeedUp(zone);
-					pointMulitpliers = 1;
 					moveTime = Math.Min(moveTime + 0.2f, maxMoveTime);
 					redZoneFX.Play();
 					break;
