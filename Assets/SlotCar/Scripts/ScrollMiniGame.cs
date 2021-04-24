@@ -103,7 +103,7 @@ namespace Assets.SlotCar.Scripts {
 			switch (zone) {
 				case ScrollZone.Yellow:
 					car.SpeedUp(zone);
-					pointsPopup.ShowPopup("Well", Color.yellow);
+					pointsPopup.ShowPopup("Miss", Color.yellow);
 					pointMulitpliers = 1;
 					yellowZoneFX.Play();
 					break;
