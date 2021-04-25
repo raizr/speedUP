@@ -59,9 +59,9 @@ namespace Assets.SlotCar.Scripts {
 
 		void SpeedAi() {
 			float distance = distanceTravelled - raceManager.playerCar.distanceTravelled;
-			if (distance < -2) {
+			if (distance < -1) {
 				curZone = ScrollZone.Green;
-			} else if (distance > 2) {
+			} else if (distance > 3) {
 				curZone = ScrollZone.Red;
 			}
 			else {

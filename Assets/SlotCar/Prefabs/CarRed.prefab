@@ -690,7 +690,7 @@ MonoBehaviour:
   speed: 0
   maxSpeed: 350
   redZoneSpeed: -10
-  greenZoneSpeed: 20
+  greenZoneSpeed: 10
   yellowZoneSpeed: 0
   distanceTravelled: 0
   currentLap: 1

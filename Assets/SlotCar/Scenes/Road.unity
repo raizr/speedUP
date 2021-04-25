@@ -360,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87764325}
   m_LocalRotation: {x: -0.2686498, y: -0.7303984, z: 0.42169577, w: -0.46531507}
-  m_LocalPosition: {x: -3.1337225, y: 3.3896868, z: -21.618208}
+  m_LocalPosition: {x: -3.1339498, y: 3.3899293, z: -21.618101}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 790448859}
@@ -2210,7 +2210,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.4
-  m_CameraDistance: 8
+  m_CameraDistance: 8.000336
   m_DeadZoneWidth: 0.05093667
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -2318,6 +2318,7 @@ MonoBehaviour:
   accelerationOnStartTime: 2
   slowdownLength: 1
   slowDownFactor: 0.05
+  startCheckPosTime: 1
 --- !u!1 &953428002
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,9 +3226,8 @@ MonoBehaviour:
   greenZoneFX: {fileID: 1565322828}
   yellowZoneFX: {fileID: 253854333}
   redZoneFX: {fileID: 524547473}
-  moveTime: 2
   maxMoveTime: 2
-  minMoveTime: 0.7
+  minMoveTime: 1.5
   handlePos: 0
   zoneCompleteEvent:
     m_PersistentCalls:
@@ -4035,7 +4035,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777349640}
   m_LocalRotation: {x: -0.2686498, y: -0.7303984, z: 0.42169577, w: -0.46531507}
-  m_LocalPosition: {x: -3.1337225, y: 3.3896868, z: -21.618208}
+  m_LocalPosition: {x: -3.1339498, y: 3.3899293, z: -21.618101}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
