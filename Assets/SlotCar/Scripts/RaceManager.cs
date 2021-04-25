@@ -40,6 +40,8 @@ namespace Assets.SlotCar.Scripts {
 		public float slowdownLength = 2.0f;
 		public float slowDownFactor = 2.0f;
 		private FinishResult finishResult = FinishResult.LOSE;
+		public float startCheckPosTime = 1.0f;
+		private bool checkPos = false;
 
 		void Awake() {
 			raceProgressSlider.maxValue = allLaps;
@@ -64,14 +66,19 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			//StartCoroutine("SetStartScrollGame");
 			StartScrollGame();
+			StartCoroutine(SetStartChecPos());
 			SetCarsState(state);
 		}
 
 		IEnumerator SetStartScrollGame() {
 			yield return new WaitForSeconds(accelerationOnStartTime);
 			StartScrollGame();
+		}
+
+		IEnumerator SetStartChecPos() {
+			yield return new WaitForSeconds(startCheckPosTime);
+			checkPos = true;
 		}
 
 		void StartScrollGame() {
@@ -112,6 +119,9 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void CheckPositions() {
+			if (!checkPos) {
+				return;
+			}
 			cars = cars.OrderBy( o => o.distanceTravelled).ToList();
 			playerPosition = cars.Count - cars.IndexOf(playerCar);
 			foreach (var car in cars) {
@@ -154,10 +164,5 @@ namespace Assets.SlotCar.Scripts {
 					finishUI.ShowUI(finishResult);
 				});
 		}
-		/*
-		void Update() {
-			Time.timeScale += (1.0f / slowdownLength) * Time.unscaledDeltaTime; // notice we are using the unscaledDelta now
-			Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
-		}*/
 	}
 }
