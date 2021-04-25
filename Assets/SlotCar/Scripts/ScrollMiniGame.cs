@@ -29,7 +29,7 @@ namespace Assets.SlotCar.Scripts {
 		public ParticleSystem yellowZoneFX;
 		public ParticleSystem redZoneFX;
 
-		public float moveTime = 2.0f;
+		private float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
 
@@ -43,6 +43,7 @@ namespace Assets.SlotCar.Scripts {
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
 			button.interactable = false;
+			moveTime = maxMoveTime;
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
