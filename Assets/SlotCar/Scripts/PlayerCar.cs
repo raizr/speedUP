@@ -14,8 +14,8 @@ namespace Assets.SlotCar.Scripts {
 
 		new void Awake() {
 			base.Awake();
-			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
-			cameraDistance = transposer.m_CameraDistance;
+			//var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+			//cameraDistance = transposer.m_CameraDistance;
 		}
 
 		// Start is called before the first frame update
@@ -43,7 +43,7 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		override public void OnIncrementSpeed(float duration) {
-			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+			/*var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
 			DOTween.To(() => transposer.m_CameraDistance,
 					x => transposer.m_CameraDistance = x,
 					cameraDistance + 2, 0.7f)
@@ -51,7 +51,7 @@ namespace Assets.SlotCar.Scripts {
 					DOTween.To(() => transposer.m_CameraDistance,
 						x => transposer.m_CameraDistance = x,
 						cameraDistance, 0.3f);
-				});
+				});*/
 		}
 	}
 }

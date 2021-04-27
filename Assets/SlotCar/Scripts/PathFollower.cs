@@ -74,6 +74,7 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void Update() {
+			SetPosition();
 			SetCurrentPositionOnRoad();
 			CheckCurrentLap();
 			if (soundEngine != null) {

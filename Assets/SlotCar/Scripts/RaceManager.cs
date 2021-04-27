@@ -66,7 +66,7 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			StartScrollGame();
+			//StartScrollGame();
 			StartCoroutine(SetStartChecPos());
 			SetCarsState(state);
 		}
@@ -110,12 +110,12 @@ namespace Assets.SlotCar.Scripts {
 			raceUI.gameObject.SetActive(true);
 			countdown.gameObject.SetActive(true);
 			finishUI.gameObject.SetActive(false);
-			scrollGame.ResetProgress();
+			//scrollGame.ResetProgress();
 			StartRace();
 		}
 
 		void StopScrollGame() {
-			scrollGame.SetCurrentState(StateScrollGame.Stop);
+			//scrollGame.SetCurrentState(StateScrollGame.Stop);
 		}
 
 		void CheckPositions() {
