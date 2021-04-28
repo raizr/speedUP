@@ -21,7 +21,7 @@ namespace Assets.SlotCar.Scripts {
 		// Start is called before the first frame update
 		new void Start() {
 			base.Start();
-			StartCoroutine(SpeedTick());
+			//StartCoroutine(SpeedTick());
 		}
 
 		IEnumerator SpeedTick() {

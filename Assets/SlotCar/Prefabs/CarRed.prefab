@@ -687,7 +687,7 @@ MonoBehaviour:
   linePosition: 1
   linePosTransform: {fileID: 3541174311524130490}
   crown: {fileID: 3453947003996280693}
-  speed: 200
+  speed: 0
   maxSpeed: 350
   redZoneSpeed: -10
   greenZoneSpeed: 10
@@ -695,8 +695,8 @@ MonoBehaviour:
   distanceTravelled: 0
   currentLap: 1
   currentTravelled: 0
-  accelerationOnStart: 20
-  accelerationOnStartTime: 2
+  accelerationOnStart: 75
+  accelerationOnStartTime: 20
   speedUpTime: 0.1
   state: 0
   speedDownCoeff: 1

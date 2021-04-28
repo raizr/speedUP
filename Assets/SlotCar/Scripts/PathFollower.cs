@@ -40,7 +40,7 @@ namespace Assets.SlotCar.Scripts {
 		public float distanceTravelled;
 		public int currentLap = 1;
 		public float currentTravelled;
-
+		[Header("% max speed")]
 		public float accelerationOnStart = 20.0f;
 		public float accelerationOnStartTime = 2.0f;
 		public float speedUpTime = 0.1f;
