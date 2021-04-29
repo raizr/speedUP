@@ -4,7 +4,7 @@ namespace Assets.SlotCar.Scripts {
 	public class SwipeDetector : MonoBehaviour {
 		private Vector2 fingerDown;
 		private Vector2 fingerUp;
-		public PlayerCar car;
+		public SlotRace.PlayerCar car;
 		public bool detectSwipeOnlyAfterRelease = false;
 
 		public float SWIPE_THRESHOLD = 20f;
@@ -81,13 +81,13 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void OnSwipeLeft() {
-			if (car.linePosition > Position.Left) {
+			if (car.linePosition > SlotRace.Position.Left) {
 				car.linePosition--;
 			}
 		}
 
 		void OnSwipeRight() {
-			if (car.linePosition < Position.Right) {
+			if (car.linePosition < SlotRace.Position.Right) {
 				car.linePosition++;
 			}
 		}

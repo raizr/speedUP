@@ -7,14 +7,15 @@ namespace Assets.SlotCar.Scripts.UI {
 	public class FinishRaceUI : MonoBehaviour {
 
 
-		public RaceManager raceManager;
+		public GameObject raceManager;
+		private IRaceManager interfaceRaceManager;
 		public Button retryButton;
 		public TextMeshProUGUI message;
 
 		// Start is called before the first frame update
-		void Awake()
-		{
-			retryButton.onClick.AddListener(raceManager.RetryRace);
+		void Awake() {
+			interfaceRaceManager = raceManager.GetComponent<IRaceManager>();
+			retryButton.onClick.AddListener(interfaceRaceManager.RetryRace);
 		}
 
 		public void ShowUI(FinishResult result) {

@@ -300,10 +300,11 @@ MonoBehaviour:
   distanceTravelled: 0
   currentLap: 1
   currentTravelled: 0
-  accelerationOnStart: 50
+  accelerationOnStart: 20
   accelerationOnStartTime: 2
   speedUpTime: 0.1
   state: 0
+  scrollMiniGame: {fileID: 0}
   raceManager: {fileID: 0}
   aiPreset: 2
   enemyCount: 0

@@ -21,7 +21,7 @@ namespace Assets.SlotCar.Scripts {
 		LOSE
 	}
 
-	public class RaceManager : MonoBehaviour {
+	public class RaceManager : MonoBehaviour, IRaceManager {
 		public List<PathFollower> cars;
 		public PlayerCar playerCar;
 		public TextAsset jsonFile;
@@ -66,7 +66,7 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			//StartScrollGame();
+			StartScrollGame();
 			StartCoroutine(SetStartChecPos());
 			SetCarsState(state);
 		}
@@ -95,7 +95,6 @@ namespace Assets.SlotCar.Scripts {
 		public void PauseRace() {
 			state = RaceState.PAUSE;
 			StopScrollGame();
-			//SetCarsState(state);
 		}
 
 		public void FinisRace(FinishResult result) {
@@ -110,12 +109,12 @@ namespace Assets.SlotCar.Scripts {
 			raceUI.gameObject.SetActive(true);
 			countdown.gameObject.SetActive(true);
 			finishUI.gameObject.SetActive(false);
-			//scrollGame.ResetProgress();
+			scrollGame.ResetProgress();
 			StartRace();
 		}
 
 		void StopScrollGame() {
-			//scrollGame.SetCurrentState(StateScrollGame.Stop);
+			scrollGame.SetCurrentState(StateScrollGame.Stop);
 		}
 
 		void CheckPositions() {

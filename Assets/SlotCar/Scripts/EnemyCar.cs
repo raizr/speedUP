@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets.SlotCar.Scripts {
 	public class EnemyCar : PathFollower {
+		public ScrollMiniGame scrollMiniGame;
 		public RaceManager raceManager;
 		public eEnemyAiPreset aiPreset = eEnemyAiPreset.Easy;
 		public int enemyCount = 0;
@@ -18,6 +19,7 @@ namespace Assets.SlotCar.Scripts {
 			base.Start();
 
 			СhooseAiPreset();
+			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int)(value)).ToList();
 		}
