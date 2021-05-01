@@ -24,8 +24,8 @@ namespace Assets.SlotCar.Scripts.SlotRace {
 		public int allLaps = 3;
 		private RaceState state = RaceState.PAUSE;
 		public float accelerationOnStartTime = 2.0f;
-		public float slowdownLength = 2.0f;
-		public float slowDownFactor = 2.0f;
+		public float slowdownLength = 1.0f;
+		public float slowDownFactor = 0.05f;
 		private FinishResult finishResult = FinishResult.LOSE;
 		public float startCheckPosTime = 1.0f;
 		private bool checkPos = false;
