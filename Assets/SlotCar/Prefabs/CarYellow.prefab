@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2455364453121975842}
-  - component: {fileID: 3048657274930426405}
   m_Layer: 0
   m_Name: a0r
   m_TagString: Untagged
@@ -32,36 +31,6 @@ Transform:
   m_Father: {fileID: 3867025639248505569}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &3048657274930426405
-WheelCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3019746700558810871}
-  m_Center: {x: 0, y: 0.1, z: 0}
-  m_Radius: 0.34
-  m_SuspensionSpring:
-    spring: 35000
-    damper: 5500
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.09
-  m_ForceAppPointDistance: 0.68
-  m_Mass: 100
-  m_WheelDampingRate: 0.1
-  m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
-    m_Stiffness: 1
-  m_Enabled: 1
 --- !u!1 &3764918576522008959
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4573792956755318492}
-  - component: {fileID: 3067929289004430136}
   m_Layer: 0
   m_Name: a1r
   m_TagString: Untagged
@@ -94,36 +62,6 @@ Transform:
   m_Father: {fileID: 3867025639248505569}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &3067929289004430136
-WheelCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3764918576522008959}
-  m_Center: {x: 0, y: 0.1, z: 0}
-  m_Radius: 0.34
-  m_SuspensionSpring:
-    spring: 35000
-    damper: 5500
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.09
-  m_ForceAppPointDistance: 0.68
-  m_Mass: 100
-  m_WheelDampingRate: 0.1
-  m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
-    m_Stiffness: 1
-  m_Enabled: 1
 --- !u!1 &3867025638814156918
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3867025638814156915}
-  - component: {fileID: 3892533132704010142}
   - component: {fileID: 7940797573305918071}
   - component: {fileID: 101228177591101085}
   m_Layer: 0
@@ -158,22 +95,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 56.781002, z: 0}
---- !u!54 &3892533132704010142
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867025638814156918}
-  serializedVersion: 2
-  m_Mass: 1000
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &7940797573305918071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +113,7 @@ MonoBehaviour:
   linePosition: 0
   linePosTransform: {fileID: 4991631208927423730}
   crown: {fileID: 8329653988889654276}
-  speed: 5
+  speed: 0
   maxSpeed: 350
   redZoneSpeed: -10
   greenZoneSpeed: 10
@@ -701,15 +622,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc5cff5638341642a45ec4ac088f8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAngle: 30
-  maxTorque: 300
-  brakeTorque: 30000
-  criticalSpeed: 5
-  stepsBelow: 5
-  stepsAbove: 1
-  driveType: 2
+  maxSteerAngle: 30
+  maxRotateAngle: 180
   currentTorque: 0
   steerAngle: 0
+  angle: 0
 --- !u!1 &3867025639745929006
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +879,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8193975848198903858}
-  - component: {fileID: 6271183478759666051}
   m_Layer: 0
   m_Name: a1l
   m_TagString: Untagged
@@ -985,36 +901,6 @@ Transform:
   m_Father: {fileID: 3867025639248505569}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &6271183478759666051
-WheelCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4343628577650079089}
-  m_Center: {x: 0, y: 0.1, z: 0}
-  m_Radius: 0.34
-  m_SuspensionSpring:
-    spring: 35000
-    damper: 5500
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.09
-  m_ForceAppPointDistance: 0.68
-  m_Mass: 100
-  m_WheelDampingRate: 0.1
-  m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
-    m_Stiffness: 1
-  m_Enabled: 1
 --- !u!1 &5346202460125176855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,7 +944,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3007984622009528083}
-  - component: {fileID: 8477660401243634892}
   m_Layer: 0
   m_Name: a0l
   m_TagString: Untagged
@@ -1081,36 +966,6 @@ Transform:
   m_Father: {fileID: 3867025639248505569}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &8477660401243634892
-WheelCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6832038297061527581}
-  m_Center: {x: 0, y: 0.1, z: 0}
-  m_Radius: 0.34
-  m_SuspensionSpring:
-    spring: 35000
-    damper: 5500
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.09
-  m_ForceAppPointDistance: 0.6
-  m_Mass: 100
-  m_WheelDampingRate: 0.1
-  m_ForwardFriction:
-    m_ExtremumSlip: 0.4
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 1
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
-    m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
-    m_Stiffness: 1
-  m_Enabled: 1
 --- !u!1 &7141278588004183371
 GameObject:
   m_ObjectHideFlags: 0
