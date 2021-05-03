@@ -14,8 +14,10 @@ namespace Assets.SlotCar.Scripts.UI {
 
 		// Start is called before the first frame update
 		void Awake() {
-			interfaceRaceManager = raceManager.GetComponent<IRaceManager>();
-			retryButton.onClick.AddListener(interfaceRaceManager.RetryRace);
+			if (raceManager != null) {
+				interfaceRaceManager = raceManager.GetComponent<IRaceManager>();
+				retryButton.onClick.AddListener(interfaceRaceManager.RetryRace);
+			}
 		}
 
 		public void ShowUI(FinishResult result) {

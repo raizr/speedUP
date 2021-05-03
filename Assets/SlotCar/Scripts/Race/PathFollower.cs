@@ -16,12 +16,10 @@ namespace Assets.SlotCar.Scripts {
 		Green
 	}
 
-// Moves along a path at constant speed.
-	// Depending on the end of path instruction, will either loop, reverse, or stop at the end of the path.
 	public class PathFollower : MonoBehaviour
-    {
-        public RoadMeshCreator roadMeshCreator;
-        public EndOfPathInstruction endOfPathInstruction;
+	{
+		public RoadMeshCreator roadMeshCreator;
+		public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 		public WheelDrive wheelsDrive;
 		public Position linePosition = Position.Center;
 		public Transform linePosTransform;
@@ -54,11 +52,14 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
+		public void Init() {
+
+		}
+
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
 			if (roadMeshCreator != null)
             {
-                // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
 				roadMeshCreator.pathCreator.pathUpdated += OnPathChanged;
 				SetPosition();
 				SetCurrentPositionOnRoad();
