@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/SlotCar/Scenes/Road.unity
-    guid: 8f020cfa1fb7ded47926b050b82adbe6
+    path: Assets/SlotCar/Scenes/Game.unity
+    guid: 1b27f6292ac7bf243a916c3ac496f94d
   m_configObjects: {}
