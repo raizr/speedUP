@@ -28,6 +28,9 @@ namespace Assets.SlotCar.Scripts.Data {
 			if (!File.Exists(profilePath)) {
 				profileStream = File.CreateText(profilePath);
 			}
+			else {
+				profileStream = new StreamWriter(profilePath);
+			}
 			profileStream.Write(JsonUtility.ToJson(profile));
 			profileStream.Flush();
 		}

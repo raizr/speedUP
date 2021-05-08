@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.Data {
 
@@ -14,5 +16,10 @@ namespace Assets.SlotCar.Scripts.Data {
 		public int laps;
 		public string prefabPath;
 		public int[] enemyCarsIds;
+	}
+
+	[CreateAssetMenu(fileName = "LevelsData", menuName = "Data/Levels")]
+	public class LevelsData : ScriptableObject {
+		public List<LevelData> levels;
 	}
 }
