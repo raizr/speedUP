@@ -6,7 +6,7 @@ namespace PathCreation.Examples {
         public float roadWidth = .4f;
         [Range (0, .5f)]
         public float thickness = .15f;
-        public bool flattenSurface;
+        public bool flattenSurface = true;
 
         [Header ("Material settings")]
         public Material roadMaterial;

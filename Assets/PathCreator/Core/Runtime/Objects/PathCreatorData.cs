@@ -22,7 +22,7 @@ namespace PathCreation {
         public float vertexPathMinVertexSpacing = 0.01f;
 
         // bezier display settings
-        public bool showTransformTool = true;
+        public bool showTransformTool = false;
         public bool showPathBounds;
         public bool showPerSegmentBounds;
         public bool displayAnchorPoints = true;

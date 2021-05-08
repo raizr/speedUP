@@ -244,7 +244,7 @@ public bool IsLastPointOnPath(int indexPoint) {
             var data = CalculatePercentOnPathData (t, endOfPathInstruction);
             Vector3 direction = Vector3.Lerp (localTangents[data.previousIndex], localTangents[data.nextIndex], data.percentBetweenIndices);
             Vector3 normal = Vector3.Lerp (localNormals[data.previousIndex], localNormals[data.nextIndex], data.percentBetweenIndices);
-            return Quaternion.LookRotation(MathUtility.TransformDirection(direction, transform, space), Vector3.up);
+            return Quaternion.LookRotation(MathUtility.TransformDirection(direction, transform, space), -Vector3.Cross(normal, direction));
         }
 
         /// Finds the closest point on the path from any point in the world

@@ -40,7 +40,7 @@ namespace PathCreation {
  [SerializeField, HideInInspector]
  List<float> perAnchorNormalsAngle;
  [SerializeField, HideInInspector]
- float globalNormalsAngle;
+ float globalNormalsAngle = 90.0f;
  [SerializeField, HideInInspector]
  bool flipNormals;
 
