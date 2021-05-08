@@ -299,7 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2280304041587024478}
   m_Layer: 0
-  m_Name: EnemyBlue
+  m_Name: CentauriBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
