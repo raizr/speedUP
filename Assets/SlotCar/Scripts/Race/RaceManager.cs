@@ -1,15 +1,17 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
+using PathCreation;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.SlotCar.Scripts {
 
+namespace Assets.SlotCar.Scripts.Race {
 	public enum RaceState {
 		PAUSE,
 		RACE,
@@ -21,141 +23,59 @@ namespace Assets.SlotCar.Scripts {
 		LOSE
 	}
 
-	public class RaceManager : MonoBehaviour, IRaceManager {
+	public class RaceManager : MonoBehaviour {
+		public RoadMeshCreator roadHolder;
+		public EnemyCar enemyCarPrefab;
+		public PlayerCar playerCarPrefab;
 		public List<PathFollower> cars;
-		public PlayerCar playerCar;
-		public TextAsset jsonFile;
-		public EnemyDifficult difficultData;
+		public List<EnemyCar> enemyCars;
 		public Slider raceProgressSlider;
-		public ScrollMiniGame scrollGame;
-		public Countdown countdown;
 		public GameObject raceUI;
 		public FinishRaceUI finishUI;
+		public Countdown countdown;
 		public FinishBlast finishBlast;
+		public LevelData levelData;
 		public int playerPosition;
+		public PlayerCar playerCar;
 		public int AllPositions => cars.Count;
-		public int allLaps = 3;
-		private RaceState state = RaceState.PAUSE;
-		public float accelerationOnStartTime = 2.0f;
+
 		public float slowdownLength = 2.0f;
 		public float slowDownFactor = 2.0f;
-		private FinishResult finishResult = FinishResult.LOSE;
-		public float startCheckPosTime = 1.0f;
-		private bool checkPos = false;
 
-		void Awake() {
-			raceProgressSlider.maxValue = allLaps;
-			raceProgressSlider.value = 0.0f;
-			difficultData = EnemyDifficult.CreateFromJson(jsonFile.text);
-			finishUI.gameObject.SetActive(false);
-		}
-
-		void Start() {
-		}
-
-		void FixedUpdate() {
-			if (state == RaceState.RACE) {
-				CheckPositions();
-				SetCurrentRaceProgress();
-			}
-		}
-
-		public void StartRace() {
-			StartCountdown();
-		}
-
-		void StartRaceInternal() {
-			state = RaceState.RACE;
-			StartScrollGame();
-			StartCoroutine(SetStartChecPos());
-			SetCarsState(state);
-		}
-
-		IEnumerator SetStartScrollGame() {
-			yield return new WaitForSeconds(accelerationOnStartTime);
-			StartScrollGame();
-		}
-
-		IEnumerator SetStartChecPos() {
-			yield return new WaitForSeconds(startCheckPosTime);
-			checkPos = true;
-		}
-
-		void StartScrollGame() {
-			if (state == RaceState.RACE) {
-				scrollGame.SetCurrentState(StateScrollGame.Start);
-			}
-		}
-
-		void StartCountdown() {
-			countdown.countdownFinish.AddListener(StartRaceInternal);
-			countdown.StartCountdown();
-		}
-
-		public void PauseRace() {
-			state = RaceState.PAUSE;
-			StopScrollGame();
-		}
-
-		public void FinisRace(FinishResult result) {
-			PauseRace();
-			finishResult = result;
-		}
-
-		public void RetryRace() {
-			foreach (var car in cars) {
-				car.ResetValues();
-			}
-			raceUI.gameObject.SetActive(true);
-			countdown.gameObject.SetActive(true);
-			finishUI.gameObject.SetActive(false);
-			scrollGame.ResetProgress();
-			StartRace();
-		}
-
-		void StopScrollGame() {
-			scrollGame.SetCurrentState(StateScrollGame.Stop);
-		}
-
-		void CheckPositions() {
-			if (!checkPos) {
-				return;
-			}
-			cars = cars.OrderBy( o => o.distanceTravelled).ToList();
-			playerPosition = cars.Count - cars.IndexOf(playerCar);
-			foreach (var car in cars) {
-				car.SetFirstPos(false);
-			}
-			PathFollower firstCar = cars.Last();
-			firstCar.SetFirstPos(true);
-			CheckEndRace(firstCar);
-		}
-
-		void SetCurrentRaceProgress() {
-			raceProgressSlider.value = playerCar.currentTravelled;
-		}
-
-		void CheckEndRace(PathFollower firstCar) {
-			if (playerCar.currentTravelled >= allLaps) {
-				FinishResult result = (firstCar == playerCar) ? FinishResult.WIN : FinishResult.LOSE;
-				FinisRace(result);
+		protected RaceState state = RaceState.PAUSE;
+		protected FinishResult finishResult = FinishResult.LOSE;
+		public virtual void Init(LevelData data) {
+			levelData = data;
+			int i = 0;
+			foreach(var enemyData in levelData.enemyCars) {
+				var enemy = Instantiate(enemyCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+				enemy.Init(roadHolder, i, enemyData.carId, enemyData.lineNumber);
+				enemyCars.Add(enemy);
+				cars.Add(enemy);
 			}
 
-			if (playerCar.currentTravelled >= allLaps - 0.03) {
-				DoSlowMotion();
-			}
+			playerCar = Instantiate(playerCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+			playerCar.Init(roadHolder, PlayerProfile.Instance.profile.currentCarId, levelData.playerPosition);
+			GameInstance.Instance.camera.m_Follow = playerCar.transform;
 		}
 
-		void SetCarsState(RaceState st) {
-			foreach (var car in cars) {
-				car.SetStateRace(st);
-			}
+		public virtual void StartRace() {
+
 		}
+
+		public virtual void FinishRace() {
+
+		}
+
+		public virtual void RetryRace() {
+
+		}
+
 		public void DoSlowMotion() {
 			raceUI.gameObject.SetActive(false);
 			finishBlast.StartFinishBlast();
 			DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
-				slowDownFactor, slowdownLength / 2.0f)
+					slowDownFactor, slowdownLength / 2.0f)
 				.OnComplete(() => {
 					DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
 						1.0f, slowdownLength / 2.0f);

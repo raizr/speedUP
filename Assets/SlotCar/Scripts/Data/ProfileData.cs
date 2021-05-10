@@ -5,6 +5,6 @@ namespace Assets.SlotCar.Scripts.Data {
 	public class ProfileData {
 		public string playerName;
 		public int currentLevel;
-		public string currentCarId;
+		public int currentCarId;
 	}
 }

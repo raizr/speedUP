@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[System.Serializable]
-public class EnemyDifficult {
-	public EnemyPreset[] easy;
-	public EnemyPreset[] normal;
-	public EnemyPreset[] hard;
-
-	public static EnemyDifficult CreateFromJson(string json) {
-		return JsonUtility.FromJson<EnemyDifficult>(json);
+namespace Assets.SlotCar.Scripts.Race {
+	[System.Serializable, CreateAssetMenu(fileName = "EnemyDifficult", menuName = "Data/EnemyDifficult")]
+	public class EnemyDifficult : ScriptableObject {
+		public EnemyPreset[] easy;
+		public EnemyPreset[] normal;
+		public EnemyPreset[] hard;
 	}
 }
 

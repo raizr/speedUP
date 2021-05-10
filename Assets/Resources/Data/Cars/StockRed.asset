@@ -15,4 +15,4 @@ MonoBehaviour:
   carId: 0
   rarity: 0
   speed: 250
-  prefabPath: StockRed.prefab
+  prefab: {fileID: 4741021785903184446, guid: 87b3b947d64d84d45bc07182d065096b, type: 3}

@@ -1,28 +1,25 @@
-﻿using DG.Tweening;
+﻿using System;
+using Assets.SlotCar.Scripts.Data;
+using Assets.SlotCar.Scripts.Race;
+using DG.Tweening;
 using PathCreation;
 using PathCreation.Examples;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
-	public enum Position {
-		Left,
-		Center,
-		Right
-	}
-	
 	public enum ScrollZone {
 		Red,
 		Yellow,
 		Green
 	}
 
-	public class PathFollower : MonoBehaviour
-	{
-		public RoadMeshCreator roadMeshCreator;
+	public class PathFollower : MonoBehaviour {
+		public RoadMeshCreator roadHolder;
 		public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 		public WheelDrive wheelsDrive;
-		public Position linePosition = Position.Center;
+		public int linePosition = 0;
 		public Transform linePosTransform;
+		public GameObject carPrefab;
 		public GameObject crown;
 		private EngineSound soundEngine;
 
@@ -45,25 +42,35 @@ namespace Assets.SlotCar.Scripts {
 		private float maxSpeedCoeff;
 		public RaceState state = RaceState.PAUSE;
 
+		private float center;
+
 		public void Awake() {
 			soundEngine = GetComponent<EngineSound>();
 			if (soundEngine != null) {
-				//soundEngine.maxRPMLimit = maxSpeed;
+				soundEngine.maxRPMLimit = maxSpeed;
 			}
-		}
-
-		public void Init() {
-
+			wheelsDrive = GetComponent<WheelDrive>();
 		}
 
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
-			if (roadMeshCreator != null)
-            {
-				roadMeshCreator.pathCreator.pathUpdated += OnPathChanged;
+			if (roadHolder != null) {
 				SetPosition();
 				SetCurrentPositionOnRoad();
 			}
+		}
+
+		public virtual void Init(RoadMeshCreator road, int carId) {
+			roadHolder = road;
+			carPrefab = Instantiate(GameDataInstance.Instance.GetCar(carId).prefab, Vector3.zero, Quaternion.identity);
+			linePosTransform = carPrefab.transform;
+			linePosTransform.SetParent(transform);
+
+			crown = Instantiate(crown, Vector3.zero, Quaternion.identity);
+			crown.transform.SetParent(transform);
+			crown.SetActive(false);
+
+			center = (float)Math.Ceiling(GameInstance.Instance.raceManager.levelData.lines / 2.0f);
 		}
 
 		public void SetStateRace(RaceState settedState) {
@@ -84,13 +91,13 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public virtual void SetCurrentPositionOnRoad() {
-			if (roadMeshCreator != null) {
+			if (roadHolder != null) {
 				if (state == RaceState.RACE) {
 					distanceTravelled += speed / 10.0f * Time.deltaTime;
 				}
-				transform.position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-				transform.rotation = roadMeshCreator.pathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
-				Vector3 position = roadMeshCreator.pathCreator.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
+				transform.position = roadHolder.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+				transform.rotation = roadHolder.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+				Vector3 position = roadHolder.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
 				if (wheelsDrive != null) {
 					wheelsDrive.currentTorque = (float)speed / maxSpeed;
@@ -100,30 +107,19 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void CheckCurrentLap() {
-			int currentIndex = roadMeshCreator.pathCreator.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
-			currentTravelled = roadMeshCreator.pathCreator.path.GetTravelledDistance(distanceTravelled, EndOfPathInstruction.Stop);
-			if (roadMeshCreator.pathCreator.path.IsLastPointOnPath(currentIndex)) {
-				currentLap++;
+			if (roadHolder != null) {
+				int currentIndex = roadHolder.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
+				currentTravelled =
+					roadHolder.path.GetTravelledDistance(distanceTravelled, EndOfPathInstruction.Stop);
+				if (roadHolder.path.IsLastPointOnPath(currentIndex)) {
+					currentLap++;
+				}
 			}
 		}
 
-		void OnPathChanged() {
-            distanceTravelled = roadMeshCreator.pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-        }
-
 		void SetPosition() {
-			float coeff = 0;
-			switch (linePosition) {
-                case Position.Left:
-					coeff = -roadMeshCreator.roadWidth;
-					break;
-				case Position.Right:
-					coeff = roadMeshCreator.roadWidth;
-					break;
-                default:
-                    break;
-            }
-
+			//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
+			float coeff = (linePosition - center) * roadHolder.roadWidth / 2.0f;
 			if (linePosTransform != null) {
 				linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
 			}

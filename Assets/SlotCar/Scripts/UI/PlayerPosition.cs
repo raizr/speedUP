@@ -1,3 +1,4 @@
+using Assets.SlotCar.Scripts.Race;
 using TMPro;
 using UnityEngine;
 

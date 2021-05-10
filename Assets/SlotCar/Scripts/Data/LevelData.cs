@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Assets.SlotCar.Scripts.UI;
+using PathCreation;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.Data {
@@ -10,16 +12,14 @@ namespace Assets.SlotCar.Scripts.Data {
 		Slot
 	}
 
-	[Serializable]
-	public class LevelData {
+	[Serializable, CreateAssetMenu(fileName = "LevelData", menuName = "Data/Level")]
+	public class LevelData : ScriptableObject {
 		public int levelId;
+		public RaceType raceType;
 		public int laps;
-		public string prefabPath;
-		public int[] enemyCarsIds;
-	}
-
-	[CreateAssetMenu(fileName = "LevelsData", menuName = "Data/Levels")]
-	public class LevelsData : ScriptableObject {
-		public List<LevelData> levels;
+		public int lines;
+		public GameObject prefab;
+		public EnemyData[] enemyCars;
+		public int playerPosition;
 	}
 }

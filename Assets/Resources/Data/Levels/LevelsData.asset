@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: LevelsData
   m_EditorClassIdentifier: Assembly-CSharp:Assets.SlotCar.Scripts.Data:LevelsData
-  levels: []
+  levels:
+  - {fileID: 11400000, guid: 40017ab0b634d2549989016ce55bbbde, type: 2}

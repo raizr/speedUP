@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using Cinemachine;
 using DG.Tweening;
+using PathCreation;
 using UnityEngine;
 
-namespace Assets.SlotCar.Scripts {
+namespace Assets.SlotCar.Scripts.Race {
 	public class PlayerCar : PathFollower {
 		public int speedDownCoeff = 1;
 		[Header("Seconds")]
@@ -13,14 +14,25 @@ namespace Assets.SlotCar.Scripts {
 		private float cameraDistance;
 
 		new void Awake() {
+			linePosition = 2;
 			base.Awake();
-			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
-			cameraDistance = transposer.m_CameraDistance;
+		}
+
+		public void Init(RoadMeshCreator road, int carId, int position) {
+			base.Init(road, carId);
+			if (position > 0) {
+				linePosition = position;
+			}
 		}
 
 		// Start is called before the first frame update
 		new void Start() {
 			base.Start();
+			camera = GameInstance.Instance.camera;
+			if (camera) {
+				var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+				cameraDistance = transposer.m_CameraDistance;
+			}
 			StartCoroutine(SpeedTick());
 		}
 
@@ -43,6 +55,9 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		override public void OnIncrementSpeed(float duration) {
+			if (camera == null) {
+				return;
+			}
 			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
 			DOTween.To(() => transposer.m_CameraDistance,
 					x => transposer.m_CameraDistance = x,

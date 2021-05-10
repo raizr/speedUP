@@ -5,39 +5,33 @@ using UnityEngine;
 
 
 namespace PathCreation {
-    /// A vertex path is a collection of points (vertices) that lie along a bezier path.
-    /// This allows one to do things like move at a constant speed along the path,
-    /// which is not possible with a bezier path directly due to how they're constructed mathematically.
-
-    /// This class also provides methods for getting the position along the path at a certain distance or time
-    /// (where time = 0 is the start of the path, and time = 1 is the end of the path).
-    /// Other info about the path (tangents, normals, rotation) can also be retrieved in this manner.
-
-    public class VertexPath {
+    [Serializable]
+	public class VertexPath {
         #region Fields
 
-        public readonly PathSpace space;
-        public readonly bool isClosedLoop;
-        public readonly Vector3[] localPoints;
-        public readonly Vector3[] localTangents;
-        public readonly Vector3[] localNormals;
+        public PathSpace space;
+        public bool isClosedLoop;
+        public Vector3[] localPoints;
+        public Vector3[] localTangents;
+        public Vector3[] localNormals;
 
         /// Percentage along the path at each vertex (0 being start of path, and 1 being the end)
-        public readonly float[] times;
+        public float[] times;
         /// Total distance between the vertices of the polyline
-        public readonly float length;
+        public float length;
         /// Total distance from the first vertex up to each vertex in the polyline
-        public readonly float[] cumulativeLengthAtEachVertex;
+        public float[] cumulativeLengthAtEachVertex;
         /// Bounding box of the path
-        public readonly Bounds bounds;
+        public Bounds bounds;
         /// Equal to (0,0,-1) for 2D paths, and (0,1,0) for XZ paths
-        public readonly Vector3 up;
+        public Vector3 up;
 
         // Default values and constants:    
-        const int accuracy = 10; // A scalar for how many times bezier path is divided when determining vertex positions
-        const float minVertexSpacing = .01f;
-
-        Transform transform;
+		[SerializeField]
+		const int accuracy = 10; // A scalar for how many times bezier path is divided when determining vertex positions
+		[SerializeField]
+		const float minVertexSpacing = .01f;
+        public Transform transform;
 
         #endregion
 
@@ -159,7 +153,12 @@ namespace PathCreation {
         }
         public int NumPoints {
             get {
-                return localPoints.Length;
+				if (localPoints != null) {
+					return localPoints.Length;
+				}
+				else {
+					return 0;
+				}
             }
         }
 

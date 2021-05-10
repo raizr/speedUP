@@ -66,8 +66,7 @@ namespace Assets.SlotCar.Scripts.Utils {
 					path = "Assets" + path.Substring(Application.dataPath.Length);
 					obj = AssetDatabase.LoadAssetAtPath(path, typeof(DefaultAsset));
 					guid.stringValue = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(obj));
-				} else
-					Debug.LogError("The path must be in the Assets folder");
+				}
 			}
 		}
 	}

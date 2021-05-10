@@ -15,13 +15,16 @@ namespace Assets.SlotCar.Scripts.Data {
 		private void LoadProfile() {
 			if (!File.Exists(profilePath)) {
 				profile.playerName = "Player";
-				profile.currentCarId = "0";
+				profile.currentCarId = 0;
+				profile.currentLevel = 0;
 				profileStream = File.CreateText(profilePath);
 				profileStream.Write(JsonUtility.ToJson(profile));
 				profileStream.Flush();
 			}
-			string jsonString = File.ReadAllText(profilePath);
-			profile = JsonUtility.FromJson<ProfileData>(jsonString);
+			else {
+				string jsonString = File.ReadAllText(profilePath);
+				profile = JsonUtility.FromJson<ProfileData>(jsonString);
+			}
 		}
 
 		public void SaveProfile() {
@@ -33,6 +36,14 @@ namespace Assets.SlotCar.Scripts.Data {
 			}
 			profileStream.Write(JsonUtility.ToJson(profile));
 			profileStream.Flush();
+		}
+
+		public int GetCurrentLevelId() {
+			return profile.currentLevel;
+		}
+
+		public int GetCurrentCarId() {
+			return profile.currentCarId;
 		}
 	}
 }

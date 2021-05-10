@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0503615b561cf4687c48ba085b00b5, type: 3}
+  m_Name: EnemyDifficult
+  m_EditorClassIdentifier: 
+  easy:
+  - scrollFreqCounterMin: 3
+    scrollFreqCounterMax: 5
+    redChance: 30
+    yellowChance: 30
+    greenChance: 40
+  - scrollFreqCounterMin: 2
+    scrollFreqCounterMax: 5
+    redChance: 20
+    yellowChance: 30
+    greenChance: 50
+  normal:
+  - scrollFreqCounterMin: 2
+    scrollFreqCounterMax: 5
+    redChance: 20
+    yellowChance: 30
+    greenChance: 50
+  - scrollFreqCounterMin: 2
+    scrollFreqCounterMax: 5
+    redChance: 25
+    yellowChance: 30
+    greenChance: 45
+  hard:
+  - scrollFreqCounterMin: 2
+    scrollFreqCounterMax: 4
+    redChance: 15
+    yellowChance: 25
+    greenChance: 60
+  - scrollFreqCounterMin: 2
+    scrollFreqCounterMax: 4
+    redChance: 25
+    yellowChance: 25
+    greenChance: 55

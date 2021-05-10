@@ -1,3 +1,4 @@
+using Assets.SlotCar.Scripts.Race;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,18 +6,14 @@ using UnityEngine.UI;
 namespace Assets.SlotCar.Scripts.UI {
 
 	public class FinishRaceUI : MonoBehaviour {
-
-
-		public GameObject raceManager;
-		private IRaceManager interfaceRaceManager;
+		public RaceManager raceManager;
 		public Button retryButton;
 		public TextMeshProUGUI message;
 
 		// Start is called before the first frame update
 		void Awake() {
 			if (raceManager != null) {
-				interfaceRaceManager = raceManager.GetComponent<IRaceManager>();
-				retryButton.onClick.AddListener(interfaceRaceManager.RetryRace);
+				retryButton.onClick.AddListener(raceManager.RetryRace);
 			}
 		}
 

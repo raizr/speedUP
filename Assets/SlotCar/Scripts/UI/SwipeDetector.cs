@@ -1,12 +1,14 @@
+using Assets.SlotCar.Scripts.Data;
+using Assets.SlotCar.Scripts.Race;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts {
 	public class SwipeDetector : MonoBehaviour {
 		private Vector2 fingerDown;
 		private Vector2 fingerUp;
-		public SlotRace.PlayerCar car;
+		public PlayerCar car;
 		public bool detectSwipeOnlyAfterRelease = false;
-
+		private int maxLines;
 		public float SWIPE_THRESHOLD = 20f;
 
 		// Update is called once per frame
@@ -81,13 +83,13 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void OnSwipeLeft() {
-			if (car.linePosition > SlotRace.Position.Left) {
+			if (car.linePosition > 0) {
 				car.linePosition--;
 			}
 		}
 
 		void OnSwipeRight() {
-			if (car.linePosition < SlotRace.Position.Right) {
+			if (car.linePosition < maxLines) {
 				car.linePosition++;
 			}
 		}

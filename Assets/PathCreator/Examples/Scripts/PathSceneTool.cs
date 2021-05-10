@@ -2,19 +2,24 @@
 
 namespace PathCreation.Examples {
     [ExecuteInEditMode]
-    public abstract class PathSceneTool : MonoBehaviour
+    public class PathSceneTool : MonoBehaviour
     {
         public event System.Action onDestroyed;
         public PathCreator pathCreator;
         public bool autoUpdate = true;
-
-        protected VertexPath path {
-            get {
-                return pathCreator.path;
-            }
-        }
+		public RoadMeshCreator roadMeshCreator;
+		protected VertexPath path {
+			get {
+				return pathCreator.path;
+			}
+		}
 
         public void TriggerUpdate() {
+			if (roadMeshCreator != null) {
+				roadMeshCreator.pathChanged = true;
+				roadMeshCreator.path = path;
+				roadMeshCreator.PathUpdated();
+			}
             PathUpdated();
         }
 
@@ -25,6 +30,8 @@ namespace PathCreation.Examples {
             }
         }
 
-        protected abstract void PathUpdated();
+		protected virtual void PathUpdated() {
+
+		}
     }
 }

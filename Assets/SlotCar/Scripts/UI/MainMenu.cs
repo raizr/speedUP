@@ -1,10 +1,10 @@
+using Assets.SlotCar.Scripts.Race;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts.UI {
 	public class MainMenu : MonoBehaviour {
-		public GameObject raceManager;
-		private IRaceManager interfaceRaceManager;
+		public RaceManager raceManager;
 		public GameObject raceUI;
 		public Button startRaceButton;
 		void Awake() {
@@ -14,8 +14,7 @@ namespace Assets.SlotCar.Scripts.UI {
 		void StartRaceClick() {
 			raceUI.SetActive(true);
 			gameObject.SetActive(false);
-			interfaceRaceManager = raceManager.GetComponent<IRaceManager>();
-			interfaceRaceManager.StartRace();
+			raceManager.StartRace();
 		}
 	}
 }

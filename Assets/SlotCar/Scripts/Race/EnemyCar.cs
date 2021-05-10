@@ -1,44 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.ProBuilder.MeshOperations;
+using Assets.SlotCar.Scripts.Data;
+using PathCreation;
 using Random = UnityEngine.Random;
 
-namespace Assets.SlotCar.Scripts {
+namespace Assets.SlotCar.Scripts.Race {
 	public class EnemyCar : PathFollower {
 		public ScrollMiniGame scrollMiniGame;
-		public RaceManager raceManager;
-		public eEnemyAiPreset aiPreset = eEnemyAiPreset.Easy;
+		public EnemyAiPreset aiPreset = EnemyAiPreset.Easy;
 		public int enemyCount = 0;
 		public ScrollZone curZone;
 		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
-		// Start is called before the first frame update
+
 		new void Start() {
 			base.Start();
+			if (scrollMiniGame != null) {
+				scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
+			}
+		}
 
+		public void Init(RoadMeshCreator road, int count, int carId, int position) {
+			base.Init(road, carId);
+			enemyCount = count;
+			linePosition = position;
 			СhooseAiPreset();
-			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
-			tempRanges = (from value in zones select (int)(value)).ToList();
+			tempRanges = (from value in zones select (int) (value)).ToList();
 		}
 
 		void СhooseAiPreset() {
-			if (raceManager == null) {
-				return;
-			}
-			internalAiPreset = raceManager.difficultData.easy[0];
-			if (enemyCount > raceManager.difficultData.easy.Length) {
+			var difficultData = GameDataInstance.Instance.GetEnemyDifficult();
+			internalAiPreset = difficultData.easy[0];
+			if (enemyCount > difficultData.easy.Length) {
 				enemyCount = 0;
 			}
-			internalAiPreset = raceManager.difficultData.easy[enemyCount];
+			internalAiPreset = difficultData.easy[enemyCount];
 			switch (aiPreset) {
-				case eEnemyAiPreset.Normal:
-					internalAiPreset = raceManager.difficultData.normal[enemyCount];
+				case EnemyAiPreset.Normal:
+					internalAiPreset = difficultData.normal[enemyCount];
 					break;
-				case eEnemyAiPreset.Hard:
-					internalAiPreset = raceManager.difficultData.hard[enemyCount];
+				case EnemyAiPreset.Hard:
+					internalAiPreset = difficultData.hard[enemyCount];
 					break;
 			}
 		}
@@ -58,7 +61,8 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void SpeedAi() {
-			float distance = distanceTravelled - raceManager.playerCar.distanceTravelled;
+			float playerDistance = GameInstance.Instance.raceManager.playerCar.distanceTravelled;
+			float distance = distanceTravelled - playerDistance;
 			if (distance < -1) {
 				curZone = ScrollZone.Green;
 			} else if (distance > 3) {

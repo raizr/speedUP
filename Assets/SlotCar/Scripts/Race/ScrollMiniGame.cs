@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.SlotCar.Scripts.Race;
 using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using DG.Tweening.Core;

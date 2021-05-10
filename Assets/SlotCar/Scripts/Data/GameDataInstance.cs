@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Assets.SlotCar.Scripts.Race;
 using Assets.SlotCar.Scripts.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -9,11 +10,14 @@ namespace Assets.SlotCar.Scripts.Data {
 		private static int FoldersPathSize = "Assets/Resources/".Length;
 		public FileReference pathCars;
 		public FileReference pathLevels;
+		public FileReference pathEnemyDifficults;
 		private CarsData cars;
 		private LevelsData levels;
+		private EnemyDifficult difficultData;
 		public void Initialize() {
 			LoadCars();
 			LoadLevels();
+			LoadEnemyDifficult();
 		}
 		
 		private void LoadCars() {
@@ -24,17 +28,34 @@ namespace Assets.SlotCar.Scripts.Data {
 			levels = Resources.Load<LevelsData>(GetResourcePath(pathLevels.Path));
 		}
 
+		private void LoadEnemyDifficult() {
+			difficultData = Resources.Load<EnemyDifficult>(GetResourcePath(pathEnemyDifficults.Path));
+		}
+
 		private string GetResourcePath(string fullPath) {
 			var resourcePath = fullPath.Remove(0, FoldersPathSize);
 			return Path.GetDirectoryName(resourcePath) + "/" + Path.GetFileNameWithoutExtension(resourcePath);
 		}
 
-		List<CarData> GetCars() {
+		public List<CarData> GetCars() {
 			return cars.cars;
 		}
 
-		List<LevelData> GetLevels() {
+		public List<LevelData> GetLevels() {
 			return levels.levels;
 		}
+
+		public LevelData GetLevel(int id) {
+			return levels.levels[id];
+		}
+
+		public CarData GetCar(int id) {
+			return cars.cars[id];
+		}
+
+		public EnemyDifficult GetEnemyDifficult() {
+			return difficultData;
+		}
+
 	}
 }

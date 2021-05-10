@@ -1,26 +1,62 @@
-﻿using UnityEngine;
+﻿using System;
+using PathCreation.Examples;
+using UnityEngine;
+using UnityEngine.Windows.WebCam;
 
-namespace PathCreation.Examples {
-    public class RoadMeshCreator : PathSceneTool {
+namespace PathCreation {
+    [Serializable, ExecuteInEditMode]
+    public class RoadMeshCreator : MonoBehaviour {
         [Header ("Road settings")]
         public float roadWidth = .4f;
-        [Range (0, .5f)]
-        public float thickness = .15f;
-        public bool flattenSurface = true;
-
+        public float thickness {
+			get {
+				return _thickness;
+			}
+			set {
+				_thickness = value;
+				CreateRoadMesh();
+			}
+		}
+		public bool flattenSurface;
         [Header ("Material settings")]
         public Material roadMaterial;
         public Material undersideMaterial;
         public float textureTiling = 1;
+        [HideInInspector]
+		public VertexPath path;
 
         [SerializeField]
-        GameObject meshHolder;
-        MeshFilter meshFilter;
-        MeshRenderer meshRenderer;
-        Mesh mesh;
+		private float _thickness;
+        [SerializeField, HideInInspector]
+        private GameObject meshHolder;
+		[SerializeField]
+		private MeshFilter meshFilter;
+		[SerializeField]
+		private MeshRenderer meshRenderer;
+        [SerializeField]
+		private Mesh mesh;
+        public bool pathChanged = false;
+        void Awake() {
+			meshHolder = gameObject;
+			path.transform = this.transform;
+			pathChanged = true;
+			PathUpdated();
 
-        protected override void PathUpdated () {
-            if (pathCreator != null) {
+		}
+        
+		public void Update() {
+#if UNITY_EDITOR
+			PathUpdated();
+#endif
+		}
+        
+        public void PathUpdated () {
+			if (!pathChanged) {
+				return;
+			}
+			pathChanged = false;
+            meshHolder = gameObject;
+            if (path != null) {
                 AssignMeshComponents ();
                 AssignMaterials ();
                 CreateRoadMesh ();
@@ -61,8 +97,8 @@ namespace PathCreation.Examples {
                 verts[vertIndex + 0] = vertSideA;
                 verts[vertIndex + 1] = vertSideB;
                 // Add bottom of road vertices
-                verts[vertIndex + 2] = vertSideA - localUp * thickness;
-                verts[vertIndex + 3] = vertSideB - localUp * thickness;
+                verts[vertIndex + 2] = vertSideA - localUp * _thickness;
+                verts[vertIndex + 3] = vertSideB - localUp * _thickness;
 
                 // Duplicate vertices to get flat shading for sides of road
                 verts[vertIndex + 4] = verts[vertIndex + 0];

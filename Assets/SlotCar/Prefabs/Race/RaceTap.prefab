@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8622338296236895096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4485999242283813064}
+  - component: {fileID: 3527159784733702639}
+  m_Layer: 0
+  m_Name: RaceTap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4485999242283813064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8622338296236895096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.494254, y: 5.071453, z: -79.93933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3527159784733702639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8622338296236895096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3d38cb6ac1525438dd0c794db69d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadHolder: {fileID: 0}
+  enemyCarPrefab: {fileID: 5552113918740183245, guid: 917f11e2c0c9fb44485b5d1f567c45e6,
+    type: 3}
+  playerCarPrefab: {fileID: 2140008340268842605, guid: 36e3c9048ec2c9147b1dc12603c84519,
+    type: 3}
+  cars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyCars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  raceProgressSlider: {fileID: 0}
+  raceUI: {fileID: 0}
+  finishUI: {fileID: 0}
+  countdown: {fileID: 0}
+  finishBlast: {fileID: 0}
+  levelData: {fileID: 11400000, guid: 40017ab0b634d2549989016ce55bbbde, type: 2}
+  playerPosition: 0
+  playerCar: {fileID: 2140008340268842605, guid: 36e3c9048ec2c9147b1dc12603c84519,
+    type: 3}
+  slowdownLength: 2
+  slowDownFactor: 2
+  scrollGame: {fileID: 0}
+  allLaps: 3
+  accelerationOnStartTime: 2
+  startCheckPosTime: 1
