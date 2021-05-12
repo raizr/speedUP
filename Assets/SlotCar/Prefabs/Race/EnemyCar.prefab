@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2144117160180321438}
   - component: {fileID: 5552113918740183245}
+  - component: {fileID: 4012908423492400367}
   m_Layer: 0
   m_Name: EnemyCar
   m_TagString: Untagged
@@ -48,11 +49,12 @@ MonoBehaviour:
   wheelsDrive: {fileID: 0}
   linePosition: 1
   linePosTransform: {fileID: 0}
+  carPrefab: {fileID: 0}
   crown: {fileID: 6361475706141428564, guid: d163b4279288bf4408279ec03a5026ba, type: 3}
   speed: 0
   maxSpeed: 270
-  redZoneSpeed: 10
-  greenZoneSpeed: 25
+  redZoneSpeed: -10
+  greenZoneSpeed: 10
   yellowZoneSpeed: 15
   distanceTravelled: 0
   currentLap: 1
@@ -61,7 +63,23 @@ MonoBehaviour:
   accelerationOnStartTime: 2
   speedUpTime: 0.1
   state: 0
-  scrollMiniGame: {fileID: 0}
   aiPreset: 0
   enemyCount: 0
   curZone: 0
+--- !u!114 &4012908423492400367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697709221352238827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc5cff5638341642a45ec4ac088f8a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSteerAngle: 30
+  maxRotateAngle: 30
+  currentTorque: 0
+  steerAngle: 0
+  angle: 0
