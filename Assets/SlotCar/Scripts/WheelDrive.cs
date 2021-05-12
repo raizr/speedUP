@@ -16,9 +16,10 @@ public class WheelDrive : MonoBehaviour
 	private Transform[] m_Wheels;
 	// Find all the WheelColliders down in the hierarchy.
 	void Start() {
-		m_Wheels = new Transform[transform.childCount];
-		for (int i = 0; i < transform.childCount; i++) {
-			m_Wheels[i] = transform.GetChild(i);
+		var wheelTransform = transform.GetChild(0).GetChild(1);
+		m_Wheels = new Transform[wheelTransform.childCount];
+		for (int i = 0; i < wheelTransform.childCount; i++) {
+			m_Wheels[i] = wheelTransform.GetChild(i);
 		}
 	}
 
