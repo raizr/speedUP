@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts.UI {
 
-	public class FinishRaceUI : MonoBehaviour {
+	public class FinishRaceUI : UIBase {
 		public RaceManager raceManager;
 		public Button retryButton;
 		public TextMeshProUGUI message;

@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.UI {
 	public class PlayerPosition : MonoBehaviour {
-	
 		public RaceManager raceManager;
 		private TextMeshProUGUI text;
 
 		void Awake() {
+			raceManager = GameInstance.Instance.raceManager;
 			text = GetComponent<TextMeshProUGUI>();
 		}
 

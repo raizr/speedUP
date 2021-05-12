@@ -51,32 +51,17 @@ MonoBehaviour:
   cars:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   enemyCars:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  levelData: {fileID: 11400000, guid: 40017ab0b634d2549989016ce55bbbde, type: 2}
+  playerCar: {fileID: 0}
   raceProgressSlider: {fileID: 0}
-  raceUI: {fileID: 0}
-  finishUI: {fileID: 0}
   countdown: {fileID: 0}
   finishBlast: {fileID: 0}
-  levelData: {fileID: 11400000, guid: 40017ab0b634d2549989016ce55bbbde, type: 2}
   playerPosition: 0
-  playerCar: {fileID: 2140008340268842605, guid: 36e3c9048ec2c9147b1dc12603c84519,
-    type: 3}
-  slowdownLength: 2
-  slowDownFactor: 2
+  slowdownLength: 1
+  slowDownFactor: 0.05
   scrollGame: {fileID: 0}
   allLaps: 3
   accelerationOnStartTime: 2

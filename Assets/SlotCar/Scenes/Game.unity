@@ -1379,12 +1379,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90a424206a69804981d0840473c1bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 4449883285829194828, guid: 8a3e4580791d74d429152a8e96724fc6,
+  mainMenu: {fileID: 1705048254777878588, guid: be51155d75553394d8db0363948475c9,
     type: 3}
-  raceSlot: {fileID: 1525109061751929725, guid: 81fdcd61ee30fe943b8c314623dc2ff3,
-    type: 3}
-  raceTap: {fileID: 1867400870825741074, guid: 1039c65e3baa3614e9b98866393b154a, type: 3}
-  finishRace: {fileID: 5937586050674174492, guid: 89cf154e64a56d74988e86d30af48b58,
+  raceSlot: {fileID: 0}
+  raceTap: {fileID: 4890816299651701501, guid: 1039c65e3baa3614e9b98866393b154a, type: 3}
+  finishRace: {fileID: 5937586050674174494, guid: 89cf154e64a56d74988e86d30af48b58,
     type: 3}
 --- !u!1001 &7268376637248180983
 PrefabInstance:

@@ -6,20 +6,12 @@ using Random = UnityEngine.Random;
 
 namespace Assets.SlotCar.Scripts.Race {
 	public class EnemyCar : PathFollower {
-		public ScrollMiniGame scrollMiniGame;
 		public EnemyAiPreset aiPreset = EnemyAiPreset.Easy;
 		public int enemyCount = 0;
 		public ScrollZone curZone;
 		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
-
-		new void Start() {
-			base.Start();
-			if (scrollMiniGame != null) {
-				scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
-			}
-		}
-
+		
 		public void Init(RoadMeshCreator road, int count, int carId, int position) {
 			base.Init(road, carId);
 			enemyCount = count;
@@ -60,7 +52,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			return result;
 		}
 
-		void SpeedAi() {
+		public void SpeedAi() {
 			float playerDistance = GameInstance.Instance.raceManager.playerCar.distanceTravelled;
 			float distance = distanceTravelled - playerDistance;
 			if (distance < -1) {

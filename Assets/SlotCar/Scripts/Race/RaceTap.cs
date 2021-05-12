@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Assets.SlotCar.Scripts.Data;
+using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using UnityEngine;
 
@@ -18,17 +20,29 @@ namespace Assets.SlotCar.Scripts.Race {
 		void Start() {
 		}
 
-		public override void Init(LevelData levelData) {
-			base.Init(levelData);
+		public override void Init(LevelData aLevelData) {
+			base.Init(aLevelData);
+			InitUI();
 			if (raceProgressSlider != null) {
 				raceProgressSlider.maxValue = allLaps;
 				raceProgressSlider.value = 0.0f;
 			}
+		}
 
-			if (finishUI != null) {
-				finishUI.gameObject.SetActive(false);
+		private void InitUI() {
+			var raceTapUI = GameInstance.Instance.uiController.GetUI(GameState.RaceTap) as RaceTapUI;
+			if (raceTapUI == null) {
+				return;
 			}
 
+			raceTapUI.scrollMiniGame.car = playerCar;
+			foreach (var enemy in enemyCars) {
+				raceTapUI.scrollMiniGame.zoneCompleteEvent.AddListener(enemy.SpeedAi);
+			}
+			scrollGame = raceTapUI.scrollMiniGame;
+			raceProgressSlider = raceTapUI.raceProgressSlider;
+			countdown = raceTapUI.countdown;
+			raceTapUI.carSpeed.car = playerCar;
 		}
 
 		void FixedUpdate() {
@@ -84,9 +98,9 @@ namespace Assets.SlotCar.Scripts.Race {
 			foreach (var car in cars) {
 				car.ResetValues();
 			}
-			raceUI.gameObject.SetActive(true);
+			//raceUI.gameObject.SetActive(true);
 			countdown.gameObject.SetActive(true);
-			finishUI.gameObject.SetActive(false);
+			//finishUI.gameObject.SetActive(false);
 			scrollGame.ResetProgress();
 			StartRace();
 		}

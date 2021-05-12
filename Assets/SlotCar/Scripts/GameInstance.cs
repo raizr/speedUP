@@ -54,10 +54,21 @@ namespace Assets.SlotCar.Scripts {
 		void InitRace() {
 			var currentLevel = gameDataInstance.GetLevel(playerProfile.GetCurrentLevelId());
 			if (currentLevel.raceType == RaceType.Tap) {
-				raceManager = raceTap;
+				raceManager = Instantiate(raceTap);
 			}
 			raceManager.roadHolder = levelHolder.GetComponent<RoadMeshCreator>();
 			raceManager.Init(currentLevel);
+		}
+
+		public void SwitchTo(GameState aGameState) {
+			gameState = aGameState;
+			uiController.EnableUI(gameState);
+			switch (aGameState) {
+				case GameState.RaceTap:
+					raceManager.StartRace();
+					break;
+
+			}
 		}
 
 		// Update is called once per frame
