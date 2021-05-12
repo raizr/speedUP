@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7268376637406678991}
   - component: {fileID: 7268376637406678988}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Level_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275c3b78f8717c4cbc60f74a3247f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roadWidth: 2
+  roadWidth: 2.5
   flattenSurface: 0
   roadMaterial: {fileID: 2100000, guid: b5df4735192845740bd11076dc9cdc99, type: 2}
   undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
