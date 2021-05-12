@@ -67,7 +67,7 @@ namespace Assets.SlotCar.Scripts {
 			linePosTransform.SetParent(transform);
 
 			crown = Instantiate(crown, Vector3.zero, Quaternion.identity);
-			crown.transform.SetParent(transform);
+			crown.transform.SetParent(carPrefab.transform);
 			crown.SetActive(false);
 
 			center = (float)Math.Ceiling(GameInstance.Instance.raceManager.levelData.lines / 2.0f);
