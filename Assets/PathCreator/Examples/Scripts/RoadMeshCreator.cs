@@ -8,6 +8,8 @@ namespace PathCreation {
     public class RoadMeshCreator : MonoBehaviour {
         [Header ("Road settings")]
         public float roadWidth = .4f;
+		public int startLineLength = 1;
+		public int startLineOffset = 3;
         public float thickness {
 			get {
 				return _thickness;
@@ -21,6 +23,7 @@ namespace PathCreation {
         [Header ("Material settings")]
         public Material roadMaterial;
         public Material undersideMaterial;
+		public Material startLineMaterial;
         public float textureTiling = 1;
         [HideInInspector]
 		public VertexPath path;
@@ -70,6 +73,7 @@ namespace PathCreation {
 
             int numTris = 2 * (path.NumPoints - 1) + ((path.isClosedLoop) ? 2 : 0);
             int[] roadTriangles = new int[numTris * 3];
+			int[] startLineTriangles = new int[numTris * 3];
             int[] underRoadTriangles = new int[numTris * 3];
             int[] sideOfRoadTriangles = new int[numTris * 2 * 3];
 
@@ -126,7 +130,12 @@ namespace PathCreation {
                 // Set triangle indices
                 if (i < path.NumPoints - 1 || path.isClosedLoop) {
                     for (int j = 0; j < triangleMap.Length; j++) {
-                        roadTriangles[triIndex + j] = (vertIndex + triangleMap[j]) % verts.Length;
+						if (i < startLineLength && i > startLineOffset) {
+							startLineTriangles[triIndex + j] = (vertIndex + triangleMap[j]) % verts.Length;
+                        }
+						else {
+                            roadTriangles[triIndex + j] = (vertIndex + triangleMap[j]) % verts.Length;
+						}
                         // reverse triangle map for under road so that triangles wind the other way and are visible from underneath
                         underRoadTriangles[triIndex + j] = (vertIndex + triangleMap[triangleMap.Length - 1 - j] + 2) % verts.Length;
                     }
@@ -144,13 +153,14 @@ namespace PathCreation {
             mesh.vertices = verts;
             mesh.uv = uvs;
             mesh.normals = normals;
-            mesh.subMeshCount = 3;
+            mesh.subMeshCount = 4;
             mesh.SetTriangles (roadTriangles, 0);
             mesh.SetTriangles (underRoadTriangles, 1);
             mesh.SetTriangles (sideOfRoadTriangles, 2);
-			mesh.OptimizeIndexBuffers();
+			mesh.SetTriangles(startLineTriangles, 3);
+            mesh.OptimizeIndexBuffers();
 			mesh.Optimize();
-            mesh.RecalculateBounds ();
+            mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
         }
 
@@ -178,7 +188,7 @@ namespace PathCreation {
 
         void AssignMaterials () {
             if (roadMaterial != null && undersideMaterial != null) {
-                meshRenderer.sharedMaterials = new Material[] { roadMaterial, undersideMaterial, undersideMaterial };
+                meshRenderer.sharedMaterials = new Material[] { roadMaterial, undersideMaterial, undersideMaterial, startLineMaterial };
                 meshRenderer.sharedMaterials[0].mainTextureScale = new Vector3 (1, textureTiling);
             }
         }

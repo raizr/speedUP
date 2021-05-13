@@ -60,6 +60,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			playerCar.Init(roadHolder, PlayerProfile.Instance.profile.currentCarId, levelData.playerPosition);
 			cars.Add(playerCar);
 			GameInstance.Instance.camera.m_Follow = playerCar.transform;
+			finishBlast = roadHolder.gameObject.GetComponent<FinishBlast>();
 		}
 
 		public virtual void StartRace() {
