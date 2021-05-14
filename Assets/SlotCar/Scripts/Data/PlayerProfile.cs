@@ -45,5 +45,13 @@ namespace Assets.SlotCar.Scripts.Data {
 		public int GetCurrentCarId() {
 			return profile.currentCarId;
 		}
+
+		public override void OnDestroy() {
+			if (profileStream != null) {
+				profileStream.Flush();
+				profileStream.Close();
+			} 
+			base.OnDestroy();
+		}
 	}
 }

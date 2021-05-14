@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Race;
 using Assets.SlotCar.Scripts.UI;
@@ -14,6 +15,7 @@ namespace Assets.SlotCar.Scripts {
 		public UIController uiController;
 		public GameObject roadHolder;
 		public static event Action OnAppQuit;
+		[HideInInspector]
 		public RaceManager raceManager;
 		public RaceTap raceTap;
 
@@ -34,13 +36,14 @@ namespace Assets.SlotCar.Scripts {
 
 		// Start is called before the first frame update
 		void Start() {
-			SpawnCurrentLevel();
-			InitRace();
-			uiController.EnableUI(gameState);
+			SwitchTo(gameState);
 		}
 
 		void SpawnCurrentLevel() {
 			var currentLevel = gameDataInstance.GetLevel(playerProfile.GetCurrentLevelId());
+			if (levelHolder != null) {
+				Destroy(levelHolder);
+			}
 			levelHolder = Instantiate(currentLevel.prefab, new Vector3(0, 0, 0), Quaternion.identity);
 			levelHolder.transform.SetParent(roadHolder.transform);
 		}
@@ -53,9 +56,17 @@ namespace Assets.SlotCar.Scripts {
 
 		void InitRace() {
 			var currentLevel = gameDataInstance.GetLevel(playerProfile.GetCurrentLevelId());
-			if (currentLevel.raceType == RaceType.Tap) {
-				raceManager = Instantiate(raceTap);
+			if (raceManager != null) {
+				if (raceManager.type != currentLevel.raceType) {
+					Destroy(raceManager);
+				}
 			}
+			else {
+				if (currentLevel.raceType == RaceType.Tap) {
+					raceManager = Instantiate(raceTap);
+				}
+			}
+			SpawnCurrentLevel();
 			raceManager.roadHolder = levelHolder.GetComponent<RoadMeshCreator>();
 			raceManager.Init(currentLevel);
 		}
@@ -67,7 +78,9 @@ namespace Assets.SlotCar.Scripts {
 				case GameState.RaceTap:
 					raceManager.StartRace();
 					break;
-
+				case GameState.Main:
+					InitRace();
+					break;
 			}
 		}
 

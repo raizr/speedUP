@@ -10,20 +10,18 @@ namespace Assets.SlotCar.Scripts.UI {
 		public Button retryButton;
 		public TextMeshProUGUI message;
 
-		// Start is called before the first frame update
-		void Awake() {
+		public override void Show() {
+			base.Show();
+			raceManager = GameInstance.Instance.raceManager;
 			if (raceManager != null) {
-				retryButton.onClick.AddListener(raceManager.RetryRace);
-			}
-		}
-
-		public void ShowUI(FinishResult result) {
-			gameObject.SetActive(true);
-			if (result == FinishResult.WIN) {
-				message.text = "You Win";
-			}
-			else {
-				message.text = "You lose";
+				retryButton.onClick.AddListener(() => {
+					GameInstance.Instance.SwitchTo(GameState.Main);
+				});
+				if (raceManager.finishResult == FinishResult.WIN) {
+					message.text = "You Win";
+				} else {
+					message.text = "You lose";
+				}
 			}
 		}
 	}

@@ -24,6 +24,7 @@ namespace Assets.SlotCar.Scripts.Race {
 	}
 
 	public class RaceManager : MonoBehaviour {
+		public RaceType type = RaceType.Tap;
 		public RoadMeshCreator roadHolder;
 		public EnemyCar enemyCarPrefab;
 		public PlayerCar playerCarPrefab;
@@ -42,13 +43,19 @@ namespace Assets.SlotCar.Scripts.Race {
 		public float slowdownLength = 1.0f;
 		public float slowDownFactor = 0.05f;
 
+		public FinishResult finishResult = FinishResult.LOSE;
+		
 		protected RaceState state = RaceState.PAUSE;
-		protected FinishResult finishResult = FinishResult.LOSE;
+		
 		public virtual void Init(LevelData aLevelData) {
 			levelData = aLevelData;
 			int i = 0;
 			cars.Clear();
 			enemyCars.Clear();
+			foreach (var car in cars) {
+				Destroy(car);
+			}
+
 			foreach (var enemyData in levelData.enemyCars) {
 				var enemy = Instantiate(enemyCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 				enemy.Init(roadHolder, i, enemyData.carId, enemyData.lineNumber);
@@ -64,6 +71,10 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		public virtual void StartRace() {
+
+		}
+
+		public virtual void ResetRace() {
 
 		}
 

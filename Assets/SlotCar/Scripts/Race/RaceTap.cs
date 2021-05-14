@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.Race {
@@ -14,13 +15,8 @@ namespace Assets.SlotCar.Scripts.Race {
 		public float startCheckPosTime = 1.0f;
 		private bool checkPos = false;
 
-		void Awake() {
-		}
-
-		void Start() {
-		}
-
 		public override void Init(LevelData aLevelData) {
+			type = RaceType.Tap;
 			base.Init(aLevelData);
 			InitUI();
 			if (raceProgressSlider != null) {
@@ -90,19 +86,27 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		public void FinisRace(FinishResult result) {
+			if (result == FinishResult.WIN) {
+				PlayerProfile.Instance.profile.currentLevel++;
+				PlayerProfile.Instance.SaveProfile();
+			}
 			PauseRace();
 			finishResult = result;
 		}
 
-		public override void RetryRace() {
+		public override void ResetRace() {
 			foreach (var car in cars) {
 				car.ResetValues();
 			}
-			//raceUI.gameObject.SetActive(true);
-			countdown.gameObject.SetActive(true);
-			//finishUI.gameObject.SetActive(false);
 			scrollGame.ResetProgress();
-			StartRace();
+		}
+
+		public override void RetryRace() {
+			ResetRace();
+		}
+
+		public override void FinishRace() {
+			ResetRace();
 		}
 
 		void StopScrollGame() {
