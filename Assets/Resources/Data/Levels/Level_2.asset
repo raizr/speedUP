@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a0126cff8dd8a4f97b4cace9859efb, type: 3}
+  m_Name: Level_2
+  m_EditorClassIdentifier: 
+  levelId: 1
+  raceType: 0
+  laps: 2
+  lines: 3
+  prefab: {fileID: 6068409222959906703, guid: 5b5fdc2725288f340834f0b0dc183aa6, type: 3}
+  enemyCars:
+  - carId: 1
+    lineNumber: 1
+  - carId: 2
+    lineNumber: 3
+  playerPosition: 0

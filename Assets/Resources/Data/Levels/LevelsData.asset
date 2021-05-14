@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Assets.SlotCar.Scripts.Data:LevelsData
   levels:
   - {fileID: 11400000, guid: 40017ab0b634d2549989016ce55bbbde, type: 2}
+  - {fileID: 11400000, guid: 643bb5a0d87f62a41904643bd0d272cf, type: 2}
