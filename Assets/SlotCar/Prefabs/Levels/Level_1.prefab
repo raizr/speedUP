@@ -66,7 +66,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: b5df4735192845740bd11076dc9cdc99, type: 2}
   - {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
   - {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
-  - {fileID: 2100000, guid: bfcbb0976d8ce6247805be82870a8833, type: 2}
+  - {fileID: 2100000, guid: 58fc802d26fb5e94693af7fae618d3da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   flattenSurface: 0
   roadMaterial: {fileID: 2100000, guid: b5df4735192845740bd11076dc9cdc99, type: 2}
   undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
-  startLineMaterial: {fileID: 2100000, guid: bfcbb0976d8ce6247805be82870a8833, type: 2}
+  startLineMaterial: {fileID: 2100000, guid: 58fc802d26fb5e94693af7fae618d3da, type: 2}
   textureTiling: 1
   path:
     space: 0
