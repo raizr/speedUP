@@ -23,10 +23,15 @@ namespace Assets.SlotCar.Scripts {
 		public Canvas greenZone;
 		public RectTransform handle;
 		public PopupManager pointsPopup;
-		public float moveTime = 2.0f;
+		public HandleBounce scrollHandle;
+
+		public ParticleSystem greenZoneFX;
+		public ParticleSystem yellowZoneFX;
+		public ParticleSystem redZoneFX;
+
+		private float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
-		public int pointMulitpliers = 1;
 
 		private StateScrollGame state = StateScrollGame.Stop;
 		[HideInInspector]
@@ -37,22 +42,23 @@ namespace Assets.SlotCar.Scripts {
 
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
+			button.interactable = false;
+			moveTime = maxMoveTime;
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
 			if (currentState == StateScrollGame.Start) {
+				button.interactable = true;
 				GenerateZonePos();
 			}
 			state = currentState;
 		}
 
-		void Start() {
-			//GenerateZonePos();
-		}
 		private void SpeedUpClick() {
 			moveHandle.Kill();
 			ScrollZone zone = GetCurrentZone();
 			SetFxByZone(zone);
+			scrollHandle.BounceAnimation();
 			state = StateScrollGame.Stop;
 			GenerateZonePos();
 		}
@@ -97,20 +103,21 @@ namespace Assets.SlotCar.Scripts {
 				case ScrollZone.Yellow:
 					car.SpeedUp(zone);
 					pointsPopup.ShowPopup("Well", Color.yellow);
-					pointMulitpliers = 1;
+					yellowZoneFX.Play();
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
 					car.SpeedUpByGreenZone();
 					pointsPopup.ShowPopup("Perfect", Color.green);
 					moveTime = Math.Max(moveTime - 0.2f, minMoveTime);
+					greenZoneFX.Play();
 					break;
 				default:
-					pointsPopup.ShowPopup("Bad", Color.red);
+					pointsPopup.ShowPopup("Miss", Color.red);
 					carSpeedText.bounceAnimationRed();
 					car.SpeedUp(zone);
-					pointMulitpliers = 1;
 					moveTime = Math.Min(moveTime + 0.2f, maxMoveTime);
+					redZoneFX.Play();
 					break;
 			}
 		}
@@ -120,6 +127,7 @@ namespace Assets.SlotCar.Scripts {
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
 			state = StateScrollGame.Stop;
 			moveTime = maxMoveTime;
+			button.interactable = false;
 		}
 	}
 }

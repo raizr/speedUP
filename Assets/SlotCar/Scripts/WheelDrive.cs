@@ -1,93 +1,53 @@
 ﻿using UnityEngine;
 using System;
 
-[Serializable]
-public enum DriveType
-{
-	RearWheelDrive,
-	FrontWheelDrive,
-	AllWheelDrive
-}
-
 public class WheelDrive : MonoBehaviour
 {
     [Tooltip("Maximum steering angle of the wheels")]
-	public float maxAngle = 30f;
-	[Tooltip("Maximum torque applied to the driving wheels")]
-	public float maxTorque = 300f;
-	[Tooltip("Maximum brake torque applied to the driving wheels")]
-	public float brakeTorque = 30000f;
-
-	[Tooltip("The vehicle's speed when the physics engine can use different amount of sub-steps (in m/s).")]
-	public float criticalSpeed = 5f;
-	[Tooltip("Simulation sub-steps when the speed is above critical.")]
-	public int stepsBelow = 5;
-	[Tooltip("Simulation sub-steps when the speed is below critical.")]
-	public int stepsAbove = 1;
-
-	[Tooltip("The vehicle's drive type: rear-wheels drive, front-wheels drive or all-wheels drive.")]
-	public DriveType driveType = DriveType.AllWheelDrive;
-
+	public float maxSteerAngle = 30f;
+	public float maxRotateAngle = 30.0f;
 	public float currentTorque = 0.0f;
-	public float steerAngle = 0.0f;
+	public float steerAngle;
+	private Quaternion rotateSteer;
+	private Quaternion rotateReerSteer;
+	public float angle;
+	private float rotateAngle;
 
-	private WheelCollider[] m_Wheels;
-
-    // Find all the WheelColliders down in the hierarchy.
-	void Start()
-	{
-		m_Wheels = GetComponentsInChildren<WheelCollider>();
-
-		for (int i = 0; i < m_Wheels.Length; ++i) 
-		{
-			var wheel = m_Wheels [i];
+	private Transform[] m_Wheels;
+	// Find all the WheelColliders down in the hierarchy.
+	void Start() {
+		m_Wheels = new Transform[transform.childCount];
+		for (int i = 0; i < transform.childCount; i++) {
+			m_Wheels[i] = transform.GetChild(i);
 		}
 	}
 
-	// This is a really simple approach to updating wheels.
-	// We simulate a rear wheel drive car and assume that the car is perfectly symmetric at local zero.
-	// This helps us to figure our which wheels are front ones and which are rear.
 	void Update()
 	{
-		m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepsBelow, stepsAbove);
-
-		float angle = maxAngle * steerAngle;
-		float torque = maxTorque * currentTorque;
-
-		float handBrake = currentTorque == 0 ? brakeTorque : 0;
-
-		foreach (WheelCollider wheel in m_Wheels)
-		{
-			// A simple car where front wheels steer while rear ones drive.
-			if (wheel.transform.localPosition.z > 0)
-				wheel.steerAngle = angle;
-			
-			wheel.brakeTorque = handBrake;
-			if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
-			{
-				wheel.motorTorque = torque;
-			}
-
-			if (wheel.transform.localPosition.z >= 0 && driveType != DriveType.RearWheelDrive)
-			{
-				wheel.motorTorque = torque;
-			}
-
-			// Update visual wheels if any.
-			Quaternion q;
-			Vector3 p;
-			wheel.GetWorldPose(out p, out q);
-
-			// Assume that the only child of the wheelcollider is the wheel shape.
+		angle = maxSteerAngle * steerAngle;
+		var wAngle = currentTorque * maxRotateAngle;
+		if (rotateAngle + wAngle >= 360.0f) {
+			rotateAngle = 0.0f;
+		}
+		rotateAngle += wAngle;
+		rotateSteer = Quaternion.Euler(rotateAngle, angle, 0.0f);
+		rotateReerSteer = Quaternion.Euler(rotateAngle, 0.0f, 0.0f);
+		foreach (Transform wheel in m_Wheels) {
 			Transform shapeTransform = wheel.transform.GetChild(0);
-
-			if (wheel.name == "a0l" || wheel.name == "a1l" || wheel.name == "a2l") {
-				shapeTransform.rotation = q * Quaternion.Euler(0, 180, 0);
-				shapeTransform.position = p;
-			} else {
-				shapeTransform.position = p;
-				shapeTransform.rotation = q;
+			if (wheel.localPosition.z > 0) {
+				RotateWheel(wheel.name, shapeTransform, rotateSteer);
 			}
+			else {
+				RotateWheel(wheel.name, shapeTransform, rotateReerSteer);
+			}
+		}
+	}
+
+	void RotateWheel(String name, Transform shapeTransform, Quaternion rotateSteer) {
+		if (name == "a0l" || name == "a1l") {
+			shapeTransform.localRotation = rotateSteer * Quaternion.Euler(0, 180, 0);
+		} else {
+			shapeTransform.localRotation = rotateSteer;
 		}
 	}
 }

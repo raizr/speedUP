@@ -10,6 +10,13 @@ namespace Assets.SlotCar.Scripts {
 		public float timeSpeedDown = 1.0f;
 		public CinemachineVirtualCamera camera;
 		public float greenZoneSpeedUpTime = 1.0f;
+		private float cameraDistance;
+
+		new void Awake() {
+			base.Awake();
+			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+			cameraDistance = transposer.m_CameraDistance;
+		}
 
 		// Start is called before the first frame update
 		new void Start() {
@@ -39,13 +46,12 @@ namespace Assets.SlotCar.Scripts {
 			var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
 			DOTween.To(() => transposer.m_CameraDistance,
 					x => transposer.m_CameraDistance = x,
-					12, duration).SetEase(Ease.OutQuad)
+					cameraDistance + 2, 0.7f)
 				.OnComplete(() => {
 					DOTween.To(() => transposer.m_CameraDistance,
 						x => transposer.m_CameraDistance = x,
-						8, 1.0f);
+						cameraDistance, 0.3f);
 				});
 		}
-
-}
+	}
 }

@@ -26,6 +26,7 @@ namespace Assets.SlotCar.Scripts {
 		public Position linePosition = Position.Center;
 		public Transform linePosTransform;
 		public GameObject crown;
+		private EngineSound soundEngine;
 
 		public int speed = 0;
 		public int maxSpeed = 270;
@@ -39,12 +40,19 @@ namespace Assets.SlotCar.Scripts {
 		public float distanceTravelled;
 		public int currentLap = 1;
 		public float currentTravelled;
-
+		[Header("% max speed")]
 		public float accelerationOnStart = 20.0f;
 		public float accelerationOnStartTime = 2.0f;
 		public float speedUpTime = 0.1f;
 		private float maxSpeedCoeff;
 		public RaceState state = RaceState.PAUSE;
+
+		public void Awake() {
+			soundEngine = GetComponent<EngineSound>();
+			if (soundEngine != null) {
+				//soundEngine.maxRPMLimit = maxSpeed;
+			}
+		}
 
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
@@ -66,8 +74,12 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void Update() {
-				SetCurrentPositionOnRoad();
-				CheckCurrentLap();
+			SetPosition();
+			SetCurrentPositionOnRoad();
+			CheckCurrentLap();
+			if (soundEngine != null) {
+				soundEngine.engineCurrentRPM = speed;
+			}
 		}
 
 		public virtual void SetCurrentPositionOnRoad() {

@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +21,7 @@ namespace Assets.SlotCar.Scripts {
 		LOSE
 	}
 
-	public class RaceManager : MonoBehaviour {
+	public class RaceManager : MonoBehaviour, IRaceManager {
 		public List<PathFollower> cars;
 		public PlayerCar playerCar;
 		public TextAsset jsonFile;
@@ -29,12 +31,18 @@ namespace Assets.SlotCar.Scripts {
 		public Countdown countdown;
 		public GameObject raceUI;
 		public FinishRaceUI finishUI;
+		public FinishBlast finishBlast;
 		public int playerPosition;
 		public int AllPositions => cars.Count;
 		public int allLaps = 3;
 		private RaceState state = RaceState.PAUSE;
 		public float accelerationOnStartTime = 2.0f;
-			// Start is called before the first frame update
+		public float slowdownLength = 2.0f;
+		public float slowDownFactor = 2.0f;
+		private FinishResult finishResult = FinishResult.LOSE;
+		public float startCheckPosTime = 1.0f;
+		private bool checkPos = false;
+
 		void Awake() {
 			raceProgressSlider.maxValue = allLaps;
 			raceProgressSlider.value = 0.0f;
@@ -45,7 +53,6 @@ namespace Assets.SlotCar.Scripts {
 		void Start() {
 		}
 
-		// Update is called once per frame
 		void FixedUpdate() {
 			if (state == RaceState.RACE) {
 				CheckPositions();
@@ -59,8 +66,25 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			StartCoroutine("SetStartScrollGame");
+			StartScrollGame();
+			StartCoroutine(SetStartChecPos());
 			SetCarsState(state);
+		}
+
+		IEnumerator SetStartScrollGame() {
+			yield return new WaitForSeconds(accelerationOnStartTime);
+			StartScrollGame();
+		}
+
+		IEnumerator SetStartChecPos() {
+			yield return new WaitForSeconds(startCheckPosTime);
+			checkPos = true;
+		}
+
+		void StartScrollGame() {
+			if (state == RaceState.RACE) {
+				scrollGame.SetCurrentState(StateScrollGame.Start);
+			}
 		}
 
 		void StartCountdown() {
@@ -71,14 +95,11 @@ namespace Assets.SlotCar.Scripts {
 		public void PauseRace() {
 			state = RaceState.PAUSE;
 			StopScrollGame();
-			//SetCarsState(state);
 		}
 
 		public void FinisRace(FinishResult result) {
 			PauseRace();
-
-			finishUI.ShowUI(result);
-			raceUI.gameObject.SetActive(false);
+			finishResult = result;
 		}
 
 		public void RetryRace() {
@@ -92,22 +113,14 @@ namespace Assets.SlotCar.Scripts {
 			StartRace();
 		}
 
-		IEnumerator SetStartScrollGame() {
-			yield return new WaitForSeconds(accelerationOnStartTime);
-			StartScrollGame();
-		}
-
-		void StartScrollGame() {
-			if (state == RaceState.RACE) {
-				scrollGame.SetCurrentState(StateScrollGame.Start);
-			}
-		}
-
 		void StopScrollGame() {
 			scrollGame.SetCurrentState(StateScrollGame.Stop);
 		}
 
 		void CheckPositions() {
+			if (!checkPos) {
+				return;
+			}
 			cars = cars.OrderBy( o => o.distanceTravelled).ToList();
 			playerPosition = cars.Count - cars.IndexOf(playerCar);
 			foreach (var car in cars) {
@@ -127,12 +140,28 @@ namespace Assets.SlotCar.Scripts {
 				FinishResult result = (firstCar == playerCar) ? FinishResult.WIN : FinishResult.LOSE;
 				FinisRace(result);
 			}
+
+			if (playerCar.currentTravelled >= allLaps - 0.03) {
+				DoSlowMotion();
+			}
 		}
 
 		void SetCarsState(RaceState st) {
 			foreach (var car in cars) {
 				car.SetStateRace(st);
 			}
+		}
+		public void DoSlowMotion() {
+			raceUI.gameObject.SetActive(false);
+			finishBlast.StartFinishBlast();
+			DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
+				slowDownFactor, slowdownLength / 2.0f)
+				.OnComplete(() => {
+					DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
+						1.0f, slowdownLength / 2.0f);
+					Time.fixedDeltaTime = 0.02f;
+					finishUI.ShowUI(finishResult);
+				});
 		}
 	}
 }

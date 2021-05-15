@@ -18,13 +18,13 @@ namespace Assets.SlotCar.Scripts {
 		new void Start() {
 			base.Start();
 
-			chooseAiPreset();
+			СhooseAiPreset();
 			scrollMiniGame.zoneCompleteEvent.AddListener(SpeedAi);
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int)(value)).ToList();
 		}
 
-		void chooseAiPreset() {
+		void СhooseAiPreset() {
 			if (raceManager == null) {
 				return;
 			}
