@@ -39,6 +39,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		public FinishBlast finishBlast;
 		public int playerPosition;
 		public int AllPositions => cars.Count;
+		public int allLaps = 3;
 
 		public float slowdownLength = 1.0f;
 		public float slowDownFactor = 0.05f;
@@ -46,16 +47,18 @@ namespace Assets.SlotCar.Scripts.Race {
 		public FinishResult finishResult = FinishResult.LOSE;
 		
 		protected RaceState state = RaceState.PAUSE;
-		
+		private bool slowMotionStarted = false;
 		public virtual void Init(LevelData aLevelData) {
 			levelData = aLevelData;
+			allLaps = levelData.laps;
 			int i = 0;
+			foreach (var car in cars) {
+				if (car != null) {
+					Destroy(car.gameObject);
+				}
+			}
 			cars.Clear();
 			enemyCars.Clear();
-			foreach (var car in cars) {
-				Destroy(car);
-			}
-
 			foreach (var enemyData in levelData.enemyCars) {
 				var enemy = Instantiate(enemyCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 				enemy.Init(roadHolder, i, enemyData.carId, enemyData.lineNumber);
@@ -87,6 +90,11 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		public void DoSlowMotion() {
+			if (slowMotionStarted) {
+				return;
+			}
+
+			slowMotionStarted = true;
 			GameInstance.Instance.uiController.HideUI();
 			if (finishBlast != null) {
 				finishBlast.StartFinishBlast();
@@ -94,6 +102,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
 					slowDownFactor, slowdownLength / 2.0f)
 				.OnComplete(() => {
+					slowMotionStarted = false;
 					DOTween.To(() => Time.timeScale, x => Time.timeScale = x,
 						1.0f, slowdownLength / 2.0f);
 					Time.fixedDeltaTime = 0.02f;

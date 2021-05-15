@@ -11,6 +11,9 @@ namespace Assets.SlotCar.Scripts.UI {
 		public TextMeshProUGUI message;
 
 		public override void Show() {
+			if (isShowed) {
+				return;
+			}
 			base.Show();
 			raceManager = GameInstance.Instance.raceManager;
 			if (raceManager != null) {

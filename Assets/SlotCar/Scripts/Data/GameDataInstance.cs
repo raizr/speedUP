@@ -46,10 +46,16 @@ namespace Assets.SlotCar.Scripts.Data {
 		}
 
 		public LevelData GetLevel(int id) {
+			if (id > levels.levels.Count - 1) {
+				return levels.levels[0];
+			}
 			return levels.levels[id];
 		}
 
 		public CarData GetCar(int id) {
+			if (id > cars.cars.Count - 1) {
+				return cars.cars[0];
+			}
 			return cars.cars[id];
 		}
 

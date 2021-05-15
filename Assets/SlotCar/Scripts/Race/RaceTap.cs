@@ -10,7 +10,6 @@ using UnityEngine;
 namespace Assets.SlotCar.Scripts.Race {
 	public class RaceTap : RaceManager {
 		public ScrollMiniGame scrollGame;
-		public int allLaps = 3;
 		public float accelerationOnStartTime = 2.0f;
 		public float startCheckPosTime = 1.0f;
 		private bool checkPos = false;

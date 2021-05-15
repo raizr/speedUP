@@ -118,12 +118,13 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void SetPosition() {
-			//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
-			float coeff = (linePosition - center) * roadHolder.roadWidth / 2.0f;
-			if (linePosTransform != null) {
-				linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
+			if (roadHolder != null) {
+				//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
+					float coeff = (linePosition - center) * roadHolder.roadWidth / 2.0f;
+				if (linePosTransform != null) {
+					linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
+				}
 			}
-
 		}
 
 		protected float ChooseSpeedByZone(ScrollZone zone) {

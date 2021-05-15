@@ -13,6 +13,9 @@ namespace Assets.SlotCar.Scripts.UI {
 		}
 
 		void OnGUI() {
+			if (raceManager == null) {
+				raceManager = GameInstance.Instance.raceManager;
+			}
 			if (raceManager != null) {
 				text.text = raceManager.playerPosition + "/" + raceManager.AllPositions;
 			}

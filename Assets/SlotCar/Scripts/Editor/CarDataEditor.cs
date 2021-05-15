@@ -12,6 +12,7 @@ namespace Assets.SlotCar.Scripts.Editor {
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("carId"), new GUIContent("Id"));
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("rarity"), new GUIContent("rarity"));
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("speed"), new GUIContent("speed"));
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("moneyCost"), new GUIContent("moneyCost"));
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("prefab"), new GUIContent("prefab"));
 
 			var texture = AssetPreview.GetAssetPreview(serializedObject.FindProperty("prefab").objectReferenceValue);
