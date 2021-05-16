@@ -1,8 +1,9 @@
 using System.IO;
+using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Utils;
 using UnityEngine;
 
-namespace Assets.SlotCar.Scripts.Data {
+namespace Assets.SlotCar.Scripts {
 	public class PlayerProfile : Singleton<PlayerProfile> {
 		public ProfileData profile;
 		private string profilePath;
@@ -32,7 +33,7 @@ namespace Assets.SlotCar.Scripts.Data {
 				profileStream = File.CreateText(profilePath);
 			}
 			else {
-				profileStream = new StreamWriter(profilePath);
+				profileStream ??= new StreamWriter(profilePath);
 			}
 			profileStream.Write(JsonUtility.ToJson(profile));
 			profileStream.Flush();

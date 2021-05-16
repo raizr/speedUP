@@ -460,6 +460,7 @@ MonoBehaviour:
     playerName: 
     currentLevel: 0
     currentCarId: 0
+    money: 0
 --- !u!4 &514605495
 Transform:
   m_ObjectHideFlags: 0
@@ -630,6 +631,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdbdaad1a37d474f903350ddde881e8, type: 3}
+--- !u!1 &1417227891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1417227893}
+  - component: {fileID: 1417227892}
+  m_Layer: 0
+  m_Name: RewardSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1417227892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417227891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ecd1eef88b3a24c95a44edf9535377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewards: {fileID: 11400000, guid: 548fa50a68980784b93df73708be261d, type: 2}
+--- !u!4 &1417227893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417227891}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5165697, y: -2.057707, z: -0.20926934}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1693029228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1384,7 @@ MonoBehaviour:
     type: 3}
   raceSlot: {fileID: 0}
   raceTap: {fileID: 4890816299651701501, guid: 1039c65e3baa3614e9b98866393b154a, type: 3}
-  finishRace: {fileID: 5937586050674174494, guid: 89cf154e64a56d74988e86d30af48b58,
+  finishRace: {fileID: 4280992744841316199, guid: 2b2933df81444d14e9d0607bf9747aed,
     type: 3}
 --- !u!4 &308377714637250352 stripped
 Transform:

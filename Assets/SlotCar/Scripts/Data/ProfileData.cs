@@ -6,5 +6,6 @@ namespace Assets.SlotCar.Scripts.Data {
 		public string playerName;
 		public int currentLevel;
 		public int currentCarId;
+		public int money;
 	}
 }

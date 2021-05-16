@@ -16,10 +16,10 @@ namespace Assets.SlotCar.Scripts.Data {
 	public class LevelData : ScriptableObject {
 		public int levelId;
 		public RaceType raceType;
-		public int laps;
-		public int lines;
+		public int laps = 3;
+		public int lines = 3;
 		public GameObject prefab;
 		public EnemyData[] enemyCars;
-		public int playerPosition;
+		public int playerPosition = 2;
 	}
 }
