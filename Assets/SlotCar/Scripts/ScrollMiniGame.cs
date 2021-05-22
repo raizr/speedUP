@@ -23,6 +23,11 @@ namespace Assets.SlotCar.Scripts {
 		public Canvas greenZone;
 		public RectTransform handle;
 		public PopupManager pointsPopup;
+
+		public ParticleSystem greenZoneFX;
+		public ParticleSystem yellowZoneFX;
+		public ParticleSystem redZoneFX;
+
 		public float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
@@ -37,10 +42,12 @@ namespace Assets.SlotCar.Scripts {
 
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
+			button.interactable = false;
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {
 			if (currentState == StateScrollGame.Start) {
+				button.interactable = true;
 				GenerateZonePos();
 			}
 			state = currentState;
@@ -98,12 +105,14 @@ namespace Assets.SlotCar.Scripts {
 					car.SpeedUp(zone);
 					pointsPopup.ShowPopup("Well", Color.yellow);
 					pointMulitpliers = 1;
+					yellowZoneFX.Play();
 					break;
 				case ScrollZone.Green:
 					carSpeedText.bounceAnimationGreen();
 					car.SpeedUpByGreenZone();
 					pointsPopup.ShowPopup("Perfect", Color.green);
 					moveTime = Math.Max(moveTime - 0.2f, minMoveTime);
+					greenZoneFX.Play();
 					break;
 				default:
 					pointsPopup.ShowPopup("Bad", Color.red);
@@ -111,6 +120,7 @@ namespace Assets.SlotCar.Scripts {
 					car.SpeedUp(zone);
 					pointMulitpliers = 1;
 					moveTime = Math.Min(moveTime + 0.2f, maxMoveTime);
+					redZoneFX.Play();
 					break;
 			}
 		}
@@ -120,6 +130,7 @@ namespace Assets.SlotCar.Scripts {
 			handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, anchor.y);
 			state = StateScrollGame.Stop;
 			moveTime = maxMoveTime;
+			button.interactable = false;
 		}
 	}
 }

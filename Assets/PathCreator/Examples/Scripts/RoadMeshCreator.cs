@@ -77,6 +77,7 @@ namespace PathCreation.Examples {
                 // Top of road normals
                 normals[vertIndex + 0] = localUp;
                 normals[vertIndex + 1] = localUp;
+                
                 // Bottom of road normals
                 normals[vertIndex + 2] = -localUp;
                 normals[vertIndex + 3] = -localUp;
@@ -111,7 +112,10 @@ namespace PathCreation.Examples {
             mesh.SetTriangles (roadTriangles, 0);
             mesh.SetTriangles (underRoadTriangles, 1);
             mesh.SetTriangles (sideOfRoadTriangles, 2);
+			mesh.OptimizeIndexBuffers();
+			mesh.Optimize();
             mesh.RecalculateBounds ();
+			mesh.RecalculateNormals();
         }
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached

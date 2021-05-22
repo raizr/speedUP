@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,7 @@ namespace Assets.SlotCar.Scripts {
 		public Countdown countdown;
 		public GameObject raceUI;
 		public FinishRaceUI finishUI;
+		public FinishBlast finishBlast;
 		public int playerPosition;
 		public int AllPositions => cars.Count;
 		public int allLaps = 3;
@@ -59,8 +61,20 @@ namespace Assets.SlotCar.Scripts {
 
 		void StartRaceInternal() {
 			state = RaceState.RACE;
-			StartCoroutine("SetStartScrollGame");
+			//StartCoroutine("SetStartScrollGame");
+			StartScrollGame();
 			SetCarsState(state);
+		}
+
+		IEnumerator SetStartScrollGame() {
+			yield return new WaitForSeconds(accelerationOnStartTime);
+			StartScrollGame();
+		}
+
+		void StartScrollGame() {
+			if (state == RaceState.RACE) {
+				scrollGame.SetCurrentState(StateScrollGame.Start);
+			}
 		}
 
 		void StartCountdown() {
@@ -79,6 +93,7 @@ namespace Assets.SlotCar.Scripts {
 
 			finishUI.ShowUI(result);
 			raceUI.gameObject.SetActive(false);
+			finishBlast.StartFinishBlast();
 		}
 
 		public void RetryRace() {
@@ -90,17 +105,6 @@ namespace Assets.SlotCar.Scripts {
 			finishUI.gameObject.SetActive(false);
 			scrollGame.ResetProgress();
 			StartRace();
-		}
-
-		IEnumerator SetStartScrollGame() {
-			yield return new WaitForSeconds(accelerationOnStartTime);
-			StartScrollGame();
-		}
-
-		void StartScrollGame() {
-			if (state == RaceState.RACE) {
-				scrollGame.SetCurrentState(StateScrollGame.Start);
-			}
 		}
 
 		void StopScrollGame() {
