@@ -7,7 +7,6 @@ namespace Assets.SlotCar.Scripts {
 	public class PlayerProfile : Singleton<PlayerProfile> {
 		public ProfileData profile;
 		private string profilePath;
-		private StreamWriter profileStream;
 		public void Initialize() {
 			profilePath = Application.persistentDataPath + "\\profile.json";
 			LoadProfile();
@@ -18,25 +17,23 @@ namespace Assets.SlotCar.Scripts {
 				profile.playerName = "Player";
 				profile.currentCarId = 0;
 				profile.currentLevel = 0;
-				profileStream = File.CreateText(profilePath);
-				profileStream.Write(JsonUtility.ToJson(profile));
-				profileStream.Flush();
+				File.WriteAllText(profilePath, JsonUtility.ToJson(profile));
 			}
 			else {
 				string jsonString = File.ReadAllText(profilePath);
-				profile = JsonUtility.FromJson<ProfileData>(jsonString);
+				if (jsonString.Length == 0) {
+					profile.playerName = "Player";
+					profile.currentCarId = 0;
+					profile.currentLevel = 0;
+				}
+				else {
+					profile = JsonUtility.FromJson<ProfileData>(jsonString);
+				}
 			}
 		}
 
 		public void SaveProfile() {
-			if (!File.Exists(profilePath)) {
-				profileStream = File.CreateText(profilePath);
-			}
-			else {
-				profileStream ??= new StreamWriter(profilePath);
-			}
-			profileStream.Write(JsonUtility.ToJson(profile));
-			profileStream.Flush();
+			File.WriteAllText(profilePath, JsonUtility.ToJson(profile));
 		}
 
 		public int GetCurrentLevelId() {
@@ -45,14 +42,6 @@ namespace Assets.SlotCar.Scripts {
 
 		public int GetCurrentCarId() {
 			return profile.currentCarId;
-		}
-
-		public override void OnDestroy() {
-			if (profileStream != null) {
-				profileStream.Flush();
-				profileStream.Close();
-			} 
-			base.OnDestroy();
 		}
 	}
 }
