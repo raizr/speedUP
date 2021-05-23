@@ -246,7 +246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: -148.24}
+  m_AnchoredPosition: {x: 84, y: -148}
   m_SizeDelta: {x: 191, y: 162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3147697899933020981
@@ -838,7 +838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 71.400024, y: -69}
+  m_AnchoredPosition: {x: 71, y: -69}
   m_SizeDelta: {x: 88, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3147697901176466945
@@ -1150,6 +1150,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ec8282364587144b876a312ed94241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideTopY: 150
+  showTopY: -70
+  hideBottomY: -170
+  showBottomY: 150
+  showDuration: 0.3
+  hideDuration: 0.1
+  onShowed:
+    m_PersistentCalls:
+      m_Calls: []
+  onHided:
+    m_PersistentCalls:
+      m_Calls: []
   startRaceButton: {fileID: 3147697901008337165}
   settingsButton: {fileID: 3147697901176466951}
   noAdsButton: {fileID: 3147697899933020971}

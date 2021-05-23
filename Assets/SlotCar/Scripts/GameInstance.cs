@@ -21,7 +21,7 @@ namespace Assets.SlotCar.Scripts {
 
 		private PlayerProfile playerProfile;
 		private GameDataInstance gameDataInstance;
-		private GameState gameState = GameState.FinishRace;
+		private GameState gameState = GameState.Main;
 		private GameObject levelHolder;
 		protected override void Init() {
 			playerProfile = PlayerProfile.Instance;

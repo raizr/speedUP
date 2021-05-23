@@ -40,11 +40,17 @@ namespace Assets.SlotCar.Scripts {
 		[HideInInspector]
 		public UnityEvent zoneCompleteEvent;
 		private TweenerCore<Vector2, Vector2, VectorOptions> moveHandle;
+		private Vector3 defaultHolderPos;
 
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
 			button.interactable = false;
 			moveTime = maxMoveTime;
+			defaultHolderPos = scrollHandle.transform.position;
+		}
+
+		void ResetScroll() {
+			scrollHandle.transform.position = defaultHolderPos;
 		}
 
 		public void SetCurrentState(StateScrollGame currentState) {

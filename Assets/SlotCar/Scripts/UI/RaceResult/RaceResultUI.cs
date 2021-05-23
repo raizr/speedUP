@@ -19,7 +19,7 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 		}
 
 		public override void Show() {
-			if (isShowed) {
+			if (showed) {
 				return;
 			}
 			base.Show();

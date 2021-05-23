@@ -26,7 +26,7 @@ namespace Assets.SlotCar.Scripts.UI {
 		public void Show() {
 			var rect = GetComponent<RectTransform>();
 			rect.DOAnchorPosY(showY, showDuration)
-				.SetEase(Ease.InBounce)
+				.SetEase(Ease.OutBack)
 				.OnComplete(() => {
 					showed = true;
 					onShowed.Invoke();
@@ -36,7 +36,7 @@ namespace Assets.SlotCar.Scripts.UI {
 		public void Hide() {
 			var rect = GetComponent<RectTransform>();
 			rect.DOAnchorPosY(hideY, hideDuration)
-				.SetEase(Ease.Linear)
+				.SetEase(Ease.InBack)
 				.OnComplete(() => {
 					showed = false;
 					onHided.Invoke();
@@ -54,7 +54,6 @@ namespace Assets.SlotCar.Scripts.UI {
 					text.text = money.ToString();
 				}
 			}
-
 		}
 	}
 }

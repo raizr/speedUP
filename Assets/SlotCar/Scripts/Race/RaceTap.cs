@@ -48,6 +48,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		public override void StartRace() {
+			scrollGame.ResetProgress();
 			StartCountdown();
 		}
 

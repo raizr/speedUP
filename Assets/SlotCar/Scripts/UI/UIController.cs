@@ -36,13 +36,20 @@ namespace Assets.SlotCar.Scripts.UI {
 
 		private void DisableAll() {
 			foreach (var stateMenu in menus) {
+				stateMenu.Value.SetHide();
+			}
+
+		}
+
+		private void HideAll() {
+			foreach (var stateMenu in menus) {
 				stateMenu.Value.Hide();
 			}
 
 		}
 		public void EnableUI(GameState state) {
 			currentUI = state;
-			DisableAll();
+			HideAll();
 			if (menus.ContainsKey(state)) {
 				menus[state].Show();
 			}

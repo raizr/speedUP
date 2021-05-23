@@ -11,7 +11,7 @@ namespace Assets.SlotCar.Scripts.UI {
 		public TextMeshProUGUI message;
 
 		public override void Show() {
-			if (isShowed) {
+			if (showed) {
 				return;
 			}
 			base.Show();
