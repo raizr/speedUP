@@ -13,6 +13,7 @@ using Random = System.Random;
 
 namespace Assets.SlotCar.Scripts.UI.RaceResult {
 	public class FortuneWheel : MonoBehaviour {
+		public RaceResultUI raceResult;
 		public Button getButton;
 		public Image slider;
 		public TextMeshProUGUI multiplierOnButton;
@@ -81,9 +82,16 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 			sliderTransform.DOLocalRotate(new Vector3(0.0f, 0.0f, angle), rotateDuration)
 				.OnComplete(() => {
 					int currentReward = RewardSystem.Instance.GetLevelCompleteReward(playerPosition);
-					RewardSystem.Instance.ApplyMultiplierReward(currentReward, multiplier);
-					GameInstance.Instance.SwitchTo(GameState.Main);
+					var flyManager = raceResult.flyMoneyHolder;
+					flyManager.StartFly(currentReward / 100);
+					flyManager.endFly.AddListener(() => {
+						RewardSystem.Instance.ApplyMultiplierReward(currentReward, multiplier);
+						GameInstance.Instance.SwitchTo(GameState.Main);
+						flyManager.endFly.RemoveAllListeners();
+					});
+
 				});
+			
 		}
 
 		public void Update() {

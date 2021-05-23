@@ -11,6 +11,7 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 		public Button levelRewardButton;
 		public FortuneWheel fortuneWheel;
 		public TextMeshProUGUI moneyCounter;
+		public FlyMoneyManager flyMoneyHolder;
 		public int playerPosition;
 
 		public void Awake() {
@@ -26,6 +27,8 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 			if (raceManager) {
 				playerPosition = GameInstance.Instance.raceManager.playerPosition;
 			}
+
+			fortuneWheel.raceResult = this;
 			fortuneWheel.playerPosition = playerPosition;
 			fortuneWheel.StartWheel();
 			SetTextPlayerPosition();

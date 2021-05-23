@@ -9,7 +9,13 @@ namespace Assets.SlotCar.Scripts.UI {
 		public UIBase raceSlot;
 		public UIBase raceTap;
 		public UIBase finishRace;
+
+		public MoneyLabel moneyLabel;
 		public Dictionary<GameState, UIBase> menus = new Dictionary<GameState, UIBase>();
+		public HashSet<GameState> moneyLabelStates = new HashSet<GameState>() {
+			GameState.Main,
+			GameState.FinishRace
+		}; 
 		private GameState currentUI;
 		protected override void Init() {
 			AddMenu(GameState.Main, mainMenu);
@@ -32,12 +38,20 @@ namespace Assets.SlotCar.Scripts.UI {
 			foreach (var stateMenu in menus) {
 				stateMenu.Value.Hide();
 			}
+
 		}
 		public void EnableUI(GameState state) {
 			currentUI = state;
 			DisableAll();
 			if (menus.ContainsKey(state)) {
 				menus[state].Show();
+			}
+
+			if (moneyLabelStates.Contains(state)) {
+				moneyLabel.Show();
+			}
+			else {
+				moneyLabel.Hide();
 			}
 		}
 
