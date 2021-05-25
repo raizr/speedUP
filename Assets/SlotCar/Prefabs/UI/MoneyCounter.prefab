@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideY: 200
-  showY: -90
+  showY: -100
   showDuration: 0.3
   hideDuration: 0.1
   coinTarget: {fileID: 2463221018641906996}

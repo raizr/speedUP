@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.38875046, g: 0.9056604, b: 0.8683768, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.02
@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 1811568527}
+  m_LightingDataAsset: {fileID: 112000000, guid: 865f18793c081584d8ecd185cd35c66d,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: fa250906d4d25f442a55af8f4be72ebe,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -657,7 +659,7 @@ PrefabInstance:
     - target: {fileID: 2078784824647226895, guid: 13fb5d1786a6b554180cbd1932590bce,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -138.70001
+      value: -138.69995
       objectReference: {fileID: 0}
     - target: {fileID: 2078784824647226895, guid: 13fb5d1786a6b554180cbd1932590bce,
         type: 3}
@@ -706,6 +708,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1239888743, guid: 2fdbdaad1a37d474f903350ddde881e8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239888745, guid: 2fdbdaad1a37d474f903350ddde881e8, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5492513727910317788, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
       propertyPath: m_Name
@@ -714,12 +724,12 @@ PrefabInstance:
     - target: {fileID: 8223901112452410965, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8223901112452410965, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.62
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 8223901112452410965, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
@@ -729,7 +739,7 @@ PrefabInstance:
     - target: {fileID: 8223901112452410965, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -73.7
+      value: -68.7
       objectReference: {fileID: 0}
     - target: {fileID: 8223901112452410965, guid: 2fdbdaad1a37d474f903350ddde881e8,
         type: 3}
@@ -907,7 +917,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777349640
 GameObject:
@@ -1027,67 +1037,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!850595691 &1811568527
-LightingSettings:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Settings.lighting
-  serializedVersion: 3
-  m_GIWorkflowMode: 1
-  m_EnableBakedLightmaps: 1
-  m_EnableRealtimeLightmaps: 0
-  m_RealtimeEnvironmentLighting: 1
-  m_BounceScale: 1
-  m_AlbedoBoost: 1
-  m_IndirectOutputScale: 1
-  m_UsingShadowmask: 1
-  m_BakeBackend: 2
-  m_LightmapMaxSize: 512
-  m_BakeResolution: 2048
-  m_Padding: 2
-  m_TextureCompression: 0
-  m_AO: 1
-  m_AOMaxDistance: 1
-  m_CompAOExponent: 1
-  m_CompAOExponentDirect: 1
-  m_ExtractAO: 0
-  m_MixedBakeMode: 2
-  m_LightmapsBakeMode: 1
-  m_FilterMode: 1
-  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
-  m_ExportTrainingData: 0
-  m_TrainingDataDestination: TrainingData
-  m_RealtimeResolution: 2
-  m_ForceWhiteAlbedo: 0
-  m_ForceUpdates: 0
-  m_FinalGather: 0
-  m_FinalGatherRayCount: 256
-  m_FinalGatherFiltering: 1
-  m_PVRCulling: 1
-  m_PVRSampling: 1
-  m_PVRDirectSampleCount: 128
-  m_PVRSampleCount: 500
-  m_PVREnvironmentSampleCount: 500
-  m_PVREnvironmentReferencePointCount: 2048
-  m_LightProbeSampleCountMultiplier: 4
-  m_PVRBounces: 2
-  m_PVRMinBounces: 2
-  m_PVREnvironmentMIS: 0
-  m_PVRFilteringMode: 2
-  m_PVRDenoiserTypeDirect: 2
-  m_PVRDenoiserTypeIndirect: 2
-  m_PVRDenoiserTypeAO: 2
-  m_PVRFilterTypeDirect: 0
-  m_PVRFilterTypeIndirect: 0
-  m_PVRFilterTypeAO: 0
-  m_PVRFilteringGaussRadiusDirect: 1
-  m_PVRFilteringGaussRadiusIndirect: 1
-  m_PVRFilteringGaussRadiusAO: 1
-  m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-  m_PVRFilteringAtrousPositionSigmaIndirect: 2
-  m_PVRFilteringAtrousPositionSigmaAO: 1
 --- !u!43 &2014962600
 Mesh:
   m_ObjectHideFlags: 0
