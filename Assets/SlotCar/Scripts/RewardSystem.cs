@@ -34,6 +34,10 @@ namespace Assets.SlotCar.Scripts {
 			PlayerProfile.Instance.SaveProfile();
 		}
 
+		public void ApplyMoney(int reward) {
+			PlayerProfile.Instance.profile.money += reward;
+		}
+
 		public int GetMultiplierReward(int baseReward, int selectedMultiplier) {
 			return baseReward * selectedMultiplier;
 		}
