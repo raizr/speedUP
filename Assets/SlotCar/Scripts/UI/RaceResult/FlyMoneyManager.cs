@@ -26,7 +26,8 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 		IEnumerator StartFlyInternal(int counter) {
 			endTarget = GameInstance.Instance.uiController.moneyLabel.coinTarget;
 			Vector2 endPos = Camera.main.WorldToScreenPoint(endTarget.position);
-			for (int i = 0; i < counter; i++) {
+			int internalCounter = counter / 100;
+			for (int i = 0; i < internalCounter; i++) {
 				var money = Instantiate(moneyPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
 				money.transform.localScale = Vector3.one;
 
@@ -37,14 +38,18 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 				var scale = rect.DOScale(new Vector2(1.3f, 1.3f), flyDuration);
 
 				TweenCallback onCompleteCallback;
-				if (i == counter - 1) {
+				var i1 = i;
+				if (i == internalCounter - 1) {
 					onCompleteCallback = () => {
+						RewardSystem.Instance.ApplyMoney((i1 + 1) * 100);
+						PlayerProfile.Instance.SaveProfile();
 						Destroy(money);
 						endFly.Invoke();
 					};
 				}
 				else {
 					onCompleteCallback = () => {
+						RewardSystem.Instance.ApplyMoney((i1 + 1) * 100);
 						Destroy(money);
 					};
 				}

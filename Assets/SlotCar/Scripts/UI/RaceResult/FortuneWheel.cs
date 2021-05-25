@@ -83,10 +83,13 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 				.OnComplete(() => {
 					int currentReward = RewardSystem.Instance.GetLevelCompleteReward(playerPosition);
 					var flyManager = raceResult.flyMoneyHolder;
-					flyManager.StartFly(currentReward / 100);
+					flyManager.StartFly(RewardSystem.Instance.GetMultiplierReward(currentReward, multiplier));
 					flyManager.endFly.AddListener(() => {
-						RewardSystem.Instance.ApplyMultiplierReward(currentReward, multiplier);
-						GameInstance.Instance.SwitchTo(GameState.Main);
+						raceResult.onHided.AddListener(() => {
+							GameInstance.Instance.SwitchTo(GameState.Main);
+							raceResult.onHided.RemoveAllListeners();
+						});
+						raceResult.Hide();
 						flyManager.endFly.RemoveAllListeners();
 					});
 

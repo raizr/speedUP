@@ -7,7 +7,7 @@ using UnityEngine.Events;
 namespace Assets.SlotCar.Scripts.UI {
 	public class MoneyLabel : MonoBehaviour {
 		public float hideY = 200.0f;
-		public float showY = -90.0f;
+		public float showY = -100.0f;
 		public float showDuration = 0.3f;
 		public float hideDuration = 0.1f;
 		public UnityAction onShowed;
