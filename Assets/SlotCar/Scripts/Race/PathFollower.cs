@@ -162,7 +162,9 @@ namespace Assets.SlotCar.Scripts {
 				}
 			}
 			else {
-				speed = maxSpeed;
+				OnIncrementSpeed(duration);
+				DOTween.To(() => (float)speed, x => speed = (int)x,
+					maxSpeed, duration);
 			}
 		}
 

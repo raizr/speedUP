@@ -3,6 +3,7 @@ using Cinemachine;
 using DG.Tweening;
 using PathCreation;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.SlotCar.Scripts.Race {
 	public class PlayerCar : PathFollower {
@@ -11,7 +12,11 @@ namespace Assets.SlotCar.Scripts.Race {
 		public float timeSpeedDown = 1.0f;
 		public CinemachineVirtualCamera camera;
 		public float greenZoneSpeedUpTime = 1.0f;
+		public float turboTime = 3.0f;
 		private float cameraDistance;
+		private int currentSavedSpeed;
+		public UnityEvent turboEnd;
+		private bool isTurbo;
 
 		new void Awake() {
 			linePosition = 2;
@@ -40,11 +45,11 @@ namespace Assets.SlotCar.Scripts.Race {
 			if (state != RaceState.RACE) {
 				yield return null;
 			}
-
 			yield return new WaitForSeconds(timeSpeedDown);
-			while (true) // Or whatever condition you want
-			{
-				SpeedUp(-speedDownCoeff, speedUpTime);
+			while (true) {
+				if (!isTurbo) {
+					SpeedUp(-speedDownCoeff, speedUpTime);
+				}
 				yield return new WaitForSeconds(timeSpeedDown);
 			}
 		}
@@ -67,6 +72,21 @@ namespace Assets.SlotCar.Scripts.Race {
 						x => transposer.m_CameraDistance = x,
 						cameraDistance, 0.3f);
 				});
+		}
+
+		public void StartTurbo() {
+			currentSavedSpeed = speed;
+			isTurbo = true;
+			SpeedUp(maxSpeed, 1.0f);
+			StartCoroutine(StartTurboInternal());
+		}
+
+		IEnumerator StartTurboInternal() {
+			yield return new WaitForSeconds(turboTime);
+			speed = currentSavedSpeed;
+			turboEnd.Invoke();
+			turboEnd.RemoveAllListeners();
+			isTurbo = false;
 		}
 	}
 }

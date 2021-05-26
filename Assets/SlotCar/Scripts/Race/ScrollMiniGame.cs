@@ -5,6 +5,7 @@ using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ namespace Assets.SlotCar.Scripts {
 	public class ScrollMiniGame : MonoBehaviour {
 		public Button button;
 		public CarSpeed carSpeedText;
+		public TextMeshProUGUI turboCounterLabel;
 		public PlayerCar car;
 		public Canvas redZone;
 		public Canvas yellowZone;
@@ -39,17 +41,21 @@ namespace Assets.SlotCar.Scripts {
 		public float handlePos;
 		[HideInInspector]
 		public UnityEvent zoneCompleteEvent;
+		public int turboClickNumbers = 3;
 		private TweenerCore<Vector2, Vector2, VectorOptions> moveHandle;
 		private Vector3 defaultHolderPos;
+		private int turboCounter;
 
 		void Awake() {
 			button.onClick.AddListener(SpeedUpClick);
 			button.interactable = false;
 			moveTime = maxMoveTime;
 			defaultHolderPos = scrollHandle.transform.position;
+			turboCounter = turboClickNumbers;
 		}
 
 		void ResetScroll() {
+			turboCounter = turboClickNumbers;
 			scrollHandle.transform.position = defaultHolderPos;
 		}
 
@@ -63,10 +69,24 @@ namespace Assets.SlotCar.Scripts {
 
 		private void SpeedUpClick() {
 			moveHandle.Kill();
-			ScrollZone zone = GetCurrentZone();
-			SetFxByZone(zone);
 			scrollHandle.BounceAnimation();
 			state = StateScrollGame.Stop;
+			ScrollZone zone = GetCurrentZone();
+			SetFxByZone(zone);
+			if (turboCounter <= 0) {
+				car.turboEnd.AddListener(TurboEnd);
+				car.StartTurbo();
+				button.interactable = false;
+				scrollHandle.gameObject.SetActive(false);
+				return;
+			}
+			GenerateZonePos();
+		}
+
+		private void TurboEnd() {
+			turboCounter = turboClickNumbers;
+			scrollHandle.gameObject.SetActive(true);
+			button.interactable = true;
 			GenerateZonePos();
 		}
 
@@ -118,6 +138,7 @@ namespace Assets.SlotCar.Scripts {
 					pointsPopup.ShowPopup("Perfect", Color.green);
 					moveTime = Math.Max(moveTime - 0.2f, minMoveTime);
 					greenZoneFX.Play();
+					turboCounter--;
 					break;
 				default:
 					pointsPopup.ShowPopup("Miss", Color.red);
@@ -135,6 +156,15 @@ namespace Assets.SlotCar.Scripts {
 			state = StateScrollGame.Stop;
 			moveTime = maxMoveTime;
 			button.interactable = false;
+		}
+
+		void OnGUI() {
+			if (turboCounter != 0) {
+				turboCounterLabel.text = turboCounter.ToString();
+			}
+			else {
+				turboCounterLabel.text = "";
+			}
 		}
 	}
 }
