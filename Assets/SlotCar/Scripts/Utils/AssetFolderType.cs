@@ -9,7 +9,7 @@ namespace Assets.SlotCar.Scripts.Utils {
 
 		public string Path => AssetDatabase.GUIDToAssetPath(GUID);
 	}
-
+#if UNITY_EDITOR
 	[CustomPropertyDrawer(typeof(FileReference))]
 	public class FolderReferencePropertyDrawer : PropertyDrawer {
 		private bool initialized;
@@ -70,4 +70,5 @@ namespace Assets.SlotCar.Scripts.Utils {
 			}
 		}
 	}
+#endif
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Utils;
-using UnityEditor.Build;
 
 namespace Assets.SlotCar.Scripts {
 	public class RewardSystem : Singleton<RewardSystem> {

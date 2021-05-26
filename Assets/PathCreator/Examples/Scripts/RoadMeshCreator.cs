@@ -1,7 +1,6 @@
 ﻿using System;
 using PathCreation.Examples;
 using UnityEngine;
-using UnityEngine.Windows.WebCam;
 
 namespace PathCreation {
     [Serializable, ExecuteInEditMode]
