@@ -34,6 +34,11 @@ namespace Assets.SlotCar.Scripts {
 		public ParticleSystem yellowZoneFX;
 		public ParticleSystem redZoneFX;
 
+		public ParticleSystem greenScreenZoneFX;
+		public ParticleSystem redScreenZoneFX;
+		public ParticleSystem turboSpeedFX;
+
+
 		private float moveTime = 2.0f;
 		public float maxMoveTime = 2.0f;
 		public float minMoveTime = 0.7f;
@@ -83,6 +88,9 @@ namespace Assets.SlotCar.Scripts {
 				turboProgress.gameObject.SetActive(true);
 				turboProgress.Value = 100;
 				TurboStartInternal();
+				var main = turboSpeedFX.main;
+				main.duration = car.turboTime;
+				turboSpeedFX.Play();
 				return;
 			}
 			GenerateZonePos();
@@ -151,6 +159,7 @@ namespace Assets.SlotCar.Scripts {
 					pointsPopup.ShowPopup("Perfect", Color.green);
 					moveTime = Math.Max(moveTime - 0.2f, minMoveTime);
 					greenZoneFX.Play();
+					greenScreenZoneFX.Play();
 					turboCounter--;
 					break;
 				default:
@@ -159,6 +168,7 @@ namespace Assets.SlotCar.Scripts {
 					car.SpeedUp(zone);
 					moveTime = Math.Min(moveTime + 0.2f, maxMoveTime);
 					redZoneFX.Play();
+					redScreenZoneFX.Play();
 					break;
 			}
 		}
