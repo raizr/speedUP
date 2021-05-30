@@ -153,9 +153,9 @@ namespace PathCreation {
             mesh.uv = uvs;
             mesh.normals = normals;
             mesh.subMeshCount = 4;
-            mesh.SetTriangles (roadTriangles, 0);
-            mesh.SetTriangles (underRoadTriangles, 1);
-            mesh.SetTriangles (sideOfRoadTriangles, 2);
+            mesh.SetTriangles(roadTriangles, 0);
+            mesh.SetTriangles(underRoadTriangles, 1);
+            mesh.SetTriangles(sideOfRoadTriangles, 2);
 			mesh.SetTriangles(startLineTriangles, 3);
             mesh.OptimizeIndexBuffers();
 			mesh.Optimize();
