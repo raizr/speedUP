@@ -8,9 +8,6 @@ using UnityEngine;
 namespace Assets.SlotCar.Scripts.Data {
 	public class GameDataInstance : Singleton<GameDataInstance> {
 		private static int FoldersPathSize = "Assets/Resources/".Length;
-		public FileReference pathCars;
-		public FileReference pathLevels;
-		public FileReference pathEnemyDifficults;
 		private CarsData cars;
 		private LevelsData levels;
 		private EnemyDifficult difficultData;
@@ -21,15 +18,15 @@ namespace Assets.SlotCar.Scripts.Data {
 		}
 		
 		private void LoadCars() {
-			cars = Resources.Load<CarsData>(GetResourcePath(pathCars.Path));
+			cars = Resources.Load<CarsData>("Data/Cars/CarsData");
 		}
 
 		private void LoadLevels() {
-			levels = Resources.Load<LevelsData>(GetResourcePath(pathLevels.Path));
+			levels = Resources.Load<LevelsData>("Data/Levels/LevelsData");
 		}
 
 		private void LoadEnemyDifficult() {
-			difficultData = Resources.Load<EnemyDifficult>(GetResourcePath(pathEnemyDifficults.Path));
+			difficultData = Resources.Load<EnemyDifficult>("Data/EnemyDifficult");
 		}
 
 		private string GetResourcePath(string fullPath) {
