@@ -3,13 +3,14 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.Utils {
+#if UNITY_EDITOR
 	[System.Serializable]
 	public class FileReference {
 		public string GUID;
 
 		public string Path => AssetDatabase.GUIDToAssetPath(GUID);
 	}
-#if UNITY_EDITOR
+
 	[CustomPropertyDrawer(typeof(FileReference))]
 	public class FolderReferencePropertyDrawer : PropertyDrawer {
 		private bool initialized;
