@@ -851,12 +851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb621bb14d7732e42a185ffeedb951d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCars:
-    GUID: 24c5566363ca99441b5be8091f8eac01
-  pathLevels:
-    GUID: 46677654569d7e04d95dccbcef46b3a7
-  pathEnemyDifficults:
-    GUID: 691320de1a463c049b4b2b4b30c8f68b
 --- !u!4 &1693029230
 Transform:
   m_ObjectHideFlags: 0
@@ -905,6 +899,7 @@ MonoBehaviour:
   roadHolder: {fileID: 2020261771}
   raceManager: {fileID: 0}
   raceTap: {fileID: 3527159784733702639, guid: 1912f484df0063744ae1ee9f191cb677, type: 3}
+  gameState: 0
 --- !u!4 &1760920082
 Transform:
   m_ObjectHideFlags: 0
