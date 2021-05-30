@@ -18,10 +18,10 @@ namespace Assets.SlotCar.Scripts {
 		[HideInInspector]
 		public RaceManager raceManager;
 		public RaceTap raceTap;
+		public GameState gameState = GameState.Main;
 
 		private PlayerProfile playerProfile;
 		private GameDataInstance gameDataInstance;
-		private GameState gameState = GameState.Main;
 		private GameObject levelHolder;
 		protected override void Init() {
 			playerProfile = PlayerProfile.Instance;
