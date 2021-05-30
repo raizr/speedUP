@@ -2,6 +2,7 @@
 using System.Collections;
 using Assets.SlotCar.Scripts.Race;
 using Assets.SlotCar.Scripts.UI;
+using Assets.SlotCar.Scripts.Utils;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
@@ -27,6 +28,7 @@ namespace Assets.SlotCar.Scripts {
 		public RectTransform handle;
 		public PopupManager pointsPopup;
 		public HandleBounce scrollHandle;
+		public ProgressBar turboProgress;
 
 		public ParticleSystem greenZoneFX;
 		public ParticleSystem yellowZoneFX;
@@ -55,7 +57,6 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void ResetScroll() {
-			turboCounter = turboClickNumbers;
 			scrollHandle.transform.position = defaultHolderPos;
 		}
 
@@ -78,14 +79,26 @@ namespace Assets.SlotCar.Scripts {
 				car.StartTurbo();
 				button.interactable = false;
 				scrollHandle.gameObject.SetActive(false);
+				redZone.gameObject.SetActive(false);
+				turboProgress.gameObject.SetActive(true);
+				turboProgress.Value = 100;
+				TurboStartInternal();
 				return;
 			}
 			GenerateZonePos();
 		}
 
+		private void TurboStartInternal() {
+			DOTween.To(() => turboProgress.Value,
+				x => turboProgress.Value = x,
+				0, car.turboTime);
+		}
+
 		private void TurboEnd() {
 			turboCounter = turboClickNumbers;
 			scrollHandle.gameObject.SetActive(true);
+			redZone.gameObject.SetActive(true);
+			turboProgress.gameObject.SetActive(false);
 			button.interactable = true;
 			GenerateZonePos();
 		}
@@ -156,6 +169,7 @@ namespace Assets.SlotCar.Scripts {
 			state = StateScrollGame.Stop;
 			moveTime = maxMoveTime;
 			button.interactable = false;
+			turboCounter = turboClickNumbers;
 		}
 
 		void OnGUI() {

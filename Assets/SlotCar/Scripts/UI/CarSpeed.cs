@@ -18,7 +18,12 @@ namespace Assets.SlotCar.Scripts.UI {
 		// Start is called before the first frame update
 		void OnGUI() {
 			if (car != null) {
-				text.text = car.speed.ToString(CultureInfo.CurrentCulture);
+				if (car.speed == car.maxSpeed) {
+					text.text = "MAX";
+				}
+				else {
+					text.text = car.speed.ToString();
+				}
 			}
 		}
 

@@ -131,6 +131,9 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		void CheckEndRace(PathFollower firstCar) {
+			if (state == RaceState.PAUSE) {
+				return;
+			}
 			if (playerCar.currentTravelled >= allLaps) {
 				FinishResult result = (firstCar == playerCar) ? FinishResult.WIN : FinishResult.LOSE;
 				FinisRace(result);
