@@ -3,20 +3,22 @@ using UnityEngine;
 namespace Assets.SlotCar.Scripts.Utils {
 	public class ProgressBar : MonoBehaviour {
 		private UnityEngine.UI.Image fillImage;
-		public int Value {
+		public float Value {
 			get {
 				fillImage = gameObject.GetComponent<UnityEngine.UI.Image>();
 				if (fillImage != null)
-					return (int)(fillImage.fillAmount * 100);
+					return (fillImage.fillAmount * maxValue);
 				else
 					return 0;
 			}
 			set {
 				fillImage = gameObject.GetComponent<UnityEngine.UI.Image>();
 				if (fillImage != null)
-					fillImage.fillAmount = value / 100f;
+					fillImage.fillAmount = value / maxValue;
 			}
 		}
+
+		public float maxValue = 100.0f;
 
 		void Awake() {
 			fillImage = gameObject.GetComponent<UnityEngine.UI.Image>();

@@ -1,10 +1,11 @@
+using Assets.SlotCar.Scripts.Utils;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.SlotCar.Scripts.UI {
 	public class RaceTapUI : UIBase {
-		public Slider raceProgressSlider;
+		public ProgressBar raceProgressSlider;
 		public PlayerPosition playerPosition;
 		public Countdown countdown;
 		public CarSpeed carSpeed;

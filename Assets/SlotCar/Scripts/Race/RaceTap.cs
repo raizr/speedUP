@@ -19,7 +19,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			InitUI();
 			if (raceProgressSlider != null) {
 				raceProgressSlider.maxValue = allLaps;
-				raceProgressSlider.value = 0.0f;
+				raceProgressSlider.Value = 0.0f;
 			}
 		}
 
@@ -127,7 +127,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		void SetCurrentRaceProgress() {
-			raceProgressSlider.value = playerCar.currentTravelled;
+			raceProgressSlider.Value = playerCar.currentTravelled;
 		}
 
 		void CheckEndRace(PathFollower firstCar) {

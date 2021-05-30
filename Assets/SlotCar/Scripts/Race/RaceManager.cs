@@ -5,6 +5,7 @@ using System.Linq;
 using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Effects;
 using Assets.SlotCar.Scripts.UI;
+using Assets.SlotCar.Scripts.Utils;
 using DG.Tweening;
 using PathCreation;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		public LevelData levelData;
 		public PlayerCar playerCar;
 
-		public Slider raceProgressSlider;
+		public ProgressBar raceProgressSlider;
 		public Countdown countdown;
 
 		public FinishBlast finishBlast;
