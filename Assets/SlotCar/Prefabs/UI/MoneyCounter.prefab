@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078784823632621721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2078784824647226895}
@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 0}
-  m_SizeDelta: {x: 120.09, y: 50}
+  m_AnchoredPosition: {x: 153.9, y: 0}
+  m_SizeDelta: {x: 112.4, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2078784823632621700
 CanvasRenderer:
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 2078784824647226893}
   - component: {fileID: 2078784824647226892}
   - component: {fileID: 4381920057010221004}
+  - component: {fileID: 4608283740193347180}
   m_Layer: 5
   m_Name: MoneyCounter
   m_TagString: Untagged
@@ -229,6 +230,27 @@ MonoBehaviour:
   showDuration: 0.3
   hideDuration: 0.1
   coinTarget: {fileID: 2463221018641906996}
+--- !u!223 &4608283740193347180
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078784824647226894}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &3563572737661433543
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2463221018641906996}
+  - component: {fileID: 7806525252297623814}
   m_Layer: 5
   m_Name: target
   m_TagString: Untagged
@@ -264,3 +287,24 @@ RectTransform:
   m_AnchoredPosition: {x: -59.6, y: -2.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &7806525252297623814
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3563572737661433543}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0

@@ -4714,6 +4714,31 @@ PrefabInstance:
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8338403986209269198, guid: 815cdc57d256f774f9276c4c1c102449,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338403986209269198, guid: 815cdc57d256f774f9276c4c1c102449,
+        type: 3}
+      propertyPath: ShapeModule.m_Position.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338403986209269198, guid: 815cdc57d256f774f9276c4c1c102449,
+        type: 3}
+      propertyPath: ShapeModule.m_Position.y
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338403986209269198, guid: 815cdc57d256f774f9276c4c1c102449,
+        type: 3}
+      propertyPath: ShapeModule.m_Position.z
+      value: -1.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338403986209269198, guid: 815cdc57d256f774f9276c4c1c102449,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 815cdc57d256f774f9276c4c1c102449, type: 3}
 --- !u!4 &6948308567305058602 stripped
