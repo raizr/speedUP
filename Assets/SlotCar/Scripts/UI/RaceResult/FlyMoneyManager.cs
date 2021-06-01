@@ -25,7 +25,6 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 
 		IEnumerator StartFlyInternal(int counter) {
 			endTarget = GameInstance.Instance.uiController.moneyLabel.coinTarget;
-			Vector2 endPos = Camera.main.WorldToScreenPoint(endTarget.position);
 			int internalCounter = counter / 100;
 			for (int i = 0; i < internalCounter; i++) {
 				var money = Instantiate(moneyPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
@@ -34,8 +33,8 @@ namespace Assets.SlotCar.Scripts.UI.RaceResult {
 				var rect = money.GetComponent<RectTransform>();
 				rect.localRotation = Quaternion.identity;
 				rect.position = startTarget.position;
-				rect.DOAnchorPos(endPos, flyDuration);
-				var scale = rect.DOScale(new Vector2(1.3f, 1.3f), flyDuration);
+				rect.gameObject.transform.DOMove(endTarget.position, flyDuration);
+				var scale = rect.DOScale(new Vector3(1.3f, 1.3f, 1.0f), flyDuration);
 
 				TweenCallback onCompleteCallback;
 				var i1 = i;
