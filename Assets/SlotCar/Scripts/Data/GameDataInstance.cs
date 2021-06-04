@@ -11,10 +11,13 @@ namespace Assets.SlotCar.Scripts.Data {
 		private CarsData cars;
 		private LevelsData levels;
 		private EnemyDifficult difficultData;
+		public Sprite[] flags;
+
 		public void Initialize() {
 			LoadCars();
 			LoadLevels();
 			LoadEnemyDifficult();
+			flags = Resources.LoadAll<Sprite>("sprite");
 		}
 		
 		private void LoadCars() {

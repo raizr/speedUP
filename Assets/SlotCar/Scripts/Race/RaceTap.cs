@@ -5,10 +5,12 @@ using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.UI;
 using DG.Tweening;
 using UnityEngine;
+using Assets.SlotCar.Scripts;
 
 namespace Assets.SlotCar.Scripts.Race {
 	public class RaceTap : RaceManager {
 		public ScrollMiniGame scrollGame;
+		public FollowTarget followTarget;
 		public float accelerationOnStartTime = 2.0f;
 		public float startCheckPosTime = 1.0f;
 		private bool checkPos = false;
@@ -17,6 +19,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			type = RaceType.Tap;
 			base.Init(aLevelData);
 			InitUI();
+			InitPlayerNames();
 			if (raceProgressSlider != null) {
 				raceProgressSlider.maxValue = allLaps;
 				raceProgressSlider.Value = 0.0f;
@@ -37,6 +40,19 @@ namespace Assets.SlotCar.Scripts.Race {
 			raceProgressSlider = raceTapUI.raceProgressSlider;
 			countdown = raceTapUI.countdown;
 			raceTapUI.carSpeed.car = playerCar;
+		}
+
+		private void InitPlayerNames() {
+			foreach (var enemy in enemyCars) {
+				var followUI = Instantiate(followTarget,
+										new Vector3(0, 0.0f, 0),
+												Quaternion.identity,
+												enemy.transform);
+				followUI.GetComponent<Canvas>().worldCamera = Camera.main;
+				followUI.lookAt = enemy.linePosTransform;
+				followUI.text.text = UtilsNameGen.GetRandomName();
+				followUI.GenerateFlag();
+			}
 		}
 
 		void FixedUpdate() {

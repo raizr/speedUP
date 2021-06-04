@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3d38cb6ac1525438dd0c794db69d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   roadHolder: {fileID: 0}
   enemyCarPrefab: {fileID: 5552113918740183245, guid: 917f11e2c0c9fb44485b5d1f567c45e6,
     type: 3}
@@ -60,9 +61,12 @@ MonoBehaviour:
   countdown: {fileID: 0}
   finishBlast: {fileID: 0}
   playerPosition: 0
+  allLaps: 3
   slowdownLength: 1
   slowDownFactor: 0.05
+  finishResult: 1
   scrollGame: {fileID: 0}
-  allLaps: 3
+  followTarget: {fileID: 29923517648596854, guid: fd36ae761c9727f41ae3c2617cda45a8,
+    type: 3}
   accelerationOnStartTime: 2
   startCheckPosTime: 1

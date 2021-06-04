@@ -681,11 +681,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4608283740193347180, guid: 13fb5d1786a6b554180cbd1932590bce,
-        type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13fb5d1786a6b554180cbd1932590bce, type: 3}
 --- !u!224 &941412888 stripped
@@ -856,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb621bb14d7732e42a185ffeedb951d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flags: []
 --- !u!4 &1693029230
 Transform:
   m_ObjectHideFlags: 0
@@ -1431,7 +1427,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 7
   m_SortingLayerID: -760115445
   m_SortingOrder: 0
   m_TargetDisplay: 0

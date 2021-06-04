@@ -2459,6 +2459,7 @@ MonoBehaviour:
   endFly:
     m_PersistentCalls:
       m_Calls: []
+  endPos: {x: 0, y: 0, z: 0}
 --- !u!222 &1693457934649404911
 CanvasRenderer:
   m_ObjectHideFlags: 0

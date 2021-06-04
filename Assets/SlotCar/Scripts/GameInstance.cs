@@ -51,7 +51,7 @@ namespace Assets.SlotCar.Scripts {
 		void SpawnCurrentCar() {
 			var currentCar = gameDataInstance.GetCar(playerProfile.GetCurrentCarId());
 			var car = Instantiate(currentCar.prefab, new Vector3(0, 0, 0), Quaternion.identity);
-			//car.transform.SetParent(roadHolder.transform);
+			car.transform.SetParent(roadHolder.transform);
 		}
 
 		void InitRace() {
