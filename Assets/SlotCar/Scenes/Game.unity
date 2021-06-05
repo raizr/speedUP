@@ -163,7 +163,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 110
+    FieldOfView: 90
     OrthographicSize: 5
     NearClipPlane: 0.1
     FarClipPlane: 1000
@@ -900,7 +900,7 @@ MonoBehaviour:
   roadHolder: {fileID: 2020261771}
   raceManager: {fileID: 0}
   raceTap: {fileID: 3527159784733702639, guid: 1912f484df0063744ae1ee9f191cb677, type: 3}
-  gameState: 3
+  gameState: 0
 --- !u!4 &1760920082
 Transform:
   m_ObjectHideFlags: 0
@@ -967,7 +967,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 110
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
