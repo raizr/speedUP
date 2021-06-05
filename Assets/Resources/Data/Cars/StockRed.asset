@@ -15,4 +15,4 @@ MonoBehaviour:
   carId: 0
   rarity: 0
   speed: 250
-  prefab: {fileID: 4741021785903184446, guid: 87b3b947d64d84d45bc07182d065096b, type: 3}
+  prefab: {fileID: 2280304041587024475, guid: f62c34694d429fa4fb60912eecc9ac52, type: 3}
