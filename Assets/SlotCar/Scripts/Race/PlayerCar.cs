@@ -17,6 +17,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		private int currentSavedSpeed;
 		public UnityEvent turboEnd;
 		private bool isTurbo;
+		private ParticleSystem turboParticle;
 
 		new void Awake() {
 			linePosition = 2;
@@ -28,6 +29,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			if (position > 0) {
 				linePosition = position;
 			}
+			turboParticle = GetComponentInChildren<ParticleSystem>(true);
 		}
 
 		// Start is called before the first frame update
@@ -79,6 +81,10 @@ namespace Assets.SlotCar.Scripts.Race {
 			isTurbo = true;
 			SpeedUp(maxSpeed, 1.0f);
 			StartCoroutine(StartTurboInternal());
+			if (turboParticle != null) {
+				turboParticle.gameObject.SetActive(true);
+				turboParticle.Play();
+			} 
 		}
 
 		IEnumerator StartTurboInternal() {
@@ -87,6 +93,9 @@ namespace Assets.SlotCar.Scripts.Race {
 			turboEnd.Invoke();
 			turboEnd.RemoveAllListeners();
 			isTurbo = false;
+			if (turboParticle != null) {
+				turboParticle.Stop();
+			}
 		}
 	}
 }
