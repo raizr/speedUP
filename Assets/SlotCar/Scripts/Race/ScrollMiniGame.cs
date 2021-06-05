@@ -59,6 +59,7 @@ namespace Assets.SlotCar.Scripts {
 			moveTime = maxMoveTime;
 			defaultHolderPos = scrollHandle.transform.position;
 			turboCounter = turboClickNumbers;
+			turboProgress.gameObject.SetActive(false);
 		}
 
 		void ResetScroll() {
