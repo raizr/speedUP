@@ -46,6 +46,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 			levelHolder = Instantiate(currentLevel.prefab, new Vector3(0, 0, 0), Quaternion.identity);
 			levelHolder.transform.SetParent(roadHolder.transform);
+			levelHolder.transform.position = Vector3.zero;
 		}
 
 		void SpawnCurrentCar() {

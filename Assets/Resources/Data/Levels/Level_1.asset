@@ -16,9 +16,10 @@ MonoBehaviour:
   raceType: 0
   laps: 2
   lines: 3
-  prefab: {fileID: 7268376637406678976, guid: 40b2df3857bd37a46a568eb911915648, type: 3}
+  prefab: {fileID: 8577124003171051923, guid: 552d03ed1ec58d94cb8c73b93a9a4d3e, type: 3}
   enemyCars:
   - carId: 1
     lineNumber: 1
   - carId: 2
     lineNumber: 3
+  playerPosition: 2
