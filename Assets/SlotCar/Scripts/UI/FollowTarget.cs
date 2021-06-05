@@ -1,5 +1,4 @@
 using Assets.SlotCar.Scripts.Data;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
