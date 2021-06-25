@@ -32,7 +32,7 @@ namespace Assets.SlotCar.Scripts.UI {
 		
 
 		void StartRaceClick() {
-			GameInstance.Instance.SwitchTo(GameState.RaceTap);
+			GameInstance.Instance.SwitchTo(GameState.Race);
 		}
 	}
 }

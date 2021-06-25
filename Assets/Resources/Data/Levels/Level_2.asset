@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_2
   m_EditorClassIdentifier: 
   levelId: 1
-  raceType: 0
+  raceType: 1
   laps: 2
   lines: 3
   prefab: {fileID: 6068409222959906703, guid: 5b5fdc2725288f340834f0b0dc183aa6, type: 3}

@@ -1,14 +1,13 @@
-using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Race;
 using UnityEngine;
 
-namespace Assets.SlotCar.Scripts {
+namespace Assets.SlotCar.Scripts.UI {
 	public class SwipeDetector : MonoBehaviour {
 		private Vector2 fingerDown;
 		private Vector2 fingerUp;
 		public PlayerCar car;
-		public bool detectSwipeOnlyAfterRelease = false;
-		private int maxLines;
+		public int maxLines;
+		private bool detectSwipeOnlyAfterRelease = true;
 		public float SWIPE_THRESHOLD = 20f;
 
 		// Update is called once per frame
@@ -40,26 +39,30 @@ namespace Assets.SlotCar.Scripts {
 			//Check if Vertical swipe
 			if (verticalMove() > SWIPE_THRESHOLD && verticalMove() > horizontalValMove()) {
 				//Debug.Log("Vertical");
-				if (fingerDown.y - fingerUp.y > 0)//up swipe
+				if (fingerDown.y - fingerUp.y > 0) //up swipe
 				{
 					OnSwipeUp();
-				} else if (fingerDown.y - fingerUp.y < 0)//Down swipe
+				}
+				else if (fingerDown.y - fingerUp.y < 0) //Down swipe
 				{
 					OnSwipeDown();
 				}
+
 				fingerUp = fingerDown;
 			}
 
 			//Check if Horizontal swipe
 			else if (horizontalValMove() > SWIPE_THRESHOLD && horizontalValMove() > verticalMove()) {
 				//Debug.Log("Horizontal");
-				if (fingerDown.x - fingerUp.x > 0)//Right swipe
+				if (fingerDown.x - fingerUp.x > 0) //Right swipe
 				{
 					OnSwipeRight();
-				} else if (fingerDown.x - fingerUp.x < 0)//Left swipe
+				}
+				else if (fingerDown.x - fingerUp.x < 0) //Left swipe
 				{
 					OnSwipeLeft();
 				}
+
 				fingerUp = fingerDown;
 			}
 
@@ -76,6 +79,7 @@ namespace Assets.SlotCar.Scripts {
 		float horizontalValMove() {
 			return Mathf.Abs(fingerDown.x - fingerUp.x);
 		}
+
 		void OnSwipeUp() {
 		}
 
@@ -83,13 +87,12 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		void OnSwipeLeft() {
-			if (car.linePosition > 0) {
+			if (car != null && car.linePosition > 1) {
 				car.linePosition--;
 			}
 		}
-
 		void OnSwipeRight() {
-			if (car.linePosition < maxLines) {
+			if (car != null && car.linePosition < maxLines) {
 				car.linePosition++;
 			}
 		}

@@ -4,6 +4,13 @@ using Assets.SlotCar.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.SlotCar.Scripts.UI {
+
+	public enum UIStates {
+		Main,
+		RaceSlot,
+		RaceTap,
+		FinishRace
+	}
 	public class UIController : ASingleton<GameInstance> {
 		public UIBase mainMenu;
 		public UIBase raceSlot;
@@ -11,21 +18,21 @@ namespace Assets.SlotCar.Scripts.UI {
 		public UIBase finishRace;
 
 		public MoneyLabel moneyLabel;
-		public Dictionary<GameState, UIBase> menus = new Dictionary<GameState, UIBase>();
-		public HashSet<GameState> moneyLabelStates = new HashSet<GameState>() {
-			GameState.Main,
-			GameState.FinishRace
+		public Dictionary<UIStates, UIBase> menus = new Dictionary<UIStates, UIBase>();
+		public HashSet<UIStates> moneyLabelStates = new HashSet<UIStates>() {
+			UIStates.Main,
+			UIStates.FinishRace
 		}; 
-		private GameState currentUI;
+		private UIStates currentUI;
 		protected override void Init() {
-			AddMenu(GameState.Main, mainMenu);
-			//AddMenu(GameState.RaceSlot, raceSlot);
-			AddMenu(GameState.RaceTap, raceTap);
-			AddMenu(GameState.FinishRace, finishRace);
+			AddMenu(UIStates.Main, mainMenu);
+			AddMenu(UIStates.RaceSlot, raceSlot);
+			AddMenu(UIStates.RaceTap, raceTap);
+			AddMenu(UIStates.FinishRace, finishRace);
 			DisableAll();
 		}
 
-		private void AddMenu(GameState state, UIBase menu) {
+		private void AddMenu(UIStates state, UIBase menu) {
 			if (menu == null) {
 				return;
 			}
@@ -47,7 +54,7 @@ namespace Assets.SlotCar.Scripts.UI {
 			}
 
 		}
-		public void EnableUI(GameState state) {
+		public void EnableUI(UIStates state) {
 			currentUI = state;
 			HideAll();
 			if (menus.ContainsKey(state)) {
@@ -70,7 +77,7 @@ namespace Assets.SlotCar.Scripts.UI {
 			EnableUI(currentUI);
 		}
 
-		public UIBase GetUI(GameState state) {
+		public UIBase GetUI(UIStates state) {
 			return menus[state];
 		}
 	}

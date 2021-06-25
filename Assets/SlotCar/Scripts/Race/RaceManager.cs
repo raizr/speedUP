@@ -53,13 +53,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			levelData = aLevelData;
 			allLaps = levelData.laps;
 			int i = 0;
-			foreach (var car in cars) {
-				if (car != null) {
-					Destroy(car.gameObject);
-				}
-			}
-			cars.Clear();
-			enemyCars.Clear();
+			Clear();
 			foreach (var enemyData in levelData.enemyCars) {
 				var enemy = Instantiate(enemyCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 				enemy.Init(roadHolder, i, enemyData.carId, enemyData.lineNumber);
@@ -70,8 +64,18 @@ namespace Assets.SlotCar.Scripts.Race {
 			playerCar = Instantiate(playerCarPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 			playerCar.Init(roadHolder, PlayerProfile.Instance.profile.currentCarId, levelData.playerPosition);
 			cars.Add(playerCar);
-			GameInstance.Instance.camera.m_Follow = playerCar.transform;
+			GameInstance.Instance.GetCamera().m_Follow = playerCar.linePosTransform;
 			finishBlast = roadHolder.gameObject.GetComponent<FinishBlast>();
+		}
+
+		public void Clear() {
+			foreach (var car in cars) {
+				if (car != null) {
+					Destroy(car.gameObject);
+				}
+			}
+			cars.Clear();
+			enemyCars.Clear();
 		}
 
 		public virtual void StartRace() {

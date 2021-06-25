@@ -35,10 +35,12 @@ namespace Assets.SlotCar.Scripts.Race {
 		// Start is called before the first frame update
 		new void Start() {
 			base.Start();
-			camera = GameInstance.Instance.camera;
+			camera = GameInstance.Instance.GetCamera();
 			if (camera) {
 				var transposer = camera.GetCinemachineComponent<CinemachineFramingTransposer>();
-				cameraDistance = transposer.m_CameraDistance;
+				if (transposer) {
+					cameraDistance = transposer.m_CameraDistance;
+				}
 			}
 			StartCoroutine(SpeedTick());
 		}

@@ -27,7 +27,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		}
 
 		private void InitUI() {
-			var raceTapUI = GameInstance.Instance.uiController.GetUI(GameState.RaceTap) as RaceTapUI;
+			var raceTapUI = GameInstance.Instance.uiController.GetUI(UIStates.RaceTap) as RaceTapUI;
 			if (raceTapUI == null) {
 				return;
 			}
