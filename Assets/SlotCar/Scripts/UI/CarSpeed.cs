@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets.SlotCar.Scripts.UI {
 	public class CarSpeed : MonoBehaviour {
 
-		public PathFollower car;
+		public Car car;
 		private TextMeshProUGUI text;
 		public float timeDown = 0.1f;
 		public float timeUp = 0.1f;

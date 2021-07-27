@@ -298,9 +298,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2280304041587024478}
+  - component: {fileID: 6259127606944556966}
+  - component: {fileID: 9109915108246658664}
   m_Layer: 0
   m_Name: Venus
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -323,6 +325,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 56.781002, z: 0}
+--- !u!65 &6259127606944556966
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2280304041587024475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.75535107, z: 2.4}
+  m_Center: {x: -0.0000000025164222, y: 0.36942565, z: -0.05626619}
+--- !u!114 &9109915108246658664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2280304041587024475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ce8ca5d8f90fc4f879431141f79557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: {x: 0, y: 0, z: 0}
+  lengthOfRay: 0
 --- !u!1 &2280304042119034059
 GameObject:
   m_ObjectHideFlags: 0

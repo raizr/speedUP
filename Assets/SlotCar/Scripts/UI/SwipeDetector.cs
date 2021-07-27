@@ -88,12 +88,12 @@ namespace Assets.SlotCar.Scripts.UI {
 
 		void OnSwipeLeft() {
 			if (car != null && car.linePosition > 1) {
-				car.linePosition--;
+				car.MoveTo(MoveLine.ToLeft);
 			}
 		}
 		void OnSwipeRight() {
 			if (car != null && car.linePosition < maxLines) {
-				car.linePosition++;
+				car.MoveTo(MoveLine.ToRight);
 			}
 		}
 	}

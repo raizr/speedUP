@@ -5,7 +5,7 @@ namespace PathCreation {
     public class PathCreator : MonoBehaviour {
         public event System.Action pathUpdated;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         PathCreatorData editorData;
         [SerializeField, HideInInspector]
         bool initialized;

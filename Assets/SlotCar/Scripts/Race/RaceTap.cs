@@ -137,7 +137,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			foreach (var car in cars) {
 				car.SetFirstPos(false);
 			}
-			PathFollower firstCar = cars.Last();
+			var firstCar = cars.Last();
 			firstCar.SetFirstPos(true);
 			CheckEndRace(firstCar);
 		}
@@ -146,7 +146,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			raceProgressSlider.Value = playerCar.currentTravelled;
 		}
 
-		void CheckEndRace(PathFollower firstCar) {
+		void CheckEndRace(Car firstCar) {
 			if (state == RaceState.PAUSE) {
 				return;
 			}

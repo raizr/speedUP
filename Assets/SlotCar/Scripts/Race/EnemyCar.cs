@@ -5,7 +5,7 @@ using PathCreation;
 using Random = UnityEngine.Random;
 
 namespace Assets.SlotCar.Scripts.Race {
-	public class EnemyCar : PathFollower {
+	public class EnemyCar : Car {
 		public EnemyAiPreset aiPreset = EnemyAiPreset.Easy;
 		public int enemyCount = 0;
 		public ScrollZone curZone;
@@ -20,7 +20,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int) (value)).ToList();
 		}
-
+		#region AIForTapType
 		void СhooseAiPreset() {
 			var difficultData = GameDataInstance.Instance.GetEnemyDifficult();
 			internalAiPreset = difficultData.easy[0];
@@ -65,5 +65,6 @@ namespace Assets.SlotCar.Scripts.Race {
 			}
 			SpeedUp(curZone);
 		}
+		#endregion
 	}
 }

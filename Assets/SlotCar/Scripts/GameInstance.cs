@@ -48,14 +48,12 @@ namespace Assets.SlotCar.Scripts {
 			if (levelHolder != null) {
 				Destroy(levelHolder);
 			}
-			levelHolder = Instantiate(currentLevel.prefab, new Vector3(0, 0, 0), Quaternion.identity);
-			levelHolder.transform.SetParent(roadHolder.transform);
-			levelHolder.transform.position = Vector3.zero;
+			levelHolder = Instantiate(currentLevel.prefab, Vector3.zero, Quaternion.identity, roadHolder.transform);
 		}
 
 		void SpawnCurrentCar() {
 			var currentCar = gameDataInstance.GetCar(playerProfile.GetCurrentCarId());
-			var car = Instantiate(currentCar.prefab, new Vector3(0, 0, 0), Quaternion.identity);
+			var car = Instantiate(currentCar.prefab, Vector3.zero, Quaternion.identity);
 			car.transform.SetParent(roadHolder.transform);
 		}
 

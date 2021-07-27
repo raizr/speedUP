@@ -29,7 +29,7 @@ namespace Assets.SlotCar.Scripts.Race {
 		public RoadMeshCreator roadHolder;
 		public EnemyCar enemyCarPrefab;
 		public PlayerCar playerCarPrefab;
-		public List<PathFollower> cars;
+		public List<Car> cars;
 		public List<EnemyCar> enemyCars;
 		public LevelData levelData;
 		public PlayerCar playerCar;

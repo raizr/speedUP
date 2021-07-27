@@ -4,32 +4,23 @@ using UnityEngine;
 
 namespace PathCreation {
     [Serializable, ExecuteInEditMode]
-    public class RoadMeshCreator : MonoBehaviour {
+    public class RoadMeshCreator : PathSceneTool {
         [Header ("Road settings")]
-        public float roadWidth = .4f;
+        public float lineWidth = 2.0f;
+		public int lines = 3;
 		public int startLineLength = 1;
 		public int startLineOffset = 3;
-        public float thickness {
-			get {
-				return _thickness;
-			}
-			set {
-				_thickness = value;
-				CreateRoadMesh();
-			}
-		}
+		[Range (0, .5f)]
+		public float thickness = .15f;
 		public bool flattenSurface;
+
         [Header ("Material settings")]
         public Material roadMaterial;
         public Material undersideMaterial;
 		public Material startLineMaterial;
         public float textureTiling = 1;
-        [HideInInspector]
-		public VertexPath path;
 
         [SerializeField]
-		private float _thickness;
-        [SerializeField, HideInInspector]
         private GameObject meshHolder;
 		[SerializeField]
 		private MeshFilter meshFilter;
@@ -37,33 +28,14 @@ namespace PathCreation {
 		private MeshRenderer meshRenderer;
         [SerializeField]
 		private Mesh mesh;
-        public bool pathChanged = false;
-        void Awake() {
-			meshHolder = gameObject;
-			path.transform = this.transform;
-			pathChanged = true;
-			PathUpdated();
 
-		}
-        
-		public void Update() {
-#if UNITY_EDITOR
-			PathUpdated();
-#endif
-		}
-        
-        public void PathUpdated () {
-			if (!pathChanged) {
-				return;
+		protected override void PathUpdated () {
+			if (pathCreator != null) {
+				AssignMeshComponents ();
+				AssignMaterials ();
+				CreateRoadMesh ();
 			}
-			pathChanged = false;
-            meshHolder = gameObject;
-            if (path != null) {
-                AssignMeshComponents ();
-                AssignMaterials ();
-                CreateRoadMesh ();
-            }
-        }
+		}
 
         void CreateRoadMesh () {
             Vector3[] verts = new Vector3[path.NumPoints * 8];
@@ -93,15 +65,15 @@ namespace PathCreation {
                 Vector3 localRight = (usePathNormals) ? path.GetNormal (i) : Vector3.Cross (localUp, path.GetTangent (i));
 
                 // Find position to left and right of current path vertex
-                Vector3 vertSideA = path.GetPoint (i) - localRight * Mathf.Abs (roadWidth);
-                Vector3 vertSideB = path.GetPoint (i) + localRight * Mathf.Abs (roadWidth);
+                Vector3 vertSideA = path.GetPoint (i) - localRight * Mathf.Abs (lineWidth * lines);
+                Vector3 vertSideB = path.GetPoint (i) + localRight * Mathf.Abs (lineWidth * lines);
 
                 // Add top of road vertices
                 verts[vertIndex + 0] = vertSideA;
                 verts[vertIndex + 1] = vertSideB;
                 // Add bottom of road vertices
-                verts[vertIndex + 2] = vertSideA - localUp * _thickness;
-                verts[vertIndex + 3] = vertSideB - localUp * _thickness;
+                verts[vertIndex + 2] = vertSideA - localUp * thickness;
+                verts[vertIndex + 3] = vertSideB - localUp * thickness;
 
                 // Duplicate vertices to get flat shading for sides of road
                 verts[vertIndex + 4] = verts[vertIndex + 0];

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using Assets.SlotCar.Scripts.Data;
 using Assets.SlotCar.Scripts.Race;
 using DG.Tweening;
 using PathCreation;
-using PathCreation.Examples;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.SlotCar.Scripts {
 	public enum ScrollZone {
@@ -13,7 +14,12 @@ namespace Assets.SlotCar.Scripts {
 		Green
 	}
 
-	public class PathFollower : MonoBehaviour {
+	public enum MoveLine {
+		ToLeft,
+		ToRight
+	}
+
+	public class Car : MonoBehaviour {
 		public RoadMeshCreator roadHolder;
 		public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 		public WheelDrive wheelsDrive;
@@ -42,6 +48,14 @@ namespace Assets.SlotCar.Scripts {
 		private float maxSpeedCoeff;
 		public RaceState state = RaceState.PAUSE;
 
+		
+		public float turboTime = 3.0f;
+		protected float cameraDistance;
+		protected int currentSavedSpeed;
+		public UnityEvent turboEnd;
+		protected bool isTurbo;
+		protected ParticleSystem turboParticle;
+
 		private float center;
 
 		public void Awake() {
@@ -55,7 +69,7 @@ namespace Assets.SlotCar.Scripts {
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
 			if (roadHolder != null) {
-				SetPosition();
+				SetLine();
 				SetCurrentPositionOnRoad();
 			}
 		}
@@ -82,7 +96,7 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void Update() {
-			SetPosition();
+			SetLine();
 			SetCurrentPositionOnRoad();
 			CheckCurrentLap();
 			if (soundEngine != null) {
@@ -117,10 +131,10 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
-		void SetPosition() {
+		void SetLine() {
 			if (roadHolder != null) {
 				//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
-					float coeff = (linePosition - center) * roadHolder.roadWidth / 2.0f;
+					float coeff = (linePosition - center) * (roadHolder.lineWidth * 1.5f);
 				if (linePosTransform != null) {
 					linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
 				}
@@ -172,6 +186,28 @@ namespace Assets.SlotCar.Scripts {
 
 		}
 
+		public void StartTurbo() {
+			currentSavedSpeed = speed;
+			isTurbo = true;
+			SpeedUp(maxSpeed, 1.0f);
+			StartCoroutine(StartTurboInternal());
+			if (turboParticle != null) {
+				turboParticle.gameObject.SetActive(true);
+				turboParticle.Play();
+			} 
+		}
+
+		IEnumerator StartTurboInternal() {
+			yield return new WaitForSeconds(turboTime);
+			speed = currentSavedSpeed;
+			turboEnd.Invoke();
+			turboEnd.RemoveAllListeners();
+			isTurbo = false;
+			if (turboParticle != null) {
+				turboParticle.Stop();
+			}
+		}
+
 		public void SetFirstPos(bool status) {
 			crown.SetActive(status);
 		}
@@ -182,6 +218,34 @@ namespace Assets.SlotCar.Scripts {
 			currentLap = 0;
 			speed = 0;
 			SetCurrentPositionOnRoad();
+		}
+
+		public void Stop() {
+			state = RaceState.PAUSE;
+			currentSavedSpeed = speed;
+			speed = 0;
+		}
+
+		public void MoveTo(MoveLine dir) {
+			bool dirChanged = false;
+			switch (dir) {
+				case MoveLine.ToLeft:
+					if (linePosition > 1) {
+						linePosition--;
+						dirChanged = true;
+					}
+					break;
+				case MoveLine.ToRight:
+					if (linePosition < roadHolder.lines) {
+						linePosition++;
+						dirChanged = true;
+					}
+					break;
+			}
+			if (dirChanged && state == RaceState.PAUSE) {
+				state = RaceState.RACE;
+				SpeedUp(currentSavedSpeed, 0.0f);
+			}
 		}
 }
 }
