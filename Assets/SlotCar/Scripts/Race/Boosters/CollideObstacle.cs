@@ -69,6 +69,7 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 					boosterLine.StopEffect(GetComponentInParent<Car>());
 				}
 				lastCollidedObject = null;
+				previousCollidedObject = null;
 			}
 		}
 	}
