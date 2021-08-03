@@ -8,8 +8,12 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 			if (car == null) {
 				return;
 			}
-			car.StartTurbo();
-			gameObject.SetActive(false);
+
+			if (!isApplied) {
+				car.StartTurbo();
+				gameObject.SetActive(false);
+				isApplied = true;
+			}
 		}
 
 	}

@@ -35,7 +35,7 @@ namespace Assets.SlotCar.Scripts.Race {
 					cameraDistance = transposer.m_CameraDistance;
 				}
 			}
-			StartCoroutine(SpeedTick());
+			//StartCoroutine(SpeedTick());
 		}
 
 		IEnumerator SpeedTick() {

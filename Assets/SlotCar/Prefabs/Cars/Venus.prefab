@@ -351,7 +351,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {x: 0, y: 0, z: 0}
-  lengthOfRay: 0
+  lengthOfRay: 2
+  angle: 15
+  angleAxis: {x: 0, y: 0, z: 0, w: 0}
+  rayDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &2280304042119034059
 GameObject:
   m_ObjectHideFlags: 0

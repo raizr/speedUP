@@ -4,7 +4,10 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 			if (car == null) {
 				return;
 			}
-			car.Stop();
+			if (!isApplied) {
+				car.Stop();
+				isApplied = true;
+			}
 		}
 	}
 }

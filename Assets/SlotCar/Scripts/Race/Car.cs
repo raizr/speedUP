@@ -6,6 +6,7 @@ using DG.Tweening;
 using PathCreation;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms;
 
 namespace Assets.SlotCar.Scripts {
 	public enum ScrollZone {
@@ -31,24 +32,28 @@ namespace Assets.SlotCar.Scripts {
 
 		public int speed = 0;
 		public int maxSpeed = 270;
-		[Header("% max speed")]
+
+		[Header("% max speed"), Range(-100.0f, 100.0f)]
 		public float redZoneSpeed = 10.0f;
-		[Header("% max speed")]
+
+		[Header("% max speed"), Range(-100.0f, 100.0f)]
 		public float greenZoneSpeed = 25.0f;
-		[Header("% max speed")]
+
+		[Header("% max speed"), Range(-100.0f, 100.0f)]
 		public float yellowZoneSpeed = 15.0f;
-		
+
 		public float distanceTravelled;
 		public int currentLap = 1;
 		public float currentTravelled;
-		[Header("% max speed")]
-		public float accelerationOnStart = 20.0f;
+		[Header("% max speed")] public float accelerationOnStart = 20.0f;
 		public float accelerationOnStartTime = 2.0f;
 		public float speedUpTime = 0.1f;
+		[Range(-100.0f, 100.0f)] public float staticSpeedUp = 70.0f;
+		[Range(-100.0f, 100.0f)] public float staticSpeedDown = 40.0f;
 		private float maxSpeedCoeff;
 		public RaceState state = RaceState.PAUSE;
 
-		
+
 		public float turboTime = 3.0f;
 		protected float cameraDistance;
 		protected int currentSavedSpeed;
@@ -57,12 +62,15 @@ namespace Assets.SlotCar.Scripts {
 		protected ParticleSystem turboParticle;
 
 		private float center;
+		private bool isStaticSpeedUp;
+		private bool isStaticSpeedDown;
 
 		public void Awake() {
 			soundEngine = GetComponent<EngineSound>();
 			if (soundEngine != null) {
 				soundEngine.maxRPMLimit = maxSpeed;
 			}
+
 			wheelsDrive = GetComponent<WheelDrive>();
 		}
 
@@ -84,19 +92,20 @@ namespace Assets.SlotCar.Scripts {
 			crown.transform.SetParent(carPrefab.transform);
 			crown.SetActive(false);
 
-			center = (float)Math.Ceiling(GameInstance.Instance.raceManager.levelData.lines / 2.0f);
+			center = (float) Math.Ceiling(GameInstance.Instance.raceManager.levelData.lines / 2.0f);
 		}
 
 		public void SetStateRace(RaceState settedState) {
 			state = settedState;
 			if (state == RaceState.RACE) {
-				DOTween.To(() => (float)speed, x => speed = (int)x,
+				DOTween.To(() => (float) speed, x => speed = (int) x,
 					accelerationOnStart * maxSpeedCoeff, accelerationOnStartTime);
 			}
 		}
 
 		public void Update() {
 			SetLine();
+			CheckStaticSpeed();
 			SetCurrentPositionOnRoad();
 			CheckCurrentLap();
 			if (soundEngine != null) {
@@ -109,12 +118,13 @@ namespace Assets.SlotCar.Scripts {
 				if (state == RaceState.RACE) {
 					distanceTravelled += speed / 10.0f * Time.deltaTime;
 				}
+
 				transform.position = roadHolder.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
 				transform.rotation = roadHolder.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
 				Vector3 position = roadHolder.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
 				Vector3 relativeVec = transform.InverseTransformPoint(position);
 				if (wheelsDrive != null) {
-					wheelsDrive.currentTorque = (float)speed / maxSpeed;
+					wheelsDrive.currentTorque = (float) speed / maxSpeed;
 					wheelsDrive.steerAngle = relativeVec.x / relativeVec.magnitude * 3.0f;
 				}
 			}
@@ -134,9 +144,10 @@ namespace Assets.SlotCar.Scripts {
 		void SetLine() {
 			if (roadHolder != null) {
 				//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
-					float coeff = (linePosition - center) * (roadHolder.lineWidth * 1.5f);
+				float coeff = (linePosition - center) * (roadHolder.lineWidth * 1.5f);
 				if (linePosTransform != null) {
-					linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y, linePosTransform.localPosition.z);
+					linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y,
+						linePosTransform.localPosition.z);
 				}
 			}
 		}
@@ -154,21 +165,27 @@ namespace Assets.SlotCar.Scripts {
 					speed = maxSpeedCoeff * redZoneSpeed;
 					break;
 			}
+
 			return speed;
 		}
+
 		public void SpeedUp(ScrollZone zone) {
 			float speed = ChooseSpeedByZone(zone);
-			SpeedUp((int)speed, speedUpTime);
+			SpeedUp((int) speed, speedUpTime);
 		}
 
 		public void SpeedUp(int value, float duration) {
+			if (isStaticSpeedUp || isStaticSpeedDown) {
+				return;
+			}
+
 			if (speed + value < 0) {
 				speed = 0;
 			}
 			else if (speed + value < maxSpeed) {
 				if (value > 0) {
 					OnIncrementSpeed(duration);
-					DOTween.To(() => (float)speed, x => speed = (int)x,
+					DOTween.To(() => (float) speed, x => speed = (int) x,
 						speed + value, duration);
 				}
 				else {
@@ -177,7 +194,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 			else {
 				OnIncrementSpeed(duration);
-				DOTween.To(() => (float)speed, x => speed = (int)x,
+				DOTween.To(() => (float) speed, x => speed = (int) x,
 					maxSpeed, duration);
 			}
 		}
@@ -194,7 +211,7 @@ namespace Assets.SlotCar.Scripts {
 			if (turboParticle != null) {
 				turboParticle.gameObject.SetActive(true);
 				turboParticle.Play();
-			} 
+			}
 		}
 
 		IEnumerator StartTurboInternal() {
@@ -226,6 +243,39 @@ namespace Assets.SlotCar.Scripts {
 			speed = 0;
 		}
 
+		public void SetupStaticSpeedUp() {
+			isStaticSpeedUp = true;
+			currentSavedSpeed = speed;
+		}
+
+		public void SetupStaticSpeedDown() {
+			isStaticSpeedDown = true;
+			currentSavedSpeed = speed;
+		}
+
+		public void CheckStaticSpeed() {
+			if (isStaticSpeedUp) {
+				speed = (int) (staticSpeedUp * maxSpeedCoeff);
+			}
+			if (isStaticSpeedDown) {
+				speed = (int) (staticSpeedDown * maxSpeedCoeff);
+			}
+		}
+
+		public void DisableStaticSpeedUp() {
+			if (isStaticSpeedUp) {
+				isStaticSpeedUp = false;
+				speed = currentSavedSpeed;
+			}
+		}
+
+		public void DisableStaticSpeedDown() {
+			if (isStaticSpeedDown) {
+				isStaticSpeedDown = false;
+				speed = currentSavedSpeed;
+			}
+		}
+
 		public void MoveTo(MoveLine dir) {
 			bool dirChanged = false;
 			switch (dir) {
@@ -247,5 +297,5 @@ namespace Assets.SlotCar.Scripts {
 				SpeedUp(currentSavedSpeed, 0.0f);
 			}
 		}
-}
+	}
 }

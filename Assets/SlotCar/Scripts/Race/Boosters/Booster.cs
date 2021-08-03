@@ -7,23 +7,19 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 	public class Booster : MonoBehaviour {
 		public PathCreator pathCreator;
 		public RoadMeshCreator roadMeshCreator;
+		[Range(0.0f, 1.0f)]
 		public float timePath;
 		public int linePosition = 0;
 		public float center;
 		public Transform linePosTransform;
 		public float coeff;
-		public Vector3 centerPosition;
 
-		private float width;
+		protected bool isApplied;
 		// Start is called before the first frame update
 		void Start() {
 			pathCreator = transform.GetComponentInParent<PathCreator>();
 			roadMeshCreator = transform.GetComponentInParent<RoadMeshCreator>();
 			linePosTransform = transform.GetChild(0);
-			var collider = GetComponentInChildren<Collider>();
-			if (collider != null) {
-				width = collider.bounds.size.x / 2.0f;
-			}
 		}
 
 		void OnEnable() {
@@ -53,6 +49,9 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 		}
 
 		public virtual void ApplyEffect(Car car) {
+
+		}
+		public virtual void StopEffect(Car car) {
 
 		}
 	}

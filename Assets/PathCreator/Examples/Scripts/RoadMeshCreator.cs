@@ -29,6 +29,10 @@ namespace PathCreation {
         [SerializeField]
 		private Mesh mesh;
 
+		void Awake() {
+			PathUpdated();
+		}
+
 		protected override void PathUpdated () {
 			if (pathCreator != null) {
 				AssignMeshComponents ();

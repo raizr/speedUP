@@ -7,19 +7,22 @@ namespace Assets.SlotCar.Scripts.Editor {
 	[CustomEditor (typeof (BoostersCreator))]
 	public class BoostersEditor : UnityEditor.Editor {
 		private BoostersCreator creator;
-		private BoosterType type;
+		private static BoosterType type;
 		ScreenSpacePolyLine screenSpaceLine;
 		ScreenSpacePolyLine.MouseInfo pathMouseInfo;
+		private float previousPathTime;
 
 		void OnEnable() {
 			creator = (BoostersCreator) target;
 		}
 
 		public override void OnInspectorGUI() { 
-			type = (BoosterType)EditorGUILayout.EnumPopup("BoosterType", type); 
+			type = (BoosterType)EditorGUILayout.EnumPopup("BoosterType", type);
 			EditorGUILayout.ObjectField(serializedObject.FindProperty("turboBoosterObject"), new GUIContent("Turbo prefab"));
 			EditorGUILayout.ObjectField(serializedObject.FindProperty("stopBoosterObject"), new GUIContent("Stop prefab"));
 			EditorGUILayout.ObjectField(serializedObject.FindProperty("moneyBoosterObject"), new GUIContent("Money prefab"));
+			EditorGUILayout.ObjectField(serializedObject.FindProperty("turboLineBoosterObject"), new GUIContent("Turbo Line prefab"));
+			EditorGUILayout.ObjectField(serializedObject.FindProperty("speedDownLineBoosterObject"), new GUIContent("Speed Down Line prefab"));
 			EditorGUILayout.FloatField(new GUIContent("timeOnPath"), pathMouseInfo.timeOnPath);
 			serializedObject.ApplyModifiedProperties();
 		}
