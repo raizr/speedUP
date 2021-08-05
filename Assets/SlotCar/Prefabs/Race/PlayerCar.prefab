@@ -62,9 +62,15 @@ MonoBehaviour:
   accelerationOnStart: 20
   accelerationOnStartTime: 2
   speedUpTime: 0.1
+  staticSpeedUp: 70
+  staticSpeedDown: 40
   state: 0
-  speedDownCoeff: 1
-  timeSpeedDown: 1
+  turboTime: 3
+  turboEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  speedDownCoeff: 10
+  timeSpeedDown: 3
   camera: {fileID: 0}
   greenZoneSpeedUpTime: 1
 --- !u!114 &-7316152007323267648

@@ -35,7 +35,7 @@ namespace Assets.SlotCar.Scripts.Race {
 					cameraDistance = transposer.m_CameraDistance;
 				}
 			}
-			//StartCoroutine(SpeedTick());
+			StartCoroutine(SpeedTick());
 		}
 
 		IEnumerator SpeedTick() {
@@ -44,10 +44,15 @@ namespace Assets.SlotCar.Scripts.Race {
 			}
 			yield return new WaitForSeconds(timeSpeedDown);
 			while (true) {
-				if (!isTurbo) {
-					SpeedUp(-speedDownCoeff, speedUpTime);
+				if (state != RaceState.RACE) {
+					yield return null;
 				}
-				yield return new WaitForSeconds(timeSpeedDown);
+				else {
+					if (!isTurbo) {
+						SpeedUp(speedDownCoeff, speedUpTime);
+					}
+					yield return new WaitForSeconds(timeSpeedDown);
+				}
 			}
 		}
 
@@ -56,7 +61,7 @@ namespace Assets.SlotCar.Scripts.Race {
 			SpeedUp((int) zoneSpeed, greenZoneSpeedUpTime);
 		}
 
-		override public void OnIncrementSpeed(float duration) {
+		public override void OnIncrementSpeed(float duration) {
 			if (camera == null) {
 				return;
 			}
