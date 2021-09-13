@@ -39,6 +39,12 @@ namespace Assets.SlotCar.Scripts.Race {
 				swipeDetector.car = playerCar;
 				swipeDetector.maxLines = levelData.lines;
 			}
+
+			var keyboardController = raceUI.GetComponent<KeyboardController>();
+			if(keyboardController)
+            {
+				keyboardController.car = playerCar;
+			}
 		}
 
 		private void InitPlayerNames() {

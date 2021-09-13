@@ -544,6 +544,7 @@ GameObject:
   - component: {fileID: 5580549107846642723}
   - component: {fileID: 5188365774227474194}
   - component: {fileID: 3678692294893837493}
+  - component: {fileID: 4784759830564996181}
   m_Layer: 5
   m_Name: RaceSlot
   m_TagString: Untagged
@@ -636,8 +637,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
-  detectSwipeOnlyAfterRelease: 0
+  maxLines: 0
   SWIPE_THRESHOLD: 20
+--- !u!114 &4784759830564996181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867400870825741074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645a6f05648c94c40913fffae49b4dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 0}
 --- !u!1 &1867400870960642279
 GameObject:
   m_ObjectHideFlags: 0
