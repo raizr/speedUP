@@ -54,15 +54,23 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 		void ApplyObstacle() {
 			lastCollidedObject = hitInfo.collider.gameObject;
 			if (lastCollidedObject != null
-				&& previousCollidedObject != lastCollidedObject) {
+				&& previousCollidedObject != lastCollidedObject)
+			{
 				previousCollidedObject = lastCollidedObject;
 				var booster = lastCollidedObject.GetComponentInParent<Booster>();
-				if (booster != null) {
+				if (booster != null)
+				{
 					booster.ApplyEffect(GetComponentInParent<Car>());
 				}
 				var boosterLine = lastCollidedObject.GetComponentInParent<BoosterLine>();
-				if (boosterLine != null) {
+				if (boosterLine != null)
+				{
 					boosterLine.ApplyEffect(GetComponentInParent<Car>());
+				}
+				var boosterStop = lastCollidedObject.GetComponentInParent<BoosterStop>();
+				if (boosterStop != null)
+				{
+					boosterStop.ApplyEffect(GetComponentInParent<Car>());
 				}
 			}
 		}

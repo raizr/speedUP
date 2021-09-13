@@ -7,6 +7,11 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 			if (!isApplied) {
 				car.Stop();
 				isApplied = true;
+				var playerCar = (PlayerCar)car;
+				if (playerCar)
+				{
+					playerCar.CameraShake(5f, 0.5f);
+				}
 			}
 		}
 	}

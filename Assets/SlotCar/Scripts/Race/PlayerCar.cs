@@ -12,6 +12,8 @@ namespace Assets.SlotCar.Scripts.Race {
 		public CinemachineVirtualCamera camera;
 		public float greenZoneSpeedUpTime = 1.0f;
 
+		private float cameraShakeTime;
+
 		new void Awake() {
 			linePosition = 2;
 			base.Awake();
@@ -74,6 +76,24 @@ namespace Assets.SlotCar.Scripts.Race {
 						x => transposer.m_CameraDistance = x,
 						cameraDistance, 0.3f);
 				});
+		}
+
+		public void CameraShake(float intensity, float time)
+		{
+			CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
+				camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+			cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+
+			cameraShakeTime = time;
+			StartCoroutine(CameraShaking());
+		}
+
+		IEnumerator CameraShaking()
+        {
+			yield return new WaitForSeconds(cameraShakeTime);
+			CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
+				camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+			cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
 		}
 	}
 }
