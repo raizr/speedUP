@@ -28,9 +28,10 @@ namespace Assets.SlotCar.Scripts {
 		public Transform linePosTransform;
 		public GameObject carPrefab;
 		public GameObject crown;
-		private EngineSound soundEngine;
+		protected EngineSound soundEngine;
+		public Rigidbody rigidbody;
 
-		public int speed = 0;
+		public float speed = 0;
 		public int maxSpeed = 270;
 
 		[Header("% max speed"), Range(-100.0f, 100.0f)]
@@ -51,15 +52,17 @@ namespace Assets.SlotCar.Scripts {
 		[Range(-100.0f, 100.0f)] public float staticSpeedUp = 70.0f;
 		[Range(-100.0f, 100.0f)] public float staticSpeedDown = 40.0f;
 		private float maxSpeedCoeff;
-		public RaceState state = RaceState.PAUSE;
+		public RaceState raceState = RaceState.PAUSE;
 
 
 		public float turboTime = 3.0f;
 		protected float cameraDistance;
-		protected int currentSavedSpeed;
+		protected float currentSavedSpeed;
 		public UnityEvent turboEnd;
 		protected bool isTurbo;
 		protected ParticleSystem turboParticle;
+		[SerializeField]
+		protected bool isFollowLine;
 
 		private float center;
 		private bool isStaticSpeedUp;
@@ -76,6 +79,7 @@ namespace Assets.SlotCar.Scripts {
 
 		public void Start() {
 			maxSpeedCoeff = maxSpeed / 100.0f;
+			isFollowLine = true;
 			if (roadHolder != null) {
 				SetLine();
 				SetCurrentPositionOnRoad();
@@ -87,7 +91,7 @@ namespace Assets.SlotCar.Scripts {
 			carPrefab = Instantiate(GameDataInstance.Instance.GetCar(carId).prefab, Vector3.zero, Quaternion.identity);
 			linePosTransform = carPrefab.transform;
 			linePosTransform.SetParent(transform);
-
+			rigidbody = GetComponent<Rigidbody>();
 			crown = Instantiate(crown, Vector3.zero, Quaternion.identity);
 			crown.transform.SetParent(carPrefab.transform);
 			crown.SetActive(false);
@@ -96,10 +100,41 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void SetStateRace(RaceState settedState) {
-			state = settedState;
-			if (state == RaceState.RACE) {
+			raceState = settedState;
+			if (raceState == RaceState.RACE) {
 				DOTween.To(() => (float) speed, x => speed = (int) x,
 					accelerationOnStart * maxSpeedCoeff, accelerationOnStartTime);
+			}
+		}
+
+		public void SetFollowLine(bool followState) {
+			//if (raceState == RaceState.RACE) {
+				isFollowLine = followState;
+			//}
+		}
+
+		
+
+		void OnCollisionEnter(Collision collision) {
+			if (raceState != RaceState.RACE) {
+				return;
+			}
+			Car anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
+			if (anotherCar) {
+				anotherCar.SetFollowLine(false);
+				int dir = (anotherCar.linePosition < 2) ? 1 : -1;
+				anotherCar.rigidbody.AddForce(new Vector3(0, 10, 10 * dir), ForceMode.Impulse);
+			}
+			foreach (ContactPoint contact in collision.contacts)
+			{
+				Debug.DrawRay(contact.point, contact.normal * 10.0f, Color.white);
+			}
+		}
+
+		void OnCollisionExit(Collision collision) {
+			Car anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
+			if (anotherCar) {
+				//anotherCar.SetFollowLine(true);
 			}
 		}
 
@@ -114,11 +149,10 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public virtual void SetCurrentPositionOnRoad() {
-			if (roadHolder != null) {
-				if (state == RaceState.RACE) {
+			if (roadHolder != null && isFollowLine) {
+				if (raceState == RaceState.RACE) {
 					distanceTravelled += speed / 10.0f * Time.deltaTime;
 				}
-
 				transform.position = roadHolder.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
 				transform.rotation = roadHolder.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
 				Vector3 position = roadHolder.path.GetPointAtDistance(distanceTravelled + 3.0f, endOfPathInstruction);
@@ -130,7 +164,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
-		void CheckCurrentLap() {
+		protected void CheckCurrentLap() {
 			if (roadHolder != null) {
 				int currentIndex = roadHolder.path.GetPointIndexAtTime(distanceTravelled, endOfPathInstruction);
 				currentTravelled =
@@ -141,7 +175,7 @@ namespace Assets.SlotCar.Scripts {
 			}
 		}
 
-		void SetLine() {
+		protected void SetLine() {
 			if (roadHolder != null) {
 				//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
 				float coeff = (linePosition - center) * (roadHolder.lineWidth * 1.5f);
@@ -171,10 +205,10 @@ namespace Assets.SlotCar.Scripts {
 
 		public void SpeedUp(ScrollZone zone) {
 			float speed = ChooseSpeedByZone(zone);
-			SpeedUp((int) speed, speedUpTime);
+			SpeedUp(speed, speedUpTime);
 		}
 
-		public void SpeedUp(int value, float duration) {
+		public void SpeedUp(float value, float duration) {
 			if (isStaticSpeedUp || isStaticSpeedDown) {
 				return;
 			}
@@ -237,10 +271,12 @@ namespace Assets.SlotCar.Scripts {
 			SetCurrentPositionOnRoad();
 		}
 
-		public void Stop() {
-			state = RaceState.PAUSE;
+		public virtual void Stop() {
+			raceState = RaceState.PAUSE;
 			currentSavedSpeed = speed;
 			speed = 0;
+			SetFollowLine(false);
+			rigidbody.AddForce(new Vector3(-20, 50, 0), ForceMode.Impulse);
 		}
 
 		public void SetupStaticSpeedUp() {
@@ -292,8 +328,8 @@ namespace Assets.SlotCar.Scripts {
 					}
 					break;
 			}
-			if (dirChanged && state == RaceState.PAUSE) {
-				state = RaceState.RACE;
+			if (dirChanged && raceState == RaceState.PAUSE) {
+				raceState = RaceState.RACE;
 				SpeedUp(currentSavedSpeed, 0.0f);
 			}
 		}

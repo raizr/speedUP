@@ -137,7 +137,12 @@ namespace PathCreation {
 			mesh.Optimize();
             mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
-        }
+			MeshCollider meshCollider = GetComponent<MeshCollider>();
+			if (meshCollider) {
+				meshCollider.sharedMesh = mesh;
+			}
+
+		}
 
         // Add MeshRenderer and MeshFilter components to this gameobject if not already attached
         void AssignMeshComponents () {

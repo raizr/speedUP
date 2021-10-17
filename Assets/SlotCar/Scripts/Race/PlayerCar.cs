@@ -11,8 +11,8 @@ namespace Assets.SlotCar.Scripts.Race {
 		public float timeSpeedDown = 1.0f;
 		public CinemachineVirtualCamera camera;
 		public float greenZoneSpeedUpTime = 1.0f;
-
-		private float cameraShakeTime;
+		public float cameraShakeIntensity = 5.0f;
+		public float cameraShakeTime = 0.5f;
 
 		new void Awake() {
 			linePosition = 2;
@@ -40,13 +40,23 @@ namespace Assets.SlotCar.Scripts.Race {
 			StartCoroutine(SpeedTick());
 		}
 
+		new void Update() {
+			SetLine();
+			CheckStaticSpeed();
+			SetCurrentPositionOnRoad();
+			CheckCurrentLap();
+			if (soundEngine != null) {
+				soundEngine.engineCurrentRPM = speed;
+			}
+		}
+
 		IEnumerator SpeedTick() {
-			if (state != RaceState.RACE) {
+			if (raceState != RaceState.RACE) {
 				yield return null;
 			}
 			yield return new WaitForSeconds(timeSpeedDown);
 			while (true) {
-				if (state != RaceState.RACE) {
+				if (raceState != RaceState.RACE) {
 					yield return null;
 				}
 				else {
@@ -76,6 +86,12 @@ namespace Assets.SlotCar.Scripts.Race {
 						x => transposer.m_CameraDistance = x,
 						cameraDistance, 0.3f);
 				});
+		}
+
+		public override void Stop() {
+			CameraShake(cameraShakeIntensity, cameraShakeTime);
+			base.Stop();
+			camera.m_Follow = null;
 		}
 
 		public void CameraShake(float intensity, float time)
