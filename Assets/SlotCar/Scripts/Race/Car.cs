@@ -25,6 +25,7 @@ namespace Assets.SlotCar.Scripts {
 		public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop;
 		public WheelDrive wheelsDrive;
 		public int linePosition = 0;
+		public float turnTime = 5f;
 		public Transform linePosTransform;
 		public GameObject carPrefab;
 		public GameObject crown;
@@ -68,6 +69,9 @@ namespace Assets.SlotCar.Scripts {
 		private bool isStaticSpeedUp;
 		private bool isStaticSpeedDown;
 
+		private float turnPosition;
+		private bool isTurn = false;
+
 		public void Awake() {
 			soundEngine = GetComponent<EngineSound>();
 			if (soundEngine != null) {
@@ -78,6 +82,7 @@ namespace Assets.SlotCar.Scripts {
 		}
 
 		public void Start() {
+			turnPosition = linePosition;
 			maxSpeedCoeff = maxSpeed / 100.0f;
 			isFollowLine = true;
 			if (roadHolder != null) {
@@ -122,7 +127,7 @@ namespace Assets.SlotCar.Scripts {
 			Car anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
 			if (anotherCar) {
 				anotherCar.SetFollowLine(false);
-				int dir = (anotherCar.linePosition < 2) ? 1 : -1;
+				int dir = (anotherCar.linePosition < turnPosition) ? 1 : -1;
 				anotherCar.rigidbody.AddForce(new Vector3(0, 10, 10 * dir), ForceMode.Impulse);
 			}
 			foreach (ContactPoint contact in collision.contacts)
@@ -178,7 +183,7 @@ namespace Assets.SlotCar.Scripts {
 		protected void SetLine() {
 			if (roadHolder != null) {
 				//int pos = (GameInstance.Instance.raceManager.levelData.lines % 2);
-				float coeff = (linePosition - center) * (roadHolder.lineWidth * 1.5f);
+				float coeff = (turnPosition - center) * (roadHolder.lineWidth * 1.5f);
 				if (linePosTransform != null) {
 					linePosTransform.localPosition = new Vector3(coeff, linePosTransform.localPosition.y,
 						linePosTransform.localPosition.z);
@@ -316,22 +321,57 @@ namespace Assets.SlotCar.Scripts {
 			bool dirChanged = false;
 			switch (dir) {
 				case MoveLine.ToLeft:
-					if (linePosition > 1) {
-						linePosition--;
-						dirChanged = true;
-					}
+					if(!isTurn)
+						if (linePosition > 1) {
+							linePosition--;
+							dirChanged = true;
+							StartCoroutine(TurnLeft());
+						}
 					break;
 				case MoveLine.ToRight:
-					if (linePosition < roadHolder.lines) {
-						linePosition++;
-						dirChanged = true;
-					}
+					if (!isTurn)
+						if (linePosition < roadHolder.lines) {
+							linePosition++;
+							dirChanged = true;
+							StartCoroutine(TurnRight());
+						}
 					break;
 			}
 			if (dirChanged && raceState == RaceState.PAUSE) {
 				raceState = RaceState.RACE;
 				SpeedUp(currentSavedSpeed, 0.0f);
 			}
+		}
+
+		IEnumerator TurnRight()
+		{
+			isTurn = true;
+			yield return new WaitForFixedUpdate();
+
+			float t = linePosition - 1;
+			while (t < linePosition)
+			{
+				t += Time.deltaTime* turnTime;
+				turnPosition = t;
+				yield return null;
+			}
+
+			isTurn = false;
+		}
+		IEnumerator TurnLeft()
+		{
+			isTurn = true;
+			yield return new WaitForFixedUpdate();
+
+			float t = linePosition + 1;
+			while (t > linePosition)
+			{
+				t -= Time.deltaTime * turnTime;
+				turnPosition = t;
+				yield return null;
+			}
+
+			isTurn = false;
 		}
 	}
 }

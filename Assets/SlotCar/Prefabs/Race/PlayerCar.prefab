@@ -49,6 +49,7 @@ MonoBehaviour:
   endOfPathInstruction: 0
   wheelsDrive: {fileID: 0}
   linePosition: 1
+  turnTime: 7
   linePosTransform: {fileID: 0}
   carPrefab: {fileID: 0}
   crown: {fileID: 6361475706141428564, guid: d163b4279288bf4408279ec03a5026ba, type: 3}
@@ -76,6 +77,8 @@ MonoBehaviour:
   timeSpeedDown: 3
   camera: {fileID: 0}
   greenZoneSpeedUpTime: 1
+  cameraShakeIntensity: 5
+  cameraShakeTime: 0.5
 --- !u!114 &-7316152007323267648
 MonoBehaviour:
   m_ObjectHideFlags: 0
