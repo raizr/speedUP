@@ -284,7 +284,12 @@ namespace Assets.SlotCar.Scripts {
 			rigidbody.AddForce(new Vector3(-20, 50, 0), ForceMode.Impulse);
 		}
 
-		public void SetupStaticSpeedUp() {
+		public virtual void Restart()
+		{
+			SetFollowLine(true);
+		}
+
+			public void SetupStaticSpeedUp() {
 			isStaticSpeedUp = true;
 			currentSavedSpeed = speed;
 		}

@@ -94,6 +94,12 @@ namespace Assets.SlotCar.Scripts.Race {
 			camera.m_Follow = null;
 		}
 
+		public override void Restart()
+		{
+			base.Restart();
+			camera.m_Follow = linePosTransform;
+		}
+
 		public void CameraShake(float intensity, float time)
 		{
 			CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
