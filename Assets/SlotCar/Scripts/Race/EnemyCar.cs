@@ -11,7 +11,8 @@ namespace Assets.SlotCar.Scripts.Race {
 		public ScrollZone curZone;
 		private EnemyPreset internalAiPreset;
 		private List<int> tempRanges = new List<int>();
-		
+		public int push = 3;
+
 		public void Init(RoadMeshCreator road, int count, int carId, int position) {
 			base.Init(road, carId);
 			enemyCount = count;
@@ -19,6 +20,12 @@ namespace Assets.SlotCar.Scripts.Race {
 			СhooseAiPreset();
 			float[] zones = { internalAiPreset.redChance, internalAiPreset.yellowChance, internalAiPreset.greenChance };
 			tempRanges = (from value in zones select (int) (value)).ToList();
+		}
+
+		public override void Restart()
+		{
+			base.Restart();
+			push = 3;
 		}
 		#region AIForTapType
 		void СhooseAiPreset() {

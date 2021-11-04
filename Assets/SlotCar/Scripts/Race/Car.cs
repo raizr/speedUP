@@ -124,11 +124,28 @@ namespace Assets.SlotCar.Scripts {
 			if (raceState != RaceState.RACE) {
 				return;
 			}
-			Car anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
+			EnemyCar anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
 			if (anotherCar) {
-				anotherCar.SetFollowLine(false);
+				Debug.Log("OnCollisionEnter");
 				int dir = (anotherCar.linePosition < turnPosition) ? 1 : -1;
-				anotherCar.rigidbody.AddForce(new Vector3(0, 10, 10 * dir), ForceMode.Impulse);
+				if (anotherCar.push == 1) {
+					anotherCar.SetFollowLine(false);
+					anotherCar.rigidbody.AddForce(new Vector3(0, 10, 10 * dir), ForceMode.Impulse);
+				}
+				else{
+					--anotherCar.push;
+					isTurn = false;
+					if (dir < 0)
+                    {
+						MoveTo(MoveLine.ToLeft);
+					}
+					else
+                    {
+						MoveTo(MoveLine.ToRight);
+					}
+
+				}
+
 			}
 			foreach (ContactPoint contact in collision.contacts)
 			{
@@ -326,20 +343,18 @@ namespace Assets.SlotCar.Scripts {
 			bool dirChanged = false;
 			switch (dir) {
 				case MoveLine.ToLeft:
-					if(!isTurn)
-						if (linePosition > 1) {
-							linePosition--;
-							dirChanged = true;
-							StartCoroutine(TurnLeft());
-						}
+					if (linePosition > 1) {
+						linePosition--;
+						dirChanged = true;
+						StartCoroutine(TurnLeft());
+					}
 					break;
 				case MoveLine.ToRight:
-					if (!isTurn)
-						if (linePosition < roadHolder.lines) {
-							linePosition++;
-							dirChanged = true;
-							StartCoroutine(TurnRight());
-						}
+					if (linePosition < roadHolder.lines) {
+						linePosition++;
+						dirChanged = true;
+						StartCoroutine(TurnRight());
+					}
 					break;
 			}
 			if (dirChanged && raceState == RaceState.PAUSE) {
@@ -354,14 +369,13 @@ namespace Assets.SlotCar.Scripts {
 			yield return new WaitForFixedUpdate();
 
 			float t = linePosition - 1;
-			while (t < linePosition)
+			while (t < linePosition && isTurn)
 			{
 				t += Time.deltaTime* turnTime;
 				turnPosition = t;
+				Debug.Log("TurnRight " + turnPosition);
 				yield return null;
 			}
-
-			isTurn = false;
 		}
 		IEnumerator TurnLeft()
 		{
@@ -369,14 +383,13 @@ namespace Assets.SlotCar.Scripts {
 			yield return new WaitForFixedUpdate();
 
 			float t = linePosition + 1;
-			while (t > linePosition)
+			while (t > linePosition && isTurn)
 			{
 				t -= Time.deltaTime * turnTime;
 				turnPosition = t;
+				Debug.Log("TurnLeft " + turnPosition);
 				yield return null;
 			}
-
-			isTurn = false;
 		}
 	}
 }
