@@ -88,9 +88,9 @@ namespace Assets.SlotCar.Scripts.Race {
 				});
 		}
 
-		public override void Stop() {
+		public override void Push(Vector3 pushVec) {
 			CameraShake(cameraShakeIntensity, cameraShakeTime);
-			base.Stop();
+			base.Push(pushVec);
 			camera.m_Follow = null;
 		}
 

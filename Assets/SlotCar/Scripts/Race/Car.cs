@@ -126,11 +126,9 @@ namespace Assets.SlotCar.Scripts {
 			}
 			EnemyCar anotherCar = collision.collider.GetComponentInParent<EnemyCar>();
 			if (anotherCar) {
-				Debug.Log("OnCollisionEnter");
 				int dir = (anotherCar.linePosition < turnPosition) ? 1 : -1;
 				if (anotherCar.push == 1) {
-					anotherCar.SetFollowLine(false);
-					anotherCar.rigidbody.AddForce(new Vector3(0, 10, 10 * dir), ForceMode.Impulse);
+					anotherCar.Push(new Vector3(0, 10, 10 * dir));
 				}
 				else{
 					--anotherCar.push;
@@ -298,15 +296,35 @@ namespace Assets.SlotCar.Scripts {
 			currentSavedSpeed = speed;
 			speed = 0;
 			SetFollowLine(false);
-			rigidbody.AddForce(new Vector3(-20, 50, 0), ForceMode.Impulse);
+		}
+
+		public virtual void Push(Vector3 pushVec)
+		{
+			raceState = RaceState.PUSHED;
+			currentSavedSpeed = speed;
+			speed = 0;
+			SetFollowLine(false);
+			rigidbody.AddForce(pushVec, ForceMode.Impulse);
+		}
+
+		public virtual void BoosterStop()
+		{
+			if(raceState == RaceState.RACE)
+				Push(new Vector3(-20, 50, 0));		
 		}
 
 		public virtual void Restart()
 		{
-			SetFollowLine(true);
+			if(raceState == RaceState.PUSHED)
+            {
+				speed = currentSavedSpeed;
+				distanceTravelled += 5;
+				raceState = RaceState.RACE;
+				SetFollowLine(true);
+			}
 		}
 
-			public void SetupStaticSpeedUp() {
+		public void SetupStaticSpeedUp() {
 			isStaticSpeedUp = true;
 			currentSavedSpeed = speed;
 		}
@@ -373,7 +391,6 @@ namespace Assets.SlotCar.Scripts {
 			{
 				t += Time.deltaTime* turnTime;
 				turnPosition = t;
-				Debug.Log("TurnRight " + turnPosition);
 				yield return null;
 			}
 		}
@@ -387,7 +404,6 @@ namespace Assets.SlotCar.Scripts {
 			{
 				t -= Time.deltaTime * turnTime;
 				turnPosition = t;
-				Debug.Log("TurnLeft " + turnPosition);
 				yield return null;
 			}
 		}

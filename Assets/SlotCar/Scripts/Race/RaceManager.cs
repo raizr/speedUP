@@ -16,7 +16,8 @@ namespace Assets.SlotCar.Scripts.Race {
 	public enum RaceState {
 		PAUSE,
 		RACE,
-		FINISHED
+		FINISHED,
+		PUSHED
 	}
 
 	public enum FinishResult {

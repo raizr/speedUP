@@ -5,8 +5,8 @@ namespace Assets.SlotCar.Scripts.Race.Boosters {
 				return;
 			}
 			if (!isApplied) {
-				car.Stop();
-				isApplied = true;
+				car.BoosterStop();
+				//isApplied = true;
 			}
 		}
 	}
